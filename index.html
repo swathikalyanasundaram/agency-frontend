@@ -38,6 +38,7 @@
   <form id="leadForm">
     <input type="text" id="clientName" placeholder="Your Name" required />
     <input type="email" id="email" placeholder="Your Email" required />
+    <input type="tel" id="phone" placeholder="Your Phone Number (Optional)" />
     <select id="serviceType" required>
       <option value="Static Website">Static Website (₹6,000)</option>
       <option value="Dynamic Website">Dynamic Website (₹15,000)</option>
@@ -50,11 +51,14 @@
   <script>
     document.getElementById('leadForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Maps input fields to Spring Boot backend Lead entity properties
       const payload = {
-        clientName: document.getElementById('clientName').value,
+        name: document.getElementById('clientName').value,
         email: document.getElementById('email').value,
-        serviceType: document.getElementById('serviceType').value,
-        estimatedBudget: parseFloat(document.getElementById('estimatedBudget').value)
+        phone: document.getElementById('phone').value || "0000000000",
+        service: document.getElementById('serviceType').value,
+        budget: parseFloat(document.getElementById('estimatedBudget').value)
       };
 
       try {
@@ -67,9 +71,12 @@
         if (response.ok) {
           alert('Lead submitted successfully!');
           document.getElementById('leadForm').reset();
+        } else {
+          alert('Failed to submit. Backend responded with status: ' + response.status);
         }
       } catch (err) {
         console.error('Submission Error:', err);
+        alert('An error occurred while submitting request.');
       }
     });
   </script>
