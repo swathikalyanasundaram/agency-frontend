@@ -333,10 +333,25 @@
       `;
     }
 
-    function logout() {
+    async function logout() {
+      // 1. Clear stored frontend credentials
       localStorage.removeItem('adminAuth');
       authHeader = null;
+    
+      // 2. Clear browser's cached HTTP Basic credentials by sending invalid credentials
+      try {
+        await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+          headers: {
+            'Authorization': 'Basic ' + btoa('invalid_user:invalid_password')
+          }
+        });
+      } catch (e) {
+        // Ignore expected 401 response
+      }
+    
       alert('Logged out successfully.');
+      
+      // 3. Reset table UI to logged-out state
       showAuthError();
     }
 
