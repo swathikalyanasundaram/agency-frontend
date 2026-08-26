@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard | yezhuththu.site</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background: #333; color: white; }
+  </style>
+</head>
+<body>
+  <h1>Client Inquiries Dashboard</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Client Name</th><th>Email</th><th>Service</th><th>Budget</th><th>Date Submitted</th>
+      </tr>
+    </thead>
+    <tbody id="leadTableBody"></tbody>
+  </table>
+
+  <script>
+    async function loadLeads() {
+      try {
+        const response = await fetch('http://localhost:8080/api/leads');
+        const data = await response.json();
+        const tbody = document.getElementById('leadTableBody');
+        tbody.innerHTML = '';
+        data.forEach(lead => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${lead.id}</td>
+              <td>${lead.clientName}</td>
+              <td>${lead.email}</td>
+              <td>${lead.serviceType}</td>
+              <td>₹${lead.estimatedBudget}</td>
+              <td>${new Date(lead.createdAt).toLocaleString()}</td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        console.error('Fetch Error:', err);
+      }
+    }
+    loadLeads();
+  </script>
+</body>
+</html>
