@@ -2,20 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard | yezhuththu.site</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-    th { background: #333; color: white; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 40px;
+      background-color: #f8fafc;
+      color: #334155;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    th {
+      background-color: #1e293b;
+      color: white;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
   </style>
 </head>
 <body>
+
   <h1>Client Inquiries Dashboard</h1>
+
   <table>
     <thead>
       <tr>
-        <th>ID</th><th>Client Name</th><th>Email</th><th>Service</th><th>Budget</th><th>Date Submitted</th>
+        <th>ID</th>
+        <th>Client Name</th>
+        <th>Email</th>
+        <th>Service</th>
+        <th>Budget</th>
+        <th>Date Submitted</th>
       </tr>
     </thead>
     <tbody id="leadTableBody"></tbody>
@@ -28,15 +63,22 @@
         const data = await response.json();
         const tbody = document.getElementById('leadTableBody');
         tbody.innerHTML = '';
+
         data.forEach(lead => {
+          // Robust mapping checks to prevent 'undefined'
+          const clientName = lead.clientname || lead.clientName || lead.name || 'N/A';
+          const service = lead.serviceType || lead.service || 'N/A';
+          const budget = lead.estimatedBudget || lead.budget || 0;
+          const date = lead.createdAt ? new Date(lead.createdAt).toLocaleString() : 'N/A';
+
           tbody.innerHTML += `
             <tr>
               <td>${lead.id}</td>
-              <td>${lead.clientName}</td>
+              <td>${clientName}</td>
               <td>${lead.email}</td>
-              <td>${lead.serviceType}</td>
-              <td>₹${lead.estimatedBudget}</td>
-              <td>${new Date(lead.createdAt).toLocaleString()}</td>
+              <td>${service}</td>
+              <td>₹${budget}</td>
+              <td>${date}</td>
             </tr>
           `;
         });
@@ -44,6 +86,7 @@
         console.error('Fetch Error:', err);
       }
     }
+
     loadLeads();
   </script>
 </body>
