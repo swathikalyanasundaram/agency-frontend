@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing Plans | yezhuththu.site</title>
+
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    [data-theme="dark"] {
+      --bg-dark: #07090e;
+      --bg-card: rgba(18, 24, 38, 0.7);
+      --bg-nav: rgba(7, 9, 14, 0.85);
+      --accent-primary: #3b82f6;
+      --accent-glow: #60a5fa;
+      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(59, 130, 246, 0.5);
+      --glow-color: rgba(59, 130, 246, 0.15);
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-nav: rgba(255, 255, 255, 0.9);
+      --accent-primary: #2563eb;
+      --accent-glow: #1d4ed8;
+      --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --border-hover: rgba(37, 99, 235, 0.4);
+      --glow-color: rgba(37, 99, 235, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-top: 100px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--glow-color) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-nav);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+    }
+
+    .brand-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .brand-logo span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-primary);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .section-padding { padding: 60px 8%; }
+    .section-header { text-align: center; max-width: 650px; margin: 0 auto 60px; }
+    .section-header h1 { font-size: 3rem; font-weight: 800; margin-bottom: 16px; }
+    .section-header p { color: var(--text-muted); font-size: 1.15rem; }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .card.popular { border-color: var(--accent-primary); }
+    .card h3 { font-size: 1.4rem; margin-bottom: 8px; }
+    .card .price { font-size: 2.6rem; font-weight: 800; color: var(--text-main); margin-bottom: 24px; }
+    
+    .card ul { list-style: none; margin-bottom: 32px; flex-grow: 1; }
+    .card ul li { display: flex; align-items: center; gap: 12px; color: var(--text-muted); margin-bottom: 14px; font-size: 0.95rem; }
+    .card ul li i { color: #10b981; }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 8%;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 80px;
+    }
+
+    footer a { color: var(--accent-glow); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-logo">yezhuththu<span>.site</span></a>
+    <div class="nav-right">
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">
+        <i data-lucide="sun"></i> Light Mode
+      </button>
+      <a href="index.html#quote" class="btn btn-primary">Back to Contact</a>
+    </div>
+  </nav>
+
+  <!-- Pricing Section -->
+  <section class="section-padding">
+    <div class="section-header">
+      <h1>Development Packages</h1>
+      <p>Transparent investment plans designed specifically for modern agencies and scalable web applications at <strong>yezhuththu.site</strong>.</p>
+    </div>
+
+    <div class="packages-grid">
+      <!-- Static Plan -->
+      <div class="card">
+        <h3>Static Business Site</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Ideal for startups and professional portfolios.</p>
+        <div class="price">₹6,000</div>
+        <ul>
+          <li><i data-lucide="check"></i> Up to 5 Fully Responsive Pages</li>
+          <li><i data-lucide="check"></i> Ultra-Fast Static Page Delivery</li>
+          <li><i data-lucide="check"></i> Mobile & Search Engine Optimized</li>
+          <li><i data-lucide="check"></i> Integrated Lead Generation Form</li>
+        </ul>
+        <a href="index.html#quote" class="btn btn-outline">Choose Plan</a>
+      </div>
+
+      <!-- Dynamic Enterprise Plan -->
+      <div class="card popular">
+        <h3>Dynamic Enterprise</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Complete backend dashboard and database access.</p>
+        <div class="price">₹15,000</div>
+        <ul>
+          <li><i data-lucide="check"></i> Custom Admin Control Panel (CMS)</li>
+          <li><i data-lucide="check"></i> Unlimited Dynamic Pages & Storage</li>
+          <li><i data-lucide="check"></i> Managed MySQL / PostgreSQL DB</li>
+          <li><i data-lucide="check"></i> Spring Security Authorization</li>
+        </ul>
+        <a href="index.html#quote" class="btn btn-primary">Choose Plan</a>
+      </div>
+
+      <!-- Ecommerce Suite -->
+      <div class="card">
+        <h3>Ecommerce Suite</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Scalable online store with checkout flows.</p>
+        <div class="price">₹25,000</div>
+        <ul>
+          <li><i data-lucide="check"></i> Secure Payment Gateway Integration</li>
+          <li><i data-lucide="check"></i> Real-time Product & Inventory Management</li>
+          <li><i data-lucide="check"></i> Order Fulfillment Tracking</li>
+          <li><i data-lucide="check"></i> Priority 24/7 Technical Support</li>
+        </ul>
+        <a href="index.html#quote" class="btn btn-outline">Choose Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 <a href="index.html">yezhuththu.site</a>. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Mouse Glow
+    const cursorGlow = document.getElementById('cursorGlow');
+    window.addEventListener('mousemove', (e) => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top = e.clientY + 'px';
+    });
+
+    // Theme Switcher Logic
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('siteTheme', theme);
+      const btn = document.getElementById('themeBtn');
+      if (theme === 'light') {
+        btn.innerHTML = `<i data-lucide="moon"></i> Dark Mode`;
+      } else {
+        btn.innerHTML = `<i data-lucide="sun"></i> Light Mode`;
+      }
+      lucide.createIcons();
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    }
+
+    // Initialize Theme
+    const savedTheme = localStorage.getItem('siteTheme') || 'dark';
+    applyTheme(savedTheme);
+  </script>
+</body>
+</html>
