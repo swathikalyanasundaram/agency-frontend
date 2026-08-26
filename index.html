@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>yezhuththu.site | Web Development Agency</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f4f7f6; }
+    .packages { display: flex; gap: 20px; margin-bottom: 40px; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex: 1; }
+    form { background: white; padding: 20px; border-radius: 8px; max-width: 400px; }
+    input, select, button { width: 100%; margin-bottom: 12px; padding: 10px; box-sizing: border-box; }
+    button { background: #007bff; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h1>Website Development Services</h1>
+
+  <div class="packages">
+    <div class="card">
+      <h3>Static Website</h3>
+      <p>₹6,000 / One Time</p>
+      <ul><li>Up to 5 Pages</li><li>Mobile Responsive</li></ul>
+    </div>
+    <div class="card">
+      <h3>Dynamic Website</h3>
+      <p>₹15,000 / One Time</p>
+      <ul><li>Admin Panel (CMS)</li><li>Unlimited Pages</li></ul>
+    </div>
+    <div class="card">
+      <h3>Ecommerce Website</h3>
+      <p>₹25,000 / One Time</p>
+      <ul><li>Payment Gateway</li><li>Product Management</li></ul>
+    </div>
+  </div>
+
+  <h2>Get an Instant Quote</h2>
+  <form id="leadForm">
+    <input type="text" id="clientName" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <select id="serviceType" required>
+      <option value="Static Website">Static Website (₹6,000)</option>
+      <option value="Dynamic Website">Dynamic Website (₹15,000)</option>
+      <option value="Ecommerce Website">Ecommerce Store (₹25,000)</option>
+    </select>
+    <input type="number" id="estimatedBudget" placeholder="Estimated Budget (₹)" required />
+    <button type="submit">Submit Request</button>
+  </form>
+
+  <script>
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        clientName: document.getElementById('clientName').value,
+        email: document.getElementById('email').value,
+        serviceType: document.getElementById('serviceType').value,
+        estimatedBudget: parseFloat(document.getElementById('estimatedBudget').value)
+      };
+
+      try {
+        const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          alert('Lead submitted successfully!');
+          document.getElementById('leadForm').reset();
+        }
+      } catch (err) {
+        console.error('Submission Error:', err);
+      }
+    });
+  </script>
+</body>
+</html>
