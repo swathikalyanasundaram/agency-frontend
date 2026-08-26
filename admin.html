@@ -24,7 +24,7 @@
   <script>
     async function loadLeads() {
       try {
-        const response = await fetch('http://localhost:8080/api/leads');
+        const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads');
         const data = await response.json();
         const tbody = document.getElementById('leadTableBody');
         tbody.innerHTML = '';
