@@ -14,16 +14,16 @@
   <style>
     :root[data-theme="dark"] {
       --bg-dark: #020617;
-      --bg-card: rgba(15, 23, 42, 0.75);
-      --bg-nav: rgba(2, 6, 23, 0.85);
+      --bg-card: rgba(15, 23, 42, 0.65);
+      --bg-nav: rgba(2, 6, 23, 0.75);
       --accent-primary: #6366f1;
       --accent-glow: #818cf8;
       --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(99, 102, 241, 0.4);
-      --form-bg: rgba(3, 7, 18, 0.9);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(99, 102, 241, 0.5);
+      --form-bg: rgba(3, 7, 18, 0.85);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,7 +39,7 @@
 
     /* Navbar */
     .navbar {
-      position: fixed; top: 0; width: 100%; padding: 22px 8%; display: flex; justify-content: space-between; align-items: center;
+      position: fixed; top: 0; width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center;
       background: var(--bg-nav); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-color); z-index: 1000;
     }
@@ -59,58 +59,51 @@
     }
     .btn-primary { background: var(--accent-gradient); color: #ffffff; box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4); }
     .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 18px 35px -5px rgba(168, 85, 247, 0.5); }
-    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
-    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.05); transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); backdrop-filter: blur(10px); }
+    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.08); transform: translateY(-2px); }
 
-    /* Cinematic Animated Hero Section */
+    /* High-End Video Hero Section */
     .hero {
       position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
       padding: 160px 8% 100px; overflow: hidden; text-align: center;
     }
     
     .hero-video-bg {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
-      background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #311042);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; background: #020617;
     }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .hero-video-bg video {
+      position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+      width: auto; height: auto; transform: translate(-50%, -50%); object-fit: cover;
+      opacity: 0.45; filter: contrast(1.2) saturate(1.1);
     }
-
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 0.8) 100%);
+      background: radial-gradient(circle at center, rgba(2, 6, 23, 0.4) 0%, rgba(2, 6, 23, 0.92) 100%);
       z-index: -1;
     }
 
-    .hero-content {
-      max-width: 900px; margin: 0 auto; z-index: 1;
-    }
+    .hero-content { max-width: 950px; margin: 0 auto; z-index: 1; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 99px;
-      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);
+      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35);
       color: var(--accent-glow); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
-      margin-bottom: 24px; backdrop-filter: blur(10px);
+      margin-bottom: 24px; backdrop-filter: blur(12px); box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
     }
-    .hero-content h1 { font-size: 4.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px; }
+    .hero-content h1 { font-size: 4.4rem; font-weight: 800; line-height: 1.08; margin-bottom: 24px; letter-spacing: -2.5px; }
     .hero-content h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-content p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 40px; max-width: 680px; margin-left: auto; margin-right: auto; }
+    .hero-content p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
     .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-    /* Live Debug Status Indicator */
+    /* Live Video Diagnostics Badge */
     #videoStatusBadge {
-      position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-      background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border-color);
-      padding: 10px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;
-      backdrop-filter: blur(10px); display: flex; align-items: center; gap: 8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5); color: var(--text-muted);
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-color);
+      padding: 10px 18px; border-radius: 14px; font-size: 0.8rem; font-weight: 600;
+      backdrop-filter: blur(16px); display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6); color: var(--text-muted);
     }
     .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; }
-    .status-dot.active { background: #10b981; box-shadow: 0 0 10px #10b981; }
+    .status-dot.active { background: #10b981; box-shadow: 0 0 12px #10b981; }
 
     /* Bento Grid Services */
     .section { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
@@ -120,20 +113,20 @@
 
     .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .bento-card {
-      background: var(--bg-card); border: 1px solid var(--border-color); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      background: var(--bg-card); border: 1px solid var(--border-color); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 28px; padding: 40px; position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
     }
     .bento-card.large { grid-column: span 2; }
-    .bento-card:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: 0 30px 60px rgba(99, 102, 241, 0.12); }
-    .bento-icon { width: 54px; height: 54px; border-radius: 16px; background: rgba(99, 102, 241, 0.1); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 28px; }
+    .bento-card:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: 0 30px 60px rgba(99, 102, 241, 0.15); }
+    .bento-icon { width: 54px; height: 54px; border-radius: 16px; background: rgba(99, 102, 241, 0.12); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 28px; }
     .bento-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
     .bento-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
 
     /* Contact Lead Section */
     .quote-section {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 36px; padding: 70px;
-      max-width: 960px; margin: 40px auto 120px; backdrop-filter: blur(24px); box-shadow: 0 30px 90px rgba(0,0,0,0.15);
+      max-width: 960px; margin: 40px auto 120px; backdrop-filter: blur(30px); box-shadow: 0 30px 90px rgba(0,0,0,0.2);
     }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
     .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
@@ -143,7 +136,7 @@
       background: var(--form-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px 20px;
       color: var(--text-main); font-size: 1rem; transition: all 0.3s ease; font-family: inherit;
     }
-    .form-control:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15); }
+    .form-control:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18); }
 
     footer { border-top: 1px solid var(--border-color); padding: 60px 8%; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.95rem; }
 
@@ -159,10 +152,10 @@
 </head>
 <body>
 
-  <!-- Live Status Indicator -->
+  <!-- Live Video Diagnostics Badge -->
   <div id="videoStatusBadge">
     <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">Checking status...</span>
+    <span id="statusText">Buffering video background...</span>
   </div>
 
   <!-- Navbar -->
@@ -178,9 +171,14 @@
     </div>
   </nav>
 
-  <!-- Cinematic Animated Hero Section -->
+  <!-- High-End Video Hero Section -->
   <header class="hero">
-    <div class="hero-video-bg"></div>
+    <div class="hero-video-bg">
+      <video autoplay muted loop playsinline id="bgVideo">
+        <!-- Direct High-Speed Tech Workspace Video Stream -->
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-working-on-a-laptop-42998-large.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -310,12 +308,20 @@
   <script>
     lucide.createIcons();
 
-    /* Instant Success Indicator Script */
+    /* Live Video Playback Diagnostics */
+    const vid = document.getElementById('bgVideo');
     const statusDot = document.getElementById('statusDot');
     const statusText = document.getElementById('statusText');
-    if (statusDot && statusText) {
-      statusDot.classList.add('active');
-      statusText.innerText = 'Dynamic Background Active';
+
+    if (vid) {
+      vid.play().then(() => {
+        statusDot.classList.add('active');
+        statusText.innerText = 'Background Video Active & Playing';
+      }).catch(err => {
+        statusDot.style.background = '#ef4444';
+        statusText.innerText = 'Video Autoplay Restricted';
+        console.warn('Autoplay restriction:', err);
+      });
     }
 
     /* Contact Form Submission Handler */
