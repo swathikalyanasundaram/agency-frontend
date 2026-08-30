@@ -15,17 +15,17 @@
   <style>
     /* Theme Variables */
     :root[data-theme="dark"] {
-      --bg-dark: #07090e;
-      --bg-card: rgba(18, 24, 38, 0.7);
-      --bg-nav: rgba(7, 9, 14, 0.85);
+      --bg-dark: #05070b;
+      --bg-card: rgba(13, 17, 28, 0.75);
+      --bg-nav: rgba(5, 7, 11, 0.85);
       --accent-primary: #3b82f6;
       --accent-glow: #60a5fa;
-      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(59, 130, 246, 0.5);
-      --form-bg: rgba(15, 23, 42, 0.8);
+      --border-hover: rgba(59, 130, 246, 0.4);
+      --form-bg: rgba(10, 15, 25, 0.8);
     }
 
     :root[data-theme="light"] {
@@ -34,7 +34,7 @@
       --bg-nav: rgba(248, 250, 252, 0.85);
       --accent-primary: #2563eb;
       --accent-glow: #3b82f6;
-      --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+      --accent-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #9333ea 100%);
       --text-main: #0f172a;
       --text-muted: #64748b;
       --border-color: rgba(0, 0, 0, 0.08);
@@ -52,12 +52,6 @@
       line-height: 1.6;
       overflow-x: hidden;
       transition: background-color 0.3s ease, color 0.3s ease;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.07) 0px, transparent 50%),
-        linear-gradient(to right, var(--border-color) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
     }
 
     /* Navigation Bar */
@@ -66,7 +60,7 @@
       background: var(--bg-nav); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-color); z-index: 1000;
       transition: background 0.3s ease, border-color 0.3s ease;
     }
-    .brand-logo { font-size: 1.6rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
+    .brand-logo { font-size: 1.6rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
     .brand-logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
     .nav-right { display: flex; align-items: center; gap: 20px; }
@@ -84,44 +78,36 @@
 
     /* Buttons */
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 26px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none; }
-    .btn-primary { background: var(--accent-gradient); color: #ffffff; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6); }
+    .btn-primary { background: var(--accent-gradient); color: #ffffff; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.35); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5); }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
-    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(59, 130, 246, 0.1); }
+    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(59, 130, 246, 0.08); }
 
     /* Hero Section */
     .hero {
-      position: relative; padding: 180px 8% 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; max-width: 1400px; margin: 0 auto;
+      position: relative; padding: 180px 8% 100px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; max-width: 1400px; margin: 0 auto;
     }
-    .hero-content h1 { font-size: 3.8rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; letter-spacing: -1px; }
+    .hero-content h1 { font-size: 3.6rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; letter-spacing: -1.5px; }
     .hero-content h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero-content p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 32px; max-width: 520px; }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
-    /* Hero 3D Render Image Showcase Grid */
-    .hero-image-grid {
+    /* High-End 3D Mesh Animation Container */
+    .hero-visual-wrapper {
       position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-color);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15); background: var(--bg-card); backdrop-filter: blur(16px);
-      aspect-ratio: 16/10; display: grid; grid-template-columns: 2fr 1fr; gap: 12px; padding: 12px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25); background: var(--bg-card); backdrop-filter: blur(20px);
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
     }
-    .hero-main-img {
-      width: 100%; height: 100%; object-fit: cover; border-radius: 14px;
-      transition: transform 0.5s ease;
+    #waveCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    .hero-main-img:hover { transform: scale(1.02); }
-    .hero-sub-column {
-      display: flex; flex-direction: column; gap: 12px; height: 100%;
-    }
-    .hero-sub-img {
-      width: 100%; height: 50%; object-fit: cover; border-radius: 14px;
-      transition: transform 0.5s ease;
-    }
-    .hero-sub-img:hover { transform: scale(1.03); }
 
     /* Bento Grid Services Section */
     .section { padding: 100px 8%; max-width: 1400px; margin: 0 auto; }
     .section-header { text-align: center; margin-bottom: 60px; }
-    .section-header h2 { font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; }
+    .section-header h2 { font-size: 2.6rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -1px; }
     .section-header p { color: var(--text-muted); font-size: 1.1rem; }
 
     .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -132,12 +118,12 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     }
     .bento-card.large { grid-column: span 2; }
-    .bento-card:hover { transform: translateY(-6px); border-color: var(--border-hover); box-shadow: 0 15px 40px rgba(59, 130, 246, 0.12); }
-    .bento-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 24px; }
+    .bento-card:hover { transform: translateY(-6px); border-color: var(--border-hover); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1); }
+    .bento-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(59, 130, 246, 0.1); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 24px; }
     .bento-card h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
     .bento-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-    /* Contact / Lead Quote Section */
+    /* Contact Lead Quote Section */
     .quote-section {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 32px; padding: 60px;
       max-width: 900px; margin: 40px auto 100px; backdrop-filter: blur(20px); box-shadow: 0 20px 60px rgba(0,0,0,0.08);
@@ -201,13 +187,9 @@
       </div>
     </div>
     
-    <!-- 3D Render Graphic Showcase Grid -->
-    <div class="hero-image-grid">
-      <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80" alt="3D Abstract Neon Render" class="hero-main-img" />
-      <div class="hero-sub-column">
-        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="3D Fluid Shapes" class="hero-sub-img" />
-        <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=600&q=80" alt="3D Digital Sphere" class="hero-sub-img" />
-      </div>
+    <!-- Immersive 3D Wave Topology Visual -->
+    <div class="hero-visual-wrapper">
+      <canvas id="waveCanvas"></canvas>
     </div>
   </header>
 
@@ -332,7 +314,6 @@
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
 
-    // Check for saved user preference
     const savedTheme = localStorage.getItem('theme') || 'dark';
     htmlElement.setAttribute('data-theme', savedTheme);
     updateThemeIcon(savedTheme);
@@ -350,6 +331,83 @@
       themeIcon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
       lucide.createIcons();
     }
+
+    /* 3D Wave Topology Animation Script */
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let animationFrameId;
+    let step = 0;
+    let mouse = { x: 0, y: 0, active: false };
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      mouse.active = false;
+    });
+
+    function drawWaveTopology() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const isDark = htmlElement.getAttribute('data-theme') === 'dark';
+
+      const rows = 16;
+      const cols = 22;
+      const spacingX = canvas.width / cols;
+      const spacingY = canvas.height / rows;
+
+      step += 0.025;
+
+      for (let i = 0; i < rows; i++) {
+        ctx.beginPath();
+        for (let j = 0; j < cols; j++) {
+          const x = j * spacingX;
+          
+          // Compute wave displacement
+          const wave1 = Math.sin(j * 0.4 + step) * 12;
+          const wave2 = Math.cos(i * 0.3 + step * 0.8) * 12;
+          let y = i * spacingY + wave1 + wave2 + 20;
+
+          // Subtle interaction with mouse position
+          if (mouse.active) {
+            const dx = x - mouse.x;
+            const dy = y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              const force = (1 - dist / 120) * 20;
+              y -= force;
+            }
+          }
+
+          if (j === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+
+        // Color grading for mesh lines
+        ctx.strokeStyle = isDark 
+          ? `rgba(96, 165, 250, ${0.15 + (i / rows) * 0.25})` 
+          : `rgba(37, 99, 235, ${0.12 + (i / rows) * 0.25})`;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+      }
+
+      animationFrameId = requestAnimationFrame(drawWaveTopology);
+    }
+    drawWaveTopology();
 
     /* Contact Form Handler */
     const contactForm = document.getElementById('contactForm');
