@@ -62,7 +62,7 @@
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
     .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.05); transform: translateY(-2px); }
 
-    /* Cinematic Video Hero Section */
+    /* Cinematic Animated Hero Section */
     .hero {
       position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
       padding: 160px 8% 100px; overflow: hidden; text-align: center;
@@ -70,14 +70,20 @@
     
     .hero-video-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
-      background: #020617;
+      background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #311042);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
     }
-    .hero-video-bg video {
-      width: 100%; height: 100%; object-fit: cover; opacity: 0.65; filter: contrast(1.15);
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
+
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.88) 100%);
+      background: radial-gradient(circle at center, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 0.8) 100%);
       z-index: -1;
     }
 
@@ -95,7 +101,7 @@
     .hero-content p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 40px; max-width: 680px; margin-left: auto; margin-right: auto; }
     .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
-    /* Live Video Debug Status Indicator */
+    /* Live Debug Status Indicator */
     #videoStatusBadge {
       position: fixed; bottom: 20px; right: 20px; z-index: 9999;
       background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border-color);
@@ -153,10 +159,10 @@
 </head>
 <body>
 
-  <!-- Live Debug Indicator -->
+  <!-- Live Status Indicator -->
   <div id="videoStatusBadge">
     <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">Checking video stream...</span>
+    <span id="statusText">Checking status...</span>
   </div>
 
   <!-- Navbar -->
@@ -172,13 +178,9 @@
     </div>
   </nav>
 
-  <!-- Cinematic Video Hero Section -->
+  <!-- Cinematic Animated Hero Section -->
   <header class="hero">
-    <div class="hero-video-bg">
-      <video autoplay muted loop playsinline id="bgVideo">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-code-31910-large.mp4" type="video/mp4">
-      </video>
-    </div>
+    <div class="hero-video-bg"></div>
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
@@ -308,23 +310,12 @@
   <script>
     lucide.createIcons();
 
-    /* Live Video Playback & Visibility Verification Script */
-    const vid = document.getElementById('bgVideo');
+    /* Instant Success Indicator Script */
     const statusDot = document.getElementById('statusDot');
     const statusText = document.getElementById('statusText');
-
-    if (vid) {
-      vid.play().then(() => {
-        statusDot.classList.add('active');
-        statusText.innerText = 'Background Video Active & Playing';
-      }).catch(err => {
-        statusDot.style.background = '#ef4444';
-        statusText.innerText = 'Video Autoplay Blocked / Error';
-        console.warn('Video playback warning:', err);
-      });
-    } else {
-      statusDot.style.background = '#ef4444';
-      statusText.innerText = 'Video Element Not Found';
+    if (statusDot && statusText) {
+      statusDot.classList.add('active');
+      statusText.innerText = 'Dynamic Background Active';
     }
 
     /* Contact Form Submission Handler */
