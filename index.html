@@ -62,7 +62,7 @@
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
     .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.05); transform: translateY(-2px); }
 
-    /* Cinematic Video Hero Section with Bulletproof Fallback */
+    /* Cinematic Video Hero Section */
     .hero {
       position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
       padding: 160px 8% 100px; overflow: hidden; text-align: center;
@@ -73,7 +73,7 @@
       background: #020617;
     }
     .hero-video-bg video {
-      width: 100%; height: 100%; object-fit: cover; opacity: 0.55; filter: contrast(1.15);
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.65; filter: contrast(1.15);
     }
     .hero-overlay {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -94,6 +94,17 @@
     .hero-content h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero-content p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 40px; max-width: 680px; margin-left: auto; margin-right: auto; }
     .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* Live Video Debug Status Indicator */
+    #videoStatusBadge {
+      position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+      background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border-color);
+      padding: 10px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;
+      backdrop-filter: blur(10px); display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5); color: var(--text-muted);
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; }
+    .status-dot.active { background: #10b981; box-shadow: 0 0 10px #10b981; }
 
     /* Bento Grid Services */
     .section { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
@@ -142,6 +153,12 @@
 </head>
 <body>
 
+  <!-- Live Debug Indicator (Removable later) -->
+  <div id="videoStatusBadge">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Checking video stream...</span>
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar">
     <a href="index.html" class="brand-logo">yezhuththu<span>.site</span></a>
@@ -158,7 +175,6 @@
   <!-- Cinematic Video Hero Section -->
   <header class="hero">
     <div class="hero-video-bg">
-      <!-- Direct reliable MP4 stream URL -->
       <video autoplay muted loop playsinline id="bgVideo">
         <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
       </video>
@@ -166,7 +182,7 @@
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
-      <div class="hero-badge"><i data-lucide="sparkles" style="width: 16px;"></i> Next-Gen Engineering Studio</div>
+      <div class="hero-badge"><i data-lucide="sparkles" style="width: 16px;"><span></span></i> Next-Gen Engineering Studio</div>
       <h1>Architecting <span>Digital Excellence</span> & Custom Web Systems</h1>
       <p>We combine high-performance frontend engineering, robust backend infrastructure, and immersive design to scale your brand to the next level.</p>
       <div class="hero-actions">
@@ -292,15 +308,24 @@
   <script>
     lucide.createIcons();
 
-    /* Ensure video autoplay policy compliance */
-    document.addEventListener('DOMContentLoaded', () => {
-      const vid = document.getElementById('bgVideo');
-      if (vid) {
-        vid.play().catch(error => {
-          console.log("Autoplay prevented by browser policy:", error);
-        });
-      }
-    });
+    /* Live Video Playback & Visibility Verification Script */
+    const vid = document.getElementById('bgVideo');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+
+    if (vid) {
+      vid.play().then(() => {
+        statusDot.classList.add('active');
+        statusText.innerText = 'Background Video Active & Playing';
+      }).catch(err => {
+        statusDot.style.background = '#ef4444';
+        statusText.innerText = 'Video Autoplay Blocked / Error';
+        console.warn('Video playback warning:', err);
+      });
+    } else {
+      statusDot.style.background = '#ef4444';
+      statusText.innerText = 'Video Element Not Found';
+    }
 
     /* Contact Form Submission Handler */
     const contactForm = document.getElementById('contactForm');
