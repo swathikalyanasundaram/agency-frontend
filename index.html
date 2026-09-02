@@ -273,8 +273,8 @@
       <form id="contactForm">
         <div class="form-grid">
           <div class="form-group">
-            <label for="clientName">Your Name</label>
-            <input type="text" id="clientName" class="form-control" placeholder="John Doe" required />
+            <label for="clientname">Your Name</label>
+            <input type="text" id="clientname" class="form-control" placeholder="John Doe" required />
           </div>
           <div class="form-group">
             <label for="email">Email Address</label>
@@ -326,7 +326,7 @@
       e.preventDefault();
 
       const payload = {
-        clientName: document.getElementById('clientName').value.trim(),
+        clientname: document.getElementById('clientname').value.trim(),
         email: document.getElementById('email').value.trim(),
         serviceType: document.getElementById('serviceType').value,
         estimatedBudget: Number(document.getElementById('estimatedBudget').value),
