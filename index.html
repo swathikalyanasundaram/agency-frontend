@@ -131,6 +131,7 @@
       try {
         const r = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
           method: 'POST',
+          mode: 'cors',
           headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
           body: JSON.stringify(payload)
         });
@@ -142,7 +143,7 @@
           btn.disabled = false;
         }
       } catch (err) {
-        alert('Could not reach backend server. Please check your network connection or Render server status.');
+        alert('CORS or Network error. Make sure your Render backend allows origins from yezhuththu.site');
         btn.innerHTML = old;
         btn.disabled = false;
       }
