@@ -12,28 +12,141 @@
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;overflow-x:hidden}a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}
     .cursor{position:fixed;left:0;top:0;width:20px;height:20px;border:2px solid #fff;background:var(--orange);border-radius:50%;pointer-events:none;z-index:30;mix-blend-mode:multiply;transition:transform .18s ease,width .18s,height .18s}.cursor-label{position:fixed;z-index:30;pointer-events:none;font-size:11px;color:var(--orange);font-weight:800;opacity:0;transform:translate(14px,10px);transition:opacity .2s}.hovering .cursor{width:34px;height:34px}.hovering .cursor-label{opacity:1}
     .nav{position:fixed;z-index:20;top:0;left:0;right:0;height:78px;padding:0 6vw;display:flex;align-items:center;justify-content:space-between;color:#fff;background:linear-gradient(#17231fcc,transparent)}.logo{font-size:20px;font-weight:800;letter-spacing:-.7px}.logo i{color:#ffd37b;font-style:normal}.navlinks{display:flex;gap:28px;font-size:13px;font-weight:700}.navlinks a{opacity:.85}.navlinks a:hover{opacity:1;color:#ffd37b}.nav-cta{border:1px solid #ffffff99;border-radius:999px;padding:10px 17px;font-size:12px;font-weight:800;color:#fff}.nav-cta:hover{background:#ffffff22}
-    .hero{height:min(860px,100vh);min-height:680px;position:relative;display:flex;align-items:center;overflow:hidden;background:linear-gradient(115deg,#d9d1c8,#b9b6af)}.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(24,37,30,.58),rgba(24,37,30,.06) 63%),linear-gradient(0deg,rgba(24,37,30,.3),transparent 30%);z-index:1;pointer-events:none}.giraffe-stage{position:absolute;z-index:2;right:7vw;bottom:-3px;width:min(44vw,520px);height:min(96%,820px);aspect-ratio:4/7;filter:drop-shadow(0 22px 22px rgba(24,37,30,.24));transition:transform .25s ease-out}.giraffe-layer{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}.giraffe-body{clip-path:inset(49% 0 0 0)}.giraffe-neck{clip-path:inset(0 0 43% 0);transform-origin:51% 57%;transition:transform .15s ease-out;will-change:transform}.eye-lid{position:absolute;z-index:4;top:10.8%;width:7.3%;height:3.3%;border-radius:50%;background:#5a3823;opacity:0;transform:scaleY(.2);transform-origin:center;pointer-events:none}.eye-left{left:38.5%}.eye-right{left:53.7%}.giraffe-stage.blink .eye-lid{opacity:1;transform:scaleY(1);transition:transform .08s ease-in}.giraffe-stage.curious{filter:drop-shadow(0 25px 26px rgba(24,37,30,.3))}.giraffe-stage.curious .giraffe-neck{filter:saturate(1.08) brightness(1.04)}.mood{position:absolute;z-index:5;top:6%;right:7%;padding:7px 10px;border-radius:14px 14px 14px 2px;background:#fff;color:var(--green);font-size:10px;font-weight:800;box-shadow:0 5px 12px #18251e22;opacity:0;transform:translateY(6px) rotate(4deg);transition:opacity .2s,transform .2s}.mood::after{content:'';position:absolute;bottom:-5px;left:9px;border-width:5px 5px 0 0;border-style:solid;border-color:#fff transparent transparent transparent}.giraffe-stage.curious .mood{opacity:1;transform:translateY(0) rotate(4deg)}.hero-content{position:relative;z-index:3;margin-left:10vw;margin-top:28px;max-width:520px;color:#fff}.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ffd37b;margin-bottom:22px}.hero h1{font-family:'Playfair Display',serif;font-size:clamp(54px,7vw,98px);line-height:.98;letter-spacing:-4px;margin-bottom:24px;font-weight:700}.hero h1 em{color:#ffd37b;font-style:italic}.hero p{font-size:16px;line-height:1.7;max-width:410px;color:#f5f2e9cc;margin-bottom:30px}.btn{display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;padding:14px 21px;font-weight:800;font-size:13px;transition:transform .2s,box-shadow .2s}.btn-primary{background:#ffd37b;color:var(--ink);box-shadow:0 8px 22px #17271d45}.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 28px #17271d59}.btn-ghost{color:#fff;border:1px solid #fff9;background:#ffffff12;margin-left:8px}.hero-note{position:absolute;right:8vw;bottom:52px;z-index:4;color:#fff;font-size:11px;display:flex;align-items:center;gap:9px;opacity:.85}.scroll-dot{width:8px;height:8px;border-radius:50%;background:#ffd37b;animation:pulse 1.6s infinite}@keyframes pulse{50%{transform:scale(1.5);opacity:.55}}
+    .hero{height:min(860px,100vh);min-height:680px;position:relative;display:flex;align-items:center;overflow:hidden;background:linear-gradient(115deg,#d9d1c8,#b9b6af)}.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(24,37,30,.58),rgba(24,37,30,.06) 63%),linear-gradient(0deg,rgba(24,37,30,.3),transparent 30%);z-index:1;pointer-events:none}
+    
+    /* Sloth Stage Styles */
+    .sloth-stage{position:absolute;z-index:2;right:7vw;bottom:-3px;width:min(38vw, 420px);height:min(85%, 520px);aspect-ratio:1/1;filter:drop-shadow(0 22px 22px rgba(24,37,30,.24));transition:transform .15s ease-out;transform-origin:center center}
+    .sloth-stage img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}
+    .sloth-stage.curious{filter:drop-shadow(0 25px 26px rgba(24,37,30,.3))}
+    
+    .mood{position:absolute;z-index:5;top:6%;right:7%;padding:7px 10px;border-radius:14px 14px 14px 2px;background:#fff;color:var(--green);font-size:10px;font-weight:800;box-shadow:0 5px 12px #18251e22;opacity:0;transform:translateY(6px) rotate(4deg);transition:opacity .2s,transform .2s}.mood::after{content:'';position:absolute;bottom:-5px;left:9px;border-width:5px 5px 0 0;border-style:solid;border-color:#fff transparent transparent transparent}.sloth-stage.curious .mood{opacity:1;transform:translateY(0) rotate(4deg)}
+    
+    .hero-content{position:relative;z-index:3;margin-left:10vw;margin-top:28px;max-width:520px;color:#fff}.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ffd37b;margin-bottom:22px}.hero h1{font-family:'Playfair Display',serif;font-size:clamp(54px,7vw,98px);line-height:.98;letter-spacing:-4px;margin-bottom:24px;font-weight:700}.hero h1 em{color:#ffd37b;font-style:italic}.hero p{font-size:16px;line-height:1.7;max-width:410px;color:#f5f2e9cc;margin-bottom:30px}.btn{display:inline-flex;align-items:center;gap:12px;border:0;border-radius:999px;padding:14px 21px;font-weight:800;font-size:13px;transition:transform .2s,box-shadow .2s}.btn-primary{background:#ffd37b;color:var(--ink);box-shadow:0 8px 22px #17271d45}.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 28px #17271d59}.btn-ghost{color:#fff;border:1px solid #fff9;background:#ffffff12;margin-left:8px}.hero-note{position:absolute;right:8vw;bottom:52px;z-index:4;color:#fff;font-size:11px;display:flex;align-items:center;gap:9px;opacity:.85}.scroll-dot{width:8px;height:8px;border-radius:50%;background:#ffd37b;animation:pulse 1.6s infinite}@keyframes pulse{50%{transform:scale(1.5);opacity:.55}}
     .intro{padding:118px 8vw 105px;display:grid;grid-template-columns:1fr 1.2fr;gap:9vw;align-items:center}.kicker{font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:800;color:var(--orange);margin-bottom:18px}.intro h2,.steps h2,.quote h2{font-family:'Playfair Display',serif;font-size:clamp(36px,4.2vw,62px);line-height:1.05;letter-spacing:-2px}.intro h2 em,.steps h2 em{color:var(--green);font-style:italic}.intro-copy{font-size:18px;color:var(--muted);max-width:530px}.intro-copy strong{color:var(--ink)}
     .steps{background:var(--sage);padding:110px 8vw}.steps-head{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:50px}.steps-head p{max-width:330px;color:#647269;font-size:14px}.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.step{background:#f8f6ee;border:1px solid var(--line);border-radius:20px;padding:28px;min-height:230px;transition:transform .25s,background .25s}.step:hover{transform:translateY(-7px) rotate(-1deg);background:#fff}.number{color:var(--orange);font-size:12px;font-weight:800;margin-bottom:48px}.step h3{font-family:'Playfair Display',serif;font-size:26px;letter-spacing:-.7px;margin-bottom:10px}.step p{font-size:14px;color:var(--muted)}
     .quote{padding:110px 8vw;display:grid;grid-template-columns:.9fr 1.1fr;gap:9vw}.quote h2{margin-bottom:18px}.quote-intro p{color:var(--muted);max-width:360px}.form{background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 14px 40px #1b2e1c0d}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}.field.full{grid-column:span 2}.field label{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:#667168}.control{border:1px solid var(--line);background:#fbfaf6;border-radius:10px;padding:12px 13px;color:var(--ink);outline:none}.control:focus{border-color:var(--green);box-shadow:0 0 0 3px #375e4520}.form .btn{width:100%;justify-content:center;background:var(--green);color:#fff}
     footer{border-top:1px solid var(--line);padding:28px 8vw;display:flex;justify-content:space-between;color:#7b837b;font-size:12px}.status{position:fixed;right:18px;bottom:18px;z-index:10;background:#fff;border:1px solid var(--line);padding:8px 11px;border-radius:999px;font-size:10px;color:var(--green);font-weight:800;box-shadow:0 5px 18px #18251e16}.status span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#62b477;margin-right:6px}
-    @media(max-width:800px){.navlinks{display:none}.nav{height:68px}.hero{min-height:700px;height:94vh}.giraffe-stage{right:-22vw;height:83%;opacity:.78}.hero-content{margin:70px 8vw 0;max-width:390px}.hero h1{font-size:58px;letter-spacing:-2px}.hero-note{right:8vw;bottom:25px}.intro,.quote{grid-template-columns:1fr;gap:35px;padding-top:80px;padding-bottom:80px}.steps{padding-top:80px;padding-bottom:80px}.steps-head{display:block}.steps-head p{margin-top:20px}.step-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:span 1}footer{display:block}footer p+p{margin-top:8px}}
+    @media(max-width:800px){.navlinks{display:none}.nav{height:68px}.hero{min-height:700px;height:94vh}.sloth-stage{right:-15vw;height:70%;opacity:.85}.hero-content{margin:70px 8vw 0;max-width:390px}.hero h1{font-size:58px;letter-spacing:-2px}.hero-note{right:8vw;bottom:25px}.intro,.quote{grid-template-columns:1fr;gap:35px;padding-top:80px;padding-bottom:80px}.steps{padding-top:80px;padding-bottom:80px}.steps-head{display:block}.steps-head p{margin-top:20px}.step-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:span 1}footer{display:block}footer p+p{margin-top:8px}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
   </style>
 </head>
 <body>
   <div class="cursor"></div><div class="cursor-label">explore</div>
   <nav class="nav"><a class="logo" href="index.html">yezhuththu<span>.site</span></a><div class="navlinks"><a href="#story">About</a><a href="#process">How it works</a><a href="pricing.html">Pricing</a></div><a class="nav-cta" href="#quote">Start a project ↗</a></nav>
-  <header class="hero" id="top"><div class="giraffe-stage"><img class="giraffe-layer giraffe-body" src="giraffe.png" alt="Friendly giraffe body"><img class="giraffe-layer giraffe-neck" src="giraffe.png" alt="Friendly giraffe neck and head"><span class="eye-lid eye-left"></span><span class="eye-lid eye-right"></span><span class="mood">oh, hi!</span></div><div class="hero-content"><div class="eyebrow">Digital experiences, made alive</div><h1>Your imagination,<br><em>but unhinged.</em></h1><p>We build joyful websites and powerful digital systems for brands that refuse to blend in.</p><a class="btn btn-primary" href="#quote">Bring your idea to life <span>↗</span></a><a class="btn btn-ghost" href="#process">See how we work</a></div><div class="hero-note"><span class="scroll-dot"></span> move your mouse — say hi</div></header>
+  
+  <header class="hero" id="top">
+    <!-- Sloth Stage Element -->
+    <div class="sloth-stage" id="slothStage">
+      <img id="slothSprite" src="sloth-1.png" alt="Interactive Sloth">
+      <span class="mood">oh, hi!</span>
+    </div>
+
+    <div class="hero-content">
+      <div class="eyebrow">Digital experiences, made alive</div>
+      <h1>Your imagination,<br><em>but unhinged.</em></h1>
+      <p>We build joyful websites and powerful digital systems for brands that refuse to blend in.</p>
+      <a class="btn btn-primary" href="#quote">Bring your idea to life <span>↗</span></a>
+      <a class="btn btn-ghost" href="#process">See how we work</a>
+    </div>
+    <div class="hero-note"><span class="scroll-dot"></span> move your mouse — say hi</div>
+  </header>
+
   <section class="intro" id="story"><div><div class="kicker">A little about us</div><h2>Good websites should feel like a <em>tiny adventure.</em></h2></div><div class="intro-copy"><p>Not another boxy template. Not another website that looks like everyone else. <strong>yezhuththu.site</strong> brings together thoughtful design, playful motion, and serious engineering to make digital places people remember.</p></div></section>
   <section class="steps" id="process"><div class="steps-head"><div><div class="kicker">The journey</div><h2>From <em>spark</em> to<br>something real.</h2></div><p>Every project starts with a feeling and ends with a system that works beautifully.</p></div><div class="step-grid"><article class="step"><div class="number">01 / DISCOVER</div><h3>We listen closely.</h3><p>Your world, your weird ideas, your big goals. We find the thread worth pulling.</p></article><article class="step"><div class="number">02 / DESIGN</div><h3>We make it feel alive.</h3><p>Visual direction, interaction, and a little magic — all shaped around your audience.</p></article><article class="step"><div class="number">03 / BUILD</div><h3>We make it work.</h3><p>Fast, responsive, secure code that holds up long after the launch confetti.</p></article></div></section>
   <section class="quote" id="quote"><div class="quote-intro"><div class="kicker">Let’s make something</div><h2>Have a good<br><em>weird idea?</em></h2><p>Tell us the rough version. The messy version. We’re good at finding the shape inside it.</p></div><div class="form"><form id="contactForm"><div class="form-grid"><div class="field"><label for="clientname">Your name</label><input class="control" id="clientname" placeholder="Jane Doe" required></div><div class="field"><label for="email">Email</label><input class="control" id="email" type="email" placeholder="jane@example.com" required></div><div class="field"><label for="serviceType">What do you need?</label><select class="control" id="serviceType" required><option value="" disabled selected>Choose one</option><option value="Static Website">A beautiful static website</option><option value="Dynamic Enterprise">A dynamic web system</option><option value="E-Commerce Solution">An e-commerce experience</option><option value="UI/UX Design">UI/UX and brand design</option><option value="Cloud DevOps">Cloud, DevOps & hosting</option></select></div><div class="field"><label for="estimatedBudget">Approx. budget (₹)</label><input class="control" id="estimatedBudget" type="number" placeholder="25000" required></div><div class="field full"><label for="projectDetails">Tell us more</label><textarea class="control" id="projectDetails" rows="4" placeholder="A few words about your idea, timeline, or what inspired it..."></textarea></div></div><button class="btn" type="submit">Send the signal <span>↗</span></button></form></div></section>
+  
   <footer><p>© 2026 yezhuththu.site</p><p>Made with curiosity, care & good coffee.</p></footer><div class="status"><span></span>interactive mode on</div>
+
   <script>
-    const cursor=document.querySelector('.cursor'),label=document.querySelector('.cursor-label'),neck=document.querySelector('.giraffe-neck'),stage=document.querySelector('.giraffe-stage');let blinkTimer;
-    window.addEventListener('mousemove',e=>{cursor.style.transform=`translate(${e.clientX-10}px,${e.clientY-10}px)`;label.style.transform=`translate(${e.clientX+14}px,${e.clientY+10}px)`;const x=e.clientX/innerWidth-.5,y=e.clientY/innerHeight-.5;neck.style.transform=`rotate(${x*9}deg) translate(${x*10}px,${y*5}px)`;stage.style.transform=`translate(${x*-7}px,${y*-3}px)`;const r=stage.getBoundingClientRect(),headX=r.left+r.width*.48,headY=r.top+r.height*.22,d=Math.hypot(e.clientX-headX,e.clientY-headY);if(d<Math.min(230,r.width*.8)){stage.classList.add('curious');clearTimeout(blinkTimer);blinkTimer=setTimeout(()=>{stage.classList.add('blink');setTimeout(()=>stage.classList.remove('blink'),170)},120)}else{stage.classList.remove('curious')}});
-    document.querySelectorAll('a,button,.step,input,select,textarea').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'))});
-    const form=document.getElementById('contactForm');form.addEventListener('submit',async e=>{e.preventDefault();const payload={clientname:document.getElementById('clientname').value.trim(),email:document.getElementById('email').value.trim(),serviceType:document.getElementById('serviceType').value,estimatedBudget:Number(document.getElementById('estimatedBudget').value),projectDetails:document.getElementById('projectDetails').value.trim()};const btn=form.querySelector('button');const old=btn.innerHTML;btn.innerHTML='Sending your signal…';btn.disabled=true;try{const r=await fetch('https://agency-backend-t8oq.onrender.com/api/leads',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});if(r.ok||r.status===200||r.status===201){form.innerHTML='<div style="padding:34px 4px;text-align:center"><div style="font-size:42px;color:#ed7445">✦</div><h3 style="font-family:Playfair Display,serif;font-size:28px">Signal received.</h3><p style="color:#6f786e;margin-top:8px">We’ll be in touch soon.</p></div>'}else{alert('Server responded with an issue: '+r.status);btn.innerHTML=old;btn.disabled=false}}catch(err){alert('Could not reach backend server. Please check your network connection or Render server status.');btn.innerHTML=old;btn.disabled=false}});
+    const cursor = document.querySelector('.cursor'),
+          label = document.querySelector('.cursor-label'),
+          slothStage = document.getElementById('slothStage'),
+          slothSprite = document.getElementById('slothSprite');
+          
+    // Sloth sprite frames array
+    const slothFrames = ['sloth-1.png', 'sloth-2.png', 'sloth-3.png', 'sloth-4.png', 'sloth-5.png'];
+    let currentFrame = 0;
+    let walkTimer;
+    let isWalking = false;
+
+    window.addEventListener('mousemove', e => {
+      // 1. Move Custom Cursor
+      cursor.style.transform = `translate(${e.clientX-10}px,${e.clientY-10}px)`;
+      label.style.transform = `translate(${e.clientX+14}px,${e.clientY+10}px)`;
+      
+      const x = e.clientX / innerWidth - .5;
+      const y = e.clientY / innerHeight - .5;
+      
+      // 2. Parallax stage shift towards cursor
+      slothStage.style.transform = `translate(${x * -12}px, ${y * -6}px)`;
+
+      // 3. Proximity check for "curious" speech bubble state
+      const r = slothStage.getBoundingClientRect();
+      const slothCenterX = r.left + r.width * .5;
+      const slothCenterY = r.top + r.height * .5;
+      const d = Math.hypot(e.clientX - slothCenterX, e.clientY - slothCenterY);
+      
+      if (d < Math.min(300, r.width * 1.3)) {
+        slothStage.classList.add('curious');
+      } else {
+        slothStage.classList.remove('curious');
+      }
+
+      // 4. Frame animation sequence loop on mouse movement
+      if (!isWalking) {
+        isWalking = true;
+      }
+      
+      currentFrame = (currentFrame + 1) % slothFrames.length;
+      slothSprite.src = slothFrames[currentFrame];
+
+      // Stop walking and reset back to idle frame when mouse stops moving
+      clearTimeout(walkTimer);
+      walkTimer = setTimeout(() => {
+        isWalking = false;
+        currentFrame = 0;
+        slothSprite.src = slothFrames[0];
+      }, 120);
+    });
+
+    document.querySelectorAll('a,button,.step,input,select,textarea').forEach(el=>{
+      el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+    });
+
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        clientname: document.getElementById('clientname').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        serviceType: document.getElementById('serviceType').value,
+        estimatedBudget: Number(document.getElementById('estimatedBudget').value),
+        projectDetails: document.getElementById('projectDetails').value.trim()
+      };
+      const btn = form.querySelector('button');
+      const old = btn.innerHTML;
+      btn.innerHTML = 'Sending your signal…';
+      btn.disabled = true;
+      try {
+        const r = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        if (r.ok || r.status === 200 || r.status === 201) {
+          form.innerHTML = '<div style="padding:34px 4px;text-align:center"><div style="font-size:42px;color:#ed7445">✦</div><h3 style="font-family:Playfair Display,serif;font-size:28px">Signal received.</h3><p style="color:#6f786e;margin-top:8px">We’ll be in touch soon.</p></div>';
+        } else {
+          alert('Server responded with an issue: ' + r.status);
+          btn.innerHTML = old;
+          btn.disabled = false;
+        }
+      } catch (err) {
+        alert('Could not reach backend server. Please check your network connection or Render server status.');
+        btn.innerHTML = old;
+        btn.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
