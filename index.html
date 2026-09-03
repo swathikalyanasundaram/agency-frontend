@@ -29,7 +29,6 @@
       align-items: center;
     }
 
-    /* Main Container */
     .hero-container {
       position: relative;
       width: 100vw;
@@ -47,7 +46,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       pointer-events: auto;
     }
 
@@ -63,14 +62,14 @@
       color: rgba(255, 255, 255, 0.6);
       font-weight: 400;
       letter-spacing: -0.01em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .contact-btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #ffffff;
-      padding: 0.6rem 1.4rem;
+      padding: 0.55rem 1.3rem;
       border-radius: 50px;
       font-size: 0.85rem;
       font-weight: 500;
@@ -93,25 +92,24 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: rotateOrbit 40s linear infinite;
+      animation: rotateOrbit 35s linear infinite;
     }
 
     .orbit-stage:hover {
-      animation-play-state: paused; /* Pause rotation on hover if desired */
+      animation-play-state: paused;
     }
 
     /* Individual Image Cards */
     .card {
       position: absolute;
-      width: 140px;
-      height: 140px;
+      width: 110px;
+      height: 110px;
       background: #111;
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      /* Counter-rotate cards so they stay upright while orbiting */
-      animation: counterRotate 40s linear infinite;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      animation: counterRotate 35s linear infinite;
     }
 
     .card img {
@@ -120,17 +118,16 @@
       object-fit: cover;
     }
 
-    /* Positioning cards in a wide circle radius (~380px from center) */
-    .card:nth-child(1)  { transform: rotate(0deg) translate(380px) rotate(0deg); }
-    .card:nth-child(2)  { transform: rotate(45deg) translate(380px) rotate(-45deg); }
-    .card:nth-child(3)  { transform: rotate(90deg) translate(380px) rotate(-90deg); }
-    .card:nth-child(4)  { transform: rotate(135deg) translate(380px) rotate(-135deg); }
-    .card:nth-child(5)  { transform: rotate(180deg) translate(380px) rotate(-180deg); }
-    .card:nth-child(6)  { transform: rotate(225deg) translate(380px) rotate(-225deg); }
-    .card:nth-child(7)  { transform: rotate(270deg) translate(380px) rotate(-270deg); }
-    .card:nth-child(8)  { transform: rotate(315deg) translate(380px) rotate(-315deg); }
+    /* Perfectly balanced orbital positioning radius (~310px) */
+    .card:nth-child(1)  { transform: rotate(0deg) translate(310px) rotate(0deg); }
+    .card:nth-child(2)  { transform: rotate(45deg) translate(310px) rotate(-45deg); }
+    .card:nth-child(3)  { transform: rotate(90deg) translate(310px) rotate(-90deg); }
+    .card:nth-child(4)  { transform: rotate(135deg) translate(310px) rotate(-135deg); }
+    .card:nth-child(5)  { transform: rotate(180deg) translate(310px) rotate(-180deg); }
+    .card:nth-child(6)  { transform: rotate(225deg) translate(310px) rotate(-225deg); }
+    .card:nth-child(7)  { transform: rotate(270deg) translate(310px) rotate(-270deg); }
+    .card:nth-child(8)  { transform: rotate(315deg) translate(310px) rotate(-315deg); }
 
-    /* Keyframe Animations */
     @keyframes rotateOrbit {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -141,17 +138,16 @@
       to { transform: rotate(0deg); }
     }
 
-    /* Responsive adjustments for smaller screens */
     @media (max-width: 900px) {
-      .card { width: 100px; height: 100px; }
-      .card:nth-child(1)  { transform: rotate(0deg) translate(240px) rotate(0deg); }
-      .card:nth-child(2)  { transform: rotate(45deg) translate(240px) rotate(-45deg); }
-      .card:nth-child(3)  { transform: rotate(90deg) translate(240px) rotate(-90deg); }
-      .card:nth-child(4)  { transform: rotate(135deg) translate(240px) rotate(-135deg); }
-      .card:nth-child(5)  { transform: rotate(180deg) translate(240px) rotate(-180deg); }
-      .card:nth-child(6)  { transform: rotate(225deg) translate(240px) rotate(-225deg); }
-      .card:nth-child(7)  { transform: rotate(270deg) translate(240px) rotate(-270deg); }
-      .card:nth-child(8)  { transform: rotate(315deg) translate(240px) rotate(-315deg); }
+      .card { width: 85px; height: 85px; }
+      .card:nth-child(1)  { transform: rotate(0deg) translate(200px) rotate(0deg); }
+      .card:nth-child(2)  { transform: rotate(45deg) translate(200px) rotate(-45deg); }
+      .card:nth-child(3)  { transform: rotate(90deg) translate(200px) rotate(-90deg); }
+      .card:nth-child(4)  { transform: rotate(135deg) translate(200px) rotate(-135deg); }
+      .card:nth-child(5)  { transform: rotate(180deg) translate(200px) rotate(-180deg); }
+      .card:nth-child(6)  { transform: rotate(225deg) translate(200px) rotate(-225deg); }
+      .card:nth-child(7)  { transform: rotate(270deg) translate(200px) rotate(-270deg); }
+      .card:nth-child(8)  { transform: rotate(315deg) translate(200px) rotate(-315deg); }
     }
   </style>
 </head>
@@ -159,7 +155,6 @@
 
   <div class="hero-container">
     
-    <!-- Orbiting Images Carousel -->
     <div class="orbit-stage">
       <div class="card"><img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=400&q=80" alt="Work 1"></div>
       <div class="card"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80" alt="Work 2"></div>
@@ -171,7 +166,6 @@
       <div class="card"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80" alt="Work 8"></div>
     </div>
 
-    <!-- Centered Text and Action -->
     <div class="central-content">
       <h1 class="main-title">Design. Develop. Grow.</h1>
       <p class="subtitle">Foci Studio - Design that means business.</p>
