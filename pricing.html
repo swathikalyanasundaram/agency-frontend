@@ -1,271 +1,240 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pricing Plans & Packages | yezhuththu.site</title>
-  <meta name="description" content="Explore custom website building packages and transparent pricing plans designed for high performance." />
-  <!-- Google Fonts & Lucide Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    :root {
-      --bg-dark: #07090e;
-      --bg-card: rgba(18, 24, 38, 0.7);
-      --bg-nav: rgba(7, 9, 14, 0.85);
-      --accent-primary: #3b82f6;
-      --accent-glow: #60a5fa;
-      --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(59, 130, 246, 0.5);
-      --glow-color: rgba(59, 130, 246, 0.15);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      line-height: 1.6;
-      overflow-x: hidden;
-      cursor: none;
-    }
-    input, textarea, select { cursor: auto; }
-    @media (hover: none) { body, a, button, .btn { cursor: auto !important; } }
-    a, button, .btn { cursor: none; }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-glow); outline-offset: 3px; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pricing — yezhuththu.site</title>
+<meta name="description" content="Three fixed-price web engineering packages: static, dynamic enterprise, and full e-commerce." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://assets.mixkit.co">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/cinematic.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root{
+    --porcelain:#F5F3ED;
+    --paper:#FCFBF8;
+    --ink:#15161C;
+    --ink-70:#43454C;
+    --ink-50:#797B81;
+    --line: rgba(21,22,28,0.13);
+    --line-soft: rgba(21,22,28,0.07);
+    --brass:#9C7A3E;
+    --brass-deep:#6E5326;
+    --brass-glow: rgba(156,122,62,0.16);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Manrope',sans-serif;background:var(--porcelain);color:var(--ink);line-height:1.6;overflow-x:hidden;cursor:none;}
+  input,textarea,select{cursor:auto;}
+  @media (hover:none){ body,a,button,.btn{cursor:auto !important;} }
+  a,button,.btn{cursor:none;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:3px;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;color:var(--ink);}
+  p{color:var(--ink-70);}
 
-    .navbar {
-      position: fixed; top: 0; width: 100%; padding: 18px 8%; display: flex; justify-content: space-between; align-items: center;
-      background: var(--bg-nav); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); z-index: 1000;
-    }
-    .brand-logo { font-size: 1.5rem; font-weight: 800; color: var(--text-main); text-decoration: none; }
-    .brand-logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .nav-links { display: flex; gap: 28px; list-style: none; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.3s; }
-    .nav-links a:hover { color: var(--accent-glow); }
-    
-    .pricing-hero {
-      position: relative; padding: 160px 8% 60px; text-align: center; overflow: hidden;
-    }
-    /* NEW: soft glow orbs behind the pricing hero, for visual continuity with the homepage */
-    .pricing-hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
-    .glow-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
-    .p-orb-1 { width: 420px; height: 420px; background: #3b82f6; top: -80px; left: 8%; animation: pFloat 11s ease-in-out infinite alternate; }
-    .p-orb-2 { width: 380px; height: 380px; background: #8b5cf6; top: 10%; right: 10%; animation: pFloat 9s ease-in-out infinite alternate-reverse; }
-    @keyframes pFloat { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(30px) scale(1.06); } }
+  .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:10000;will-change:transform;}
+  .cursor-dot{width:4px;height:4px;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%);}
+  .cursor-ring{width:26px;height:26px;border:1px solid var(--ink-50);border-radius:50%;transform:translate(-50%,-50%);
+    transition:width .22s cubic-bezier(.16,1,.3,1),height .22s cubic-bezier(.16,1,.3,1),border-color .22s ease,background .22s ease;}
+  .cursor-ring.is-hover{width:46px;height:46px;border-color:var(--brass);background:var(--brass-glow);}
+  body.over-video .cursor-ring{border-color:rgba(252,251,248,0.6);}
+  body.over-video .cursor-dot{background:var(--paper);}
 
-    .pricing-hero h1 { font-size: 3.2rem; font-weight: 800; margin-bottom: 16px; }
-    .pricing-hero h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .pricing-hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+  .navbar{position:fixed;top:0;width:100%;padding:22px 8%;display:flex;justify-content:space-between;align-items:center;
+    z-index:1000;transition:background .3s ease,border-color .3s ease,padding .3s ease;border-bottom:1px solid transparent;}
+  .navbar.is-scrolled{background:rgba(245,243,237,0.88);backdrop-filter:blur(14px);border-color:var(--line-soft);padding:15px 8%;}
+  .navbar.on-video:not(.is-scrolled) .brand,
+  .navbar.on-video:not(.is-scrolled) .nav-links a{color:var(--paper);}
+  .navbar.on-video:not(.is-scrolled) .nav-links a::after{background:var(--paper);}
+  .brand{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:500;color:var(--ink);text-decoration:none;letter-spacing:-0.01em;transition:color .3s ease;}
+  .brand em{font-style:normal;color:var(--brass);}
+  .nav-links{display:flex;gap:30px;list-style:none;}
+  .nav-links a{color:var(--ink-70);text-decoration:none;font-weight:500;font-size:0.95rem;position:relative;padding-bottom:2px;transition:color .3s ease;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--ink);transition:width .3s cubic-bezier(.16,1,.3,1);}
+  .nav-links a:hover::after{width:100%;}
 
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 40px 8% 100px; max-width: 1300px; margin: 0 auto;
-    }
-    .pricing-card {
-      background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 24px; padding: 40px;
-      position: relative; transition: border-color 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .pricing-card.popular {
-      border-color: var(--accent-primary);
-      box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
-    }
-    .pricing-card:hover { border-color: var(--border-hover); }
-    .popular-badge {
-      position: absolute; top: -14px; right: 30px; background: var(--accent-gradient); color: white; padding: 4px 14px;
-      font-size: 0.75rem; font-weight: 700; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    .price { font-size: 2.8rem; font-weight: 800; margin: 24px 0; color: var(--text-main); }
-    .price span { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
-    .features-list { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 14px; }
-    .features-list li { display: flex; align-items: center; gap: 10px; font-size: 0.950rem; color: var(--text-muted); }
-    .features-list li i { color: #10b981; width: 18px; height: 18px; }
-    
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.3s ease; width: 100%; cursor: pointer; }
-    .btn-primary { background: var(--accent-gradient); color: #ffffff; border: none; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5); }
-    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
-    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(59, 130, 246, 0.1); }
-    
-    footer { border-top: 1px solid var(--border-color); padding: 40px 8%; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-    footer a { color: var(--accent-glow); text-decoration: none; }
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 26px;border-radius:2px;
+    font-weight:600;font-size:0.92rem;text-decoration:none;border:1px solid transparent;transition:all .35s cubic-bezier(.16,1,.3,1);width:100%;}
+  .btn-primary{background:var(--ink);color:var(--paper);}
+  .btn-primary:hover{background:var(--brass-deep);transform:translateY(-2px);}
+  .btn-outline{border-color:var(--ink);color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--paper);}
 
-    /* NEW: custom cursor */
-    .cursor-dot, .cursor-ring {
-      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
-      border-radius: 50%; transform: translate(-50%, -50%); will-change: transform;
-    }
-    .cursor-dot { width: 6px; height: 6px; background: var(--text-main); }
-    .cursor-ring {
-      width: 34px; height: 34px; border: 1px solid rgba(248, 250, 252, 0.5);
-      transition: width .25s cubic-bezier(0.16,1,0.3,1), height .25s cubic-bezier(0.16,1,0.3,1),
-                  border-color .25s ease, background .25s ease;
-    }
-    .cursor-ring.is-hover { width: 60px; height: 60px; background: rgba(59, 130, 246, 0.15); border-color: transparent; }
+  .pricing-hero{position:relative;padding:210px 8% 110px;overflow:hidden;min-height:64vh;display:flex;flex-direction:column;justify-content:center;}
+  .pricing-hero h1{font-size:2.9rem;max-width:640px;margin-bottom:16px;}
+  .pricing-hero p{font-size:1.1rem;max-width:520px;}
 
-    /* NEW: scroll reveal */
-    .reveal-up {
-      opacity: 0; transform: translateY(26px); filter: blur(6px);
-      transition: opacity .8s cubic-bezier(0.16,1,0.3,1), transform .8s cubic-bezier(0.16,1,0.3,1), filter .8s cubic-bezier(0.16,1,0.3,1);
-      transition-delay: calc(var(--d, 0) * 0.08s);
-    }
-    .reveal-up.in-view { opacity: 1; transform: translateY(0); filter: blur(0); }
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:1300px;margin:60px auto 120px;padding:0 8%;
+    border-top:1px solid var(--line);border-left:1px solid var(--line);}
+  .plan{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 38px;
+    display:flex;flex-direction:column;justify-content:space-between;position:relative;background:var(--paper);
+    transition:background .3s ease;}
+  .plan:hover{background:#F9F7F2;}
+  .plan.popular::before{content:'Most requested';position:absolute;top:0;left:0;background:var(--ink);color:var(--paper);
+    font-size:0.72rem;font-weight:600;padding:5px 14px;letter-spacing:0.02em;}
+  .plan h3{font-size:1.4rem;margin-bottom:8px;margin-top:18px;}
+  .plan .tagline{font-size:0.92rem;color:var(--ink-50);margin-bottom:24px;min-height:44px;}
+  .plan .price{font-family:'Fraunces',serif;font-size:2.6rem;font-weight:500;margin-bottom:26px;}
+  .plan .price span{font-size:0.95rem;color:var(--ink-50);font-family:'Manrope',sans-serif;font-weight:500;}
+  .plan .features{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:34px;}
+  .plan .features li{display:flex;align-items:flex-start;gap:10px;font-size:0.92rem;color:var(--ink-70);}
+  .plan .features li svg{color:var(--brass);width:16px;height:16px;flex-shrink:0;margin-top:2px;}
 
-    @media (prefers-reduced-motion: reduce) {
-      .reveal-up { opacity: 1; transform: none; filter: none; transition: none; }
-      .glow-orb { animation: none; }
-      .cursor-dot, .cursor-ring { display: none; }
-      body, a, button, .btn { cursor: auto; }
-    }
-  </style>
+  @media(max-width:900px){ .pricing-grid{grid-template-columns:1fr;} }
+
+  footer{border-top:1px solid var(--line);padding:50px 8%;text-align:center;color:var(--ink-50);font-size:0.9rem;}
+  footer a{color:var(--ink-70);text-decoration:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    .cursor-dot,.cursor-ring{display:none;}
+    body,a,button,.btn{cursor:auto;}
+  }
+</style>
 </head>
 <body>
-  <!-- NEW: custom cursor elements -->
-  <div class="cursor-dot" data-cursor-dot></div>
-  <div class="cursor-ring" data-cursor-ring></div>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <a href="index.html" class="brand-logo" data-cursor="hover">yezhuththu<span>.site</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html#services" data-cursor="hover">Services</a></li>
-      <li><a href="pricing.html" data-cursor="hover">Pricing Plans</a></li>
-      <li><a href="index.html#quote" data-cursor="hover">Contact Us</a></li>
-    </ul>
-    <a href="index.html#quote" class="btn btn-primary magnetic" style="width: auto; padding: 10px 22px;" data-cursor="hover">Get Started</a>
-  </nav>
+<div class="preloader" data-preloader>
+  <div class="preloader-mark">yezhuth<em>thu</em>.site</div>
+  <div class="preloader-track"><div class="preloader-fill" data-preloader-fill></div></div>
+</div>
+<div class="cine-bar cine-bar-top"></div>
+<div class="cine-bar cine-bar-bottom"></div>
+<div class="page-curtain" data-page-curtain></div>
 
-  <!-- Hero -->
-  <header class="pricing-hero">
-    <div class="pricing-hero-bg">
-      <div class="glow-orb p-orb-1"></div>
-      <div class="glow-orb p-orb-2"></div>
+<div class="cursor-dot" data-cursor-dot></div>
+<div class="cursor-ring" data-cursor-ring></div>
+
+<nav class="navbar" data-nav>
+  <a href="index.html" class="brand" data-cursor="hover">yezhuth<em>thu</em>.site</a>
+  <ul class="nav-links">
+    <li><a href="index.html#services" data-cursor="hover">Services</a></li>
+    <li><a href="pricing.html" data-cursor="hover">Pricing</a></li>
+    <li><a href="index.html#quote" data-cursor="hover">Contact</a></li>
+  </ul>
+  <a href="index.html#quote" class="btn btn-primary magnetic" style="width:auto;" data-cursor="hover">Start a project</a>
+</nav>
+
+<header class="pricing-hero hero--cinematic" id="pricingHero">
+  <div class="cine-video-wrap">
+    <video autoplay muted loop playsinline preload="auto"
+      src="https://assets.mixkit.co/videos/3130/3130-720.mp4"></video>
+  </div>
+  <div class="cine-video-scrim"></div>
+  <div class="cine-grain"></div>
+  <h1 data-split data-split-delay="0.5">Three packages. One price each. No surprises later.</h1>
+  <p>Pick the scope that matches where your business is today — every plan is built by the same studio, to the same standard.</p>
+</header>
+
+<main class="pricing-grid">
+  <div class="plan reveal">
+    <div>
+      <h3>Static Website</h3>
+      <p class="tagline">Portfolios, local businesses, and landing pages.</p>
+      <div class="price">₹12,000 <span>/ project</span></div>
+      <ul class="features">
+        <li><i data-lucide="check"></i> Fast, responsive design</li>
+        <li><i data-lucide="check"></i> Core SEO setup</li>
+        <li><i data-lucide="check"></i> 3–5 custom pages</li>
+        <li><i data-lucide="check"></i> Contact form</li>
+        <li><i data-lucide="check"></i> Deployed and live</li>
+      </ul>
     </div>
-    <h1 class="reveal-up" style="--d:0">Transparent Pricing for <span>High-Performance</span> Websites</h1>
-    <p class="reveal-up" style="--d:1">Choose the ideal engineering plan tailored to elevate your business footprint and conversion rate.</p>
-  </header>
+    <a href="index.html#quote" class="btn btn-outline" data-cursor="hover">Choose plan</a>
+  </div>
 
-  <!-- Pricing Cards Grid -->
-  <main class="pricing-grid">
-    <!-- Static Website -->
-    <div class="pricing-card magnetic-card reveal-up" style="--d:0" data-cursor="hover">
-      <div>
-        <h3>Static Website</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;">Ideal for portfolios, local businesses, and landing pages.</p>
-        <div class="price">₹12,000 <span>/ project</span></div>
-        <ul class="features-list">
-          <li><i data-lucide="check"></i> Ultra-Fast Responsive Design</li>
-          <li><i data-lucide="check"></i> Core SEO Optimization</li>
-          <li><i data-lucide="check"></i> 3-5 Custom Pages</li>
-          <li><i data-lucide="check"></i> Contact Form Integration</li>
-          <li><i data-lucide="check"></i> Lightning Deployment</li>
-        </ul>
-      </div>
-      <a href="index.html#quote" class="btn btn-outline" data-cursor="hover">Choose Plan</a>
+  <div class="plan popular reveal">
+    <div>
+      <h3>Dynamic Enterprise</h3>
+      <p class="tagline">For businesses that need a real backend, not just a form.</p>
+      <div class="price">₹25,000 <span>/ project</span></div>
+      <ul class="features">
+        <li><i data-lucide="check"></i> Everything in Static</li>
+        <li><i data-lucide="check"></i> Spring Boot backend API</li>
+        <li><i data-lucide="check"></i> Admin lead dashboard</li>
+        <li><i data-lucide="check"></i> Secure authentication</li>
+        <li><i data-lucide="check"></i> Dynamic database architecture</li>
+      </ul>
     </div>
+    <a href="index.html#quote" class="btn btn-primary" data-cursor="hover">Choose plan</a>
+  </div>
 
-    <!-- Dynamic Enterprise Website -->
-    <div class="pricing-card popular magnetic-card reveal-up" style="--d:1" data-cursor="hover">
-      <div class="popular-badge">Most Popular</div>
-      <div>
-        <h3>Dynamic Enterprise</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;">Built for scaling businesses needing robust database backends.</p>
-        <div class="price">₹25,000 <span>/ project</span></div>
-        <ul class="features-list">
-          <li><i data-lucide="check"></i> Everything in Static Plan</li>
-          <li><i data-lucide="check"></i> Spring Boot Backend API</li>
-          <li><i data-lucide="check"></i> Admin Lead Tracking Dashboard</li>
-          <li><i data-lucide="check"></i> Secure Authentication</li>
-          <li><i data-lucide="check"></i> Dynamic Database Architecture</li>
-        </ul>
-      </div>
-      <a href="index.html#quote" class="btn btn-primary" data-cursor="hover">Choose Plan</a>
+  <div class="plan reveal">
+    <div>
+      <h3>E-Commerce Solution</h3>
+      <p class="tagline">A full online store, ready to take orders.</p>
+      <div class="price">₹45,000 <span>/ project</span></div>
+      <ul class="features">
+        <li><i data-lucide="check"></i> Custom catalog & product pages</li>
+        <li><i data-lucide="check"></i> Secure payment gateway</li>
+        <li><i data-lucide="check"></i> Inventory & order management</li>
+        <li><i data-lucide="check"></i> Analytics integration</li>
+        <li><i data-lucide="check"></i> Priority support</li>
+      </ul>
     </div>
+    <a href="index.html#quote" class="btn btn-outline" data-cursor="hover">Choose plan</a>
+  </div>
+</main>
 
-    <!-- E-Commerce Solution -->
-    <div class="pricing-card magnetic-card reveal-up" style="--d:2" data-cursor="hover">
-      <div>
-        <h3>E-Commerce Solution</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;">Fully featured online store ready to drive automated sales.</p>
-        <div class="price">₹45,000 <span>/ project</span></div>
-        <ul class="features-list">
-          <li><i data-lucide="check"></i> Custom Catalog & Product Pages</li>
-          <li><i data-lucide="check"></i> Secure Payment Gateway Setup</li>
-          <li><i data-lucide="check"></i> Inventory & Order Management</li>
-          <li><i data-lucide="check"></i> Advanced Analytics Integration</li>
-          <li><i data-lucide="check"></i> Priority 24/7 Support</li>
-        </ul>
-      </div>
-      <a href="index.html#quote" class="btn btn-outline" data-cursor="hover">Choose Plan</a>
-    </div>
-  </main>
+<footer>
+  <p>&copy; 2026 <a href="index.html" data-cursor="hover">yezhuththu.site</a>. All rights reserved. Engineered in Chennai.</p>
+</footer>
 
-  <footer>
-    <p>&copy; 2026 <a href="index.html" data-cursor="hover">yezhuththu.site</a>. All Rights Reserved. Professional Web Solutions.</p>
-  </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/cinematic.js"></script>
+<script>
+  lucide.createIcons();
+  (function(){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouch = window.matchMedia('(hover: none)').matches;
 
-  <script>
-    lucide.createIcons();
+    if (!isTouch && !reduceMotion) {
+      const dot = document.querySelector('[data-cursor-dot]');
+      const ring = document.querySelector('[data-cursor-ring]');
+      const mouse = { x: innerWidth/2, y: innerHeight/2 };
+      const r = { x: mouse.x, y: mouse.y };
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX; mouse.y = e.clientY;
+        dot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        document.body.classList.toggle('over-video', !!(el && el.closest('.hero--cinematic')));
+      });
+      document.querySelectorAll('[data-cursor="hover"]').forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+      });
+      (function tick(){
+        r.x += (mouse.x - r.x) * 0.18; r.y += (mouse.y - r.y) * 0.18;
+        ring.style.transform = `translate(${r.x}px, ${r.y}px) translate(-50%,-50%)`;
+        requestAnimationFrame(tick);
+      })();
+    }
 
-    (function () {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const isTouch = window.matchMedia('(hover: none)').matches;
-
-      /* Custom cursor */
-      if (!isTouch && !reduceMotion) {
-        const cursorDot = document.querySelector('[data-cursor-dot]');
-        const cursorRing = document.querySelector('[data-cursor-ring]');
-        const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
-        const ring = { x: mouse.x, y: mouse.y };
-        cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
-        cursorRing.style.transform = `translate(${ring.x}px, ${ring.y}px) translate(-50%,-50%)`;
-
-        window.addEventListener('mousemove', (e) => {
-          mouse.x = e.clientX; mouse.y = e.clientY;
-          cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
+    if (!isTouch && !reduceMotion) {
+      document.querySelectorAll('.magnetic').forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const relX = e.clientX - rect.left - rect.width/2;
+          const relY = e.clientY - rect.top - rect.height/2;
+          el.style.transform = `translate(${relX*0.2}px, ${relY*0.3}px)`;
         });
-        document.querySelectorAll('[data-cursor="hover"]').forEach((el) => {
-          el.addEventListener('mouseenter', () => cursorRing.classList.add('is-hover'));
-          el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-hover'));
-        });
-        (function tick() {
-          ring.x += (mouse.x - ring.x) * 0.15;
-          ring.y += (mouse.y - ring.y) * 0.15;
-          cursorRing.style.transform = `translate(${ring.x}px, ${ring.y}px) translate(-50%,-50%)`;
-          requestAnimationFrame(tick);
-        })();
-      }
+        el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+      });
+    }
 
-      /* Magnetic buttons & cards */
-      if (!isTouch && !reduceMotion) {
-        document.querySelectorAll('.magnetic, .magnetic-card').forEach((el) => {
-          const strength = el.classList.contains('magnetic-card') ? 0.06 : 0.3;
-          el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            const relX = e.clientX - rect.left - rect.width / 2;
-            const relY = e.clientY - rect.top - rect.height / 2;
-            el.style.transform = `translate(${relX * strength}px, ${relY * strength}px)`;
-          });
-          el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
-        });
-      }
-
-      /* Scroll reveal */
-      const revealEls = document.querySelectorAll('.reveal-up');
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-      revealEls.forEach((el) => revealObserver.observe(el));
-    })();
-  </script>
+    const nav = document.querySelector('[data-nav]');
+    const heroEl = document.getElementById('pricingHero');
+    nav.classList.add('on-video');
+    function syncNav(){
+      nav.classList.toggle('is-scrolled', scrollY > 30);
+      const heroRect = heroEl.getBoundingClientRect();
+      nav.classList.toggle('on-video', heroRect.bottom > 80);
+    }
+    window.addEventListener('scroll', syncNav, { passive:true });
+    syncNav();
+  })();
+</script>
 </body>
 </html>
