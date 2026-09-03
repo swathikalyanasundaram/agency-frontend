@@ -306,27 +306,20 @@
   var EASE = 0.12;            
   var IDLE_EASE = 0.06;       
 
-  function frameForPointer(clientX){
+ function frameForPointer(clientX){
     var stageRect = stage.getBoundingClientRect();
-    
-    // Exact center of Clover's body on the screen
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
 
-    // Distance of your cursor from the center of his body
-    var distanceX = clientX - bodyCenterX;
+    // FIXED: Invert the distance so left = left-facing frames, right = right-facing frames
+    var distanceX = bodyCenterX - clientX; 
     
-    // The maximum pixel range from his body to trigger a full head turn (tweak this if needed)
     var maxRange = window.innerWidth * 0.38;
-
-    // Normalize value from -1 (fully left) to +1 (fully right), with 0 exactly at his body center
     var normalized = Math.min(1, Math.max(-1, distanceX / maxRange));
 
-    // Map precisely across the 96 frames centered on frame 48
     var frame = CENTER_FRAME + (normalized * CENTER_FRAME);
 
     return Math.min(FRAME_COUNT - 1, Math.max(0, frame));
   }
-
   function onPointerMove(e){
     if (reduceMotion) return;
     var x = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
