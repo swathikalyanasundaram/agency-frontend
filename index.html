@@ -10,10 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- GSAP & ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
   <style>
     * {
       box-sizing: border-box;
@@ -21,11 +17,14 @@
       padding: 0;
     }
 
-    body {
+    html, body {
       background-color: #0b0c10;
       color: #ffffff;
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+      height: 100vh;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
     }
 
     /* Fixed Top Navigation Bar */
@@ -65,6 +64,7 @@
       font-weight: 500;
       font-size: 0.95rem;
       transition: color 0.2s ease;
+      cursor: pointer;
     }
 
     .nav-links a:hover {
@@ -85,43 +85,31 @@
       background: rgba(255, 255, 255, 0.2);
     }
 
-    /* Horizontal Scroll Container Structure */
-    .horizontal-scroll-container {
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
+    /* Fullscreen Sections with Snap Alignment */
+    section {
       position: relative;
-    }
-
-    .panels-track {
-      display: flex;
-      width: 300vw; /* 3 panels * 100vw */
       height: 100vh;
-      will-change: transform;
-    }
-
-    .panel {
       width: 100vw;
-      height: 100vh;
-      flex-shrink: 0;
       display: flex;
       align-items: center;
       padding: 0 8vw;
       background-size: cover;
       background-position: center;
-      position: relative;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
     }
 
-    /* Panel Backgrounds */
-    .hero-panel {
+    /* Section Backgrounds */
+    .hero-section {
       background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80');
     }
 
-    .tranquility-panel {
+    .tranquility-section {
       background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80');
     }
 
-    .biodiversity-panel {
+    .biodiversity-section {
       background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=80');
     }
 
@@ -214,9 +202,59 @@
       border-color: #fff;
     }
 
+    /* Continuous Moving Background Elements (Birds & Drifting Clouds) */
+    .moving-bird {
+      position: absolute;
+      top: 15%;
+      left: -10vw;
+      font-size: 1.5rem;
+      opacity: 0.8;
+      z-index: 1;
+      animation: flyAcross 14s linear infinite;
+    }
+
+    .bird-delay {
+      animation-delay: 5s;
+      top: 25%;
+    }
+
+    .drifting-cloud {
+      position: absolute;
+      top: 10%;
+      right: -20vw;
+      width: 300px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.08);
+      filter: blur(30px);
+      border-radius: 50%;
+      z-index: 1;
+      animation: driftCloud 25s linear infinite;
+    }
+
+    @keyframes flyAcross {
+      0% {
+        transform: translateX(0) translateY(0);
+      }
+      50% {
+        transform: translateX(60vw) translateY(-20px);
+      }
+      100% {
+        transform: translateX(120vw) translateY(0);
+      }
+    }
+
+    @keyframes driftCloud {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-140vw);
+      }
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .panel { padding: 0 6vw; }
+      section { padding: 0 6vw; }
     }
   </style>
 </head>
@@ -224,82 +262,53 @@
 
   <!-- Top Navigation Bar -->
   <header>
-    <a href="#" class="logo">Notosan</a>
+    <a href="#hero" class="logo">Notosan</a>
     <ul class="nav-links">
-      <li><a href="#hero" onclick="scrollToPanel(0)">Community</a></li>
-      <li><a href="#tranquility" onclick="scrollToPanel(1)">About</a></li>
-      <li><a href="#biodiversity" onclick="scrollToPanel(2)">Support</a></li>
-      <li><a href="#" class="register-btn">Register</a></li>
+      <li><a href="#hero">Community</a></li>
+      <li><a href="#tranquility">About</a></li>
+      <li><a href="#biodiversity">Support</a></li>
+      <li><a href="#hero">Contact</a></li>
+      <li><a href="#hero" class="register-btn">Register</a></li>
     </ul>
   </header>
 
-  <!-- Horizontal Scroll Wrapper -->
-  <div class="horizontal-scroll-container">
-    <div class="panels-track" id="panelsTrack">
-      
-      <!-- Panel 1: Hero (VISITE) -->
-      <section class="panel hero-panel" id="hero">
-        <div class="hero-content">
-          <div class="subtitle-tag">
-            <span>⚡</span> Journey to new frontiers, Journey to Noto Nature Park
-          </div>
-          <h1 class="hero-title">Visite</h1>
-          <a class="cta-btn" onclick="scrollToPanel(1)">Start the journey <span>→</span></a>
-        </div>
-      </section>
-
-      <!-- Panel 2: Tranquility -->
-      <section class="panel tranquility-panel" id="tranquility">
-        <div class="content-box">
-          <div class="section-category">02 Experience</div>
-          <h2 class="section-heading">Tranquility</h2>
-          <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
-          <a class="text-link" onclick="scrollToPanel(2)">Learn more <span>→</span></a>
-        </div>
-      </section>
-
-      <!-- Panel 3: Biodiversity -->
-      <section class="panel biodiversity-panel" id="biodiversity">
-        <div class="content-box">
-          <div class="section-category">03 Habitat</div>
-          <h2 class="section-heading">Biodiversity</h2>
-          <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
-          <a class="text-link" onclick="scrollToPanel(0)">Back to start <span>→</span></a>
-        </div>
-      </section>
-
+  <!-- Hero Section (VISITE) -->
+  <section id="hero" class="hero-section">
+    <div class="moving-bird">🕊️ 🕊️</div>
+    <div class="moving-bird bird-delay">🕊️</div>
+    <div class="drifting-cloud"></div>
+    <div class="hero-content">
+      <div class="subtitle-tag">
+        <span>⚡</span> Journey to new frontiers, Journey to Noto Nature Park
+      </div>
+      <h1 class="hero-title">Visite</h1>
+      <a href="#tranquility" class="cta-btn">Start the journey <span>→</span></a>
     </div>
-  </div>
+  </section>
 
-  <!-- GSAP Horizontal Scroll Logic -->
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+  <!-- Tranquility Section -->
+  <section id="tranquility" class="tranquility-section">
+    <div class="moving-bird" style="animation-duration: 18s; top: 20%;">🕊️</div>
+    <div class="drifting-cloud" style="animation-duration: 30s; top: 30%;"></div>
+    <div class="content-box">
+      <div class="section-category">02 Experience</div>
+      <h2 class="section-heading">Tranquility</h2>
+      <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
+      <a href="#biodiversity" class="text-link">Learn more <span>→</span></a>
+    </div>
+  </section>
 
-    const track = document.getElementById("panelsTrack");
-
-    // Pin the container and translate panels horizontally on vertical scroll
-    let tween = gsap.to(track, {
-      xPercent: -66.666, // Move track across the 3 panels (200vw total movement for 300vw track)
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".horizontal-scroll-container",
-        pin: true,
-        scrub: 1,
-        end: "+=3000", // Controls scroll distance length
-        anticipatePin: 1
-      }
-    });
-
-    // Helper function for nav clicks
-    function scrollToPanel(index) {
-      const totalScroll = ScrollTrigger.maxScroll(window);
-      const targetScroll = (index / 2) * totalScroll;
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth'
-      });
-    }
-  </script>
+  <!-- Biodiversity Section -->
+  <section id="biodiversity" class="biodiversity-section">
+    <div class="moving-bird" style="animation-duration: 12s; top: 12%;">🕊️ 🕊️</div>
+    <div class="drifting-cloud" style="animation-duration: 20s; top: 18%;"></div>
+    <div class="content-box">
+      <div class="section-category">03 Habitat</div>
+      <h2 class="section-heading">Biodiversity</h2>
+      <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
+      <a href="#hero" class="text-link">Learn more <span>→</span></a>
+    </div>
+  </section>
 
 </body>
 </html>
