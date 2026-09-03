@@ -309,29 +309,23 @@
   function frameForPointer(clientX, clientY){
     var stageRect = stage.getBoundingClientRect();
     
-    // Find the exact horizontal and vertical center of Clover's body on the screen
+    // Clover's exact horizontal center point on the page
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
-    var bodyCenterY = stageRect.top + (stageRect.height * 0.45); // chest/head anchor
 
-    // 1. Horizontal Tracking (Left to Right relative to his body)
-    // Distance from his body center, scaled against half the window width
+    // Calculate distance from his body center
     var distanceX = clientX - bodyCenterX;
-    var maxDistX = window.innerWidth * 0.45; // range width for full turn
+    
+    // Define the distance threshold where he reaches his full left/right head turn (e.g., 400px range)
+    var maxDistX = 400; 
+
+    // Normalize from -1 (left) to +1 (right), with 0 exactly at his body center
     var normalizedX = Math.min(1, Math.max(-1, distanceX / maxDistX));
 
-    // Map -1..1 range to the 0..95 frames, with CENTER_FRAME (48) as straight ahead
-    var baseFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
+    // Map -1..1 directly across your 96 frames, centered perfectly at CENTER_FRAME (48)
+    var frame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
 
-    // 2. Vertical Head Tilt Bias (Up/Down)
-    var distanceY = clientY - bodyCenterY;
-    var normalizedY = Math.min(1, Math.max(-1, distanceY / (window.innerHeight * 0.4)));
-    
-    // Slight frame nudge for vertical movement (adjust multiplier if needed)
-    var finalFrame = baseFrame + (normalizedY * 3);
-
-    return Math.min(FRAME_COUNT - 1, Math.max(0, finalFrame));
+    return Math.min(FRAME_COUNT - 1, Math.max(0, frame));
   }
-
   function onPointerMove(e){
     if (reduceMotion) return;
     var x = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
