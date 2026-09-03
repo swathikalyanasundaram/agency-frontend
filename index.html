@@ -40,47 +40,48 @@
       overflow: hidden; /* Locked initially for video intro */
     }
 
-    /* Fullscreen Immersive Video Intro Overlay */
+    /* Immersive Video Intro Overlay */
     #introOverlay {
       position: fixed;
       inset: 0;
-      background: #000;
+      background: #2d2a29;
       z-index: 9999;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
+    .intro-box {
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+    }
+
     #introVideo {
-      position: absolute;
       width: 100%;
-      height: 100%;
-      object-fit: cover; /* Ensures video fills the screen smoothly without ugly boxes */
-      opacity: 0.85;
+      border-radius: 20px;
+      border: 4px solid #fcfbfa;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
     .skip-btn {
-      position: absolute;
-      bottom: 40px;
-      right: 40px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #fff;
-      padding: 12px 28px;
+      margin-top: 25px;
+      background: transparent;
+      border: 2px solid #fcfbfa;
+      color: #fcfbfa;
+      padding: 10px 24px;
       border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
       font-family: inherit;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 10000;
+      transition: background 0.2s, color 0.2s;
     }
 
     .skip-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
+      background: #fcfbfa;
+      color: #2d2a29;
     }
 
     /* Organic Background Blobs */
@@ -232,7 +233,7 @@
       transform: translateY(-2px);
     }
 
-    /* Pinterest-Style Cozy Vector Box */
+    /* Cozy Pinterest Illustration Box */
     .hero-graphic-box {
       position: relative;
       width: 100%;
@@ -445,13 +446,15 @@
 </head>
 <body>
 
-  <!-- Fullscreen Immersive Video Intro Overlay -->
+  <!-- Fullscreen Intro Video Overlay (Plays First) -->
   <div id="introOverlay">
-    <video id="introVideo" autoplay muted playsinline>
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-lights-31998-large.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <button class="skip-btn" onclick="skipIntro()">Skip Intro ➔</button>
+    <div class="intro-box">
+      <video id="introVideo" autoplay muted playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-lights-31998-large.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button class="skip-btn" onclick="skipIntro()">Skip Intro →</button>
+    </div>
   </div>
 
   <!-- Background Blobs -->
@@ -625,6 +628,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Handle Video Intro Ending
       const video = document.getElementById('introVideo');
       video.onended = () => {
         skipIntro();
