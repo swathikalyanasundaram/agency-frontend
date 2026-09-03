@@ -154,6 +154,7 @@
       <ul class="nav-links">
         <li><a href="#services">Services</a></li>
         <li><a href="pricing.html">Pricing Plans</a></li>
+        <li><a href="admin.html" style="color: var(--accent-glow); font-weight: 600;">Admin Dashboard</a></li>
       </ul>
       <a href="#quote" class="btn btn-primary">Start Project</a>
     </div>
@@ -306,11 +307,13 @@
         });
 
         if (response.ok || response.status === 200 || response.status === 201) {
+          // Success view, providing a quick redirect link to admin.html so you can view it immediately
           contactForm.innerHTML = `
             <div style="text-align: center; padding: 40px;">
               <div style="font-size: 3.5rem; color: #10b981; margin-bottom: 16px;">✓</div>
               <h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 8px;">Inquiry Successfully Transmitted!</h3>
-              <p style="color: var(--text-muted); font-size: 1.05rem;">Your data has been saved to the backend database.</p>
+              <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 24px;">Your data has been securely saved to the backend database.</p>
+              <a href="admin.html" class="btn btn-primary" style="text-decoration: none;">View in Admin Dashboard</a>
             </div>
           `;
         } else {
