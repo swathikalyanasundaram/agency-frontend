@@ -297,7 +297,7 @@
   function frameForPointer(clientX, clientY){
     var stageRect = stage.getBoundingClientRect();
     
-    // Sheep's stomach / center body anchor point
+    // Sheep's center body anchor point
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
     var bodyCenterY = stageRect.top + (stageRect.height * 0.55);
 
@@ -305,14 +305,14 @@
     var distanceX = clientX - bodyCenterX;
     var maxRangeX = window.innerWidth * 0.4;
     var normalizedX = Math.min(1, Math.max(-1, distanceX / maxRangeX));
-    var horizontalFrames = normalizedX * CENTER_FRAME;
+    var horizontalFrames = normalizedX * (CENTER_FRAME * 0.8);
 
-    // --- VERTICAL TRACKING (Up / Down illusion mapping) ---
-    // Moving cursor UP (negative Y relative to stomach) shifts frames to create an upward look
+    // --- VERTICAL TRACKING (Up / Down) ---
+    // Fixed: Removing the negative sign so moving mouse UP increases frame index appropriately
     var distanceY = clientY - bodyCenterY;
     var maxRangeY = window.innerHeight * 0.35;
     var normalizedY = Math.min(1, Math.max(-1, distanceY / maxRangeY));
-    var verticalFrames = -normalizedY * 10; // Negative so moving up shifts frame index accordingly
+    var verticalFrames = normalizedY * 14; 
 
     var finalFrame = CENTER_FRAME + horizontalFrames + verticalFrames;
 
