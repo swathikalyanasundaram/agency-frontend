@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>yezhuththu.site — Motion Design & Animation Studio</title>
+  <title>yezhuththu.site — Cozy Motion & Illustration Studio</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- GSAP Library -->
+  <!-- GSAP & ScrollTrigger Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
     :root {
-      --bg-light: #f8fafc;
-      --bg-white: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --primary-blue: #0284c7;
-      --accent-teal: #0d9488;
-      --border-color: #e2e8f0;
+      --bg-cream: #fcfbfa;
+      --text-dark: #2d2a29;
+      --text-muted: #6b6563;
+      --accent-pink: #f7d6d0;
+      --accent-green: #e1edd8;
+      --coral: #f06449;
+      --border-soft: #eae3de;
     }
 
     * {
@@ -32,39 +33,76 @@
     }
 
     body {
-      background-color: var(--bg-light);
-      color: var(--text-main);
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+    }
+
+    /* Cozy Organic Background Blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .blob-1 {
+      width: 450px; height: 450px;
+      background: var(--accent-pink);
+      top: -50px; left: -100px;
+      opacity: 0.7;
+    }
+    .blob-2 {
+      width: 500px; height: 500px;
+      background: var(--accent-green);
+      top: 30%; right: -100px;
+      opacity: 0.6;
     }
 
     /* Header Navigation */
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 0; left: 0; width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.2rem 5vw;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
+      padding: 1.5rem 6vw;
+      background: rgba(252, 251, 250, 0.85);
+      backdrop-filter: blur(10px);
       z-index: 100;
     }
 
-    .logo {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--text-main);
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .mini-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--accent-pink);
+      border: 2px solid var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .logo-text {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
@@ -73,159 +111,153 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
-      transition: color 0.2s ease;
+      transition: color 0.2s;
     }
 
     .nav-links a:hover {
-      color: var(--primary-blue);
+      color: var(--coral);
     }
 
     .nav-btn {
-      background: var(--text-main);
-      color: var(--bg-white);
+      background: var(--coral);
+      color: white;
       padding: 0.6rem 1.4rem;
       border-radius: 50px;
       font-weight: 700;
       text-decoration: none;
       font-size: 0.9rem;
-      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 14px rgba(240, 100, 73, 0.3);
+      transition: transform 0.2s;
     }
 
     .nav-btn:hover {
-      transform: scale(1.03);
-      background: var(--primary-blue);
+      transform: scale(1.04);
     }
 
-    /* Hero Motion Stage Section */
-    .motion-stage-section {
+    /* Hero Section */
+    .hero-section {
       position: relative;
-      height: 90vh;
+      min-height: 95vh;
+      display: flex;
+      align-items: center;
+      padding: 8vh 6vw;
+      z-index: 1;
+    }
+
+    .hero-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 44ch;
+    }
+
+    .schedule-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--coral);
+      color: white;
+      padding: 0.9rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(240, 100, 73, 0.35);
+      transition: transform 0.2s;
+    }
+
+    .schedule-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Cozy Illustration Graphic Box */
+    .hero-graphic-box {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      background: white;
+      border: 2px solid var(--text-dark);
+      border-radius: 28px;
+      box-shadow: 12px 12px 0px var(--text-dark);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      background: var(--bg-white);
-      border-bottom: 1px solid var(--border-color);
     }
 
-    .portal-ring {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border: 30px solid var(--accent-teal);
-      border-radius: 50%;
-      box-shadow: 0 20px 40px rgba(13, 148, 136, 0.15);
-      z-index: 5;
-    }
-
-    .workflow-track {
-      position: absolute;
-      display: flex;
-      gap: 35px;
-      width: max-content;
-      z-index: 2;
-    }
-
-    .browser-card {
-      width: 280px;
-      height: 180px;
-      background: var(--bg-white);
-      border-radius: 12px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--border-color);
-    }
-
-    .browser-header {
-      background: #f1f5f9;
-      padding: 8px 12px;
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .dot { width: 8px; height: 8px; border-radius: 50%; }
-    .dot-red { background: #ef4444; }
-    .dot-yellow { background: #f59e0b; }
-    .dot-green { background: #10b981; }
-
-    .browser-body {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .mock-image {
-      width: 100%;
-      height: 60px;
-      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-      border-radius: 6px;
-    }
-
-    .mock-line {
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 4px;
-      width: 75%;
-    }
-    .mock-line.short { width: 40%; }
-
-    .console-gadget {
-      position: absolute;
-      bottom: 15%;
-      right: 35%;
-      background: var(--text-main);
-      border: 2px solid var(--accent-teal);
-      border-radius: 14px;
-      padding: 10px 16px;
-      z-index: 6;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .console-badge {
-      background: var(--accent-teal);
-      color: white;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.75rem;
-      padding: 2px 8px;
+    .mockup-scene {
+      position: relative;
+      width: 80%;
+      height: 70%;
+      background: var(--accent-green);
       border-radius: 20px;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 4px;
+      border: 2px solid var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .console-text {
+    .floating-bee {
+      position: absolute;
+      width: 45px; height: 30px;
+      background: #facc15;
+      border: 2px solid var(--text-dark);
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 0.7rem;
-      color: #94a3b8;
-      font-weight: 600;
+      font-weight: bold;
+    }
+    .bee-1 { top: 20px; left: 30px; animation: floatBee 3s ease-in-out infinite alternate; }
+    .bee-2 { bottom: 30px; right: 40px; animation: floatBee 2.5s ease-in-out infinite alternate-reverse; }
+
+    @keyframes floatBee {
+      0% { transform: translateY(0) rotate(-5deg); }
+      100% { transform: translateY(-10px) rotate(5deg); }
     }
 
-    /* General Section Layout */
+    /* Standard Sections */
     section {
-      padding: 6rem 5vw;
+      padding: 7rem 6vw;
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
 
     .section-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
       text-align: center;
       margin-bottom: 1rem;
-      letter-spacing: -0.02em;
     }
 
     .section-subtitle {
       text-align: center;
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       margin-bottom: 4rem;
-      max-width: 50ch;
+      max-width: 45ch;
       margin-left: auto;
       margin-right: auto;
     }
@@ -234,97 +266,89 @@
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
+      gap: 2.5rem;
     }
 
     .pricing-card {
-      background: var(--bg-white);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 2.5rem;
+      background: white;
+      border: 2px solid var(--text-dark);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      box-shadow: 8px 8px 0px var(--text-dark);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s ease;
     }
 
     .pricing-card:hover {
       transform: translateY(-5px);
-      border-color: var(--primary-blue);
     }
 
     .pricing-card.featured {
-      border: 2px solid var(--primary-blue);
-      position: relative;
+      background: var(--accent-pink);
     }
 
     .plan-name {
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
 
     .plan-price {
-      font-size: 2.5rem;
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 700;
-      color: var(--primary-blue);
+      font-family: 'Fraunces', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--coral);
       margin-bottom: 1.5rem;
     }
 
     .plan-features {
       list-style: none;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.8rem;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-weight: 500;
     }
 
     .plan-features li::before {
-      content: "✓ ";
-      color: var(--accent-teal);
+      content: "✦ ";
+      color: var(--coral);
       font-weight: bold;
     }
 
-    .plan-btn {
+    .card-btn {
       display: block;
       text-align: center;
-      background: var(--bg-light);
-      color: var(--text-main);
-      padding: 0.8rem;
-      border-radius: 10px;
+      background: var(--text-dark);
+      color: white;
+      padding: 0.9rem;
+      border-radius: 50px;
       font-weight: 700;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s;
     }
 
-    .pricing-card.featured .plan-btn {
-      background: var(--primary-blue);
-      color: white;
+    .card-btn:hover {
+      background: var(--coral);
     }
 
-    .plan-btn:hover {
-      background: var(--primary-blue);
-      color: white;
-    }
-
-    /* Contact / Inquiry Form Section */
-    .contact-container {
-      background: var(--bg-white);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 4rem 3rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    /* Contact Inquiry Form */
+    .contact-box {
+      background: white;
+      border: 2px solid var(--text-dark);
+      border-radius: 28px;
+      padding: 4rem;
+      box-shadow: 12px 12px 0px var(--text-dark);
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
-      margin-bottom: 1.5rem;
     }
 
     .form-group {
@@ -338,63 +362,62 @@
     }
 
     label {
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.9rem;
-      color: var(--text-main);
     }
 
     input, textarea {
       width: 100%;
-      padding: 0.9rem 1rem;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      background: var(--bg-light);
+      padding: 1rem;
+      border: 2px solid var(--text-dark);
+      border-radius: 12px;
+      background: var(--bg-cream);
       font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--text-main);
+      font-size: 1rem;
       outline: none;
       transition: border-color 0.2s;
     }
 
     input:focus, textarea:focus {
-      border-color: var(--primary-blue);
+      border-color: var(--coral);
       background: white;
     }
 
     textarea {
+      min-height: 140px;
       resize: vertical;
-      min-height: 120px;
     }
 
     .submit-btn {
-      background: var(--primary-blue);
+      background: var(--coral);
       color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 10px;
+      border: 2px solid var(--text-dark);
+      padding: 1.1rem 2rem;
+      border-radius: 50px;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.05rem;
       cursor: pointer;
-      transition: background 0.2s;
+      box-shadow: 4px 4px 0px var(--text-dark);
+      transition: transform 0.1s, box-shadow 0.1s;
       width: 100%;
     }
 
     .submit-btn:hover {
-      background: #02699d;
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--text-dark);
     }
 
-    /* Footer */
     footer {
-      background: var(--bg-white);
-      border-top: 1px solid var(--border-color);
       text-align: center;
-      padding: 2rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+      padding: 3rem;
       font-weight: 600;
+      color: var(--text-muted);
+      border-top: 2px solid var(--border-soft);
     }
 
     @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-content p { margin-left: auto; margin-right: auto; }
       .form-grid { grid-template-columns: 1fr; }
       .form-group.full { grid-column: span 1; }
       .nav-links { display: none; }
@@ -403,68 +426,63 @@
 </head>
 <body>
 
-  <!-- Navigation -->
+  <!-- Background Soft Blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+
+  <!-- Header Navigation -->
   <header>
-    <a href="#" class="logo">yezhuththu.site</a>
+    <a href="#" class="logo-container">
+      <div class="mini-avatar">Y</div>
+      <span class="logo-text">yezhuththu</span>
+    </a>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-btn">Start Project</a>
+    <a href="#contact" class="nav-btn">Schedule a Call</a>
   </header>
 
-  <!-- Hero Motion Stage Section -->
-  <div class="motion-stage-section" id="home">
-    <div class="portal-ring"></div>
+  <!-- Hero Section with Cozy Motion Design -->
+  <section class="hero-section" id="home">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <h1>Hello &amp; welcome!</h1>
+        <p>Hey, I'm a motion designer and illustrator crafting custom web animations and cozy vector interfaces that help your brand stand out.</p>
+        <div>
+          <a href="#contact" class="schedule-btn">Schedule a Call →</a>
+        </div>
+      </div>
 
-    <div class="console-gadget" id="consoleGadget">
-      <div class="console-badge">✨ Add</div>
-      <div class="console-text">Motion Design &amp; Animation</div>
-    </div>
-
-    <div class="workflow-track" id="workflowTrack">
-      <div class="browser-card">
-        <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
-      </div>
-      <div class="browser-card">
-        <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #fef08a, #fde047);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
-      </div>
-      <div class="browser-card">
-        <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #ccfbf1, #99f6e4);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
-      </div>
-      <div class="browser-card">
-        <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #fae8ff, #f5d0fe);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
-      </div>
-      <div class="browser-card">
-        <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #ffedd5, #fed7aa);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+      <div class="hero-graphic-box">
+        <div class="floating-bee bee-1">🐝 bee</div>
+        <div class="mockup-scene">
+          <h3 style="font-family: 'Fraunces', serif; font-size: 1.4rem; margin-bottom: 6px;">Interactive Stage</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">Custom vector animations &amp; motion engineering</p>
+        </div>
+        <div class="floating-bee bee-2">🐝 art</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Pricing Section -->
+  <!-- Pricing Section with Scroll Animations -->
   <section id="pricing">
-    <h2 class="section-title">Transparent Pricing</h2>
-    <p class="section-subtitle">Choose the perfect tier for your motion design and web engineering scope.</p>
-    
+    <h2 class="section-title">Cozy Pricing Packages</h2>
+    <p class="section-subtitle">Transparent scope tiers built for projects of every size.</p>
+
     <div class="pricing-grid">
       <div class="pricing-card">
         <div>
           <div class="plan-name">Landing Page Motion</div>
           <div class="plan-price">$1,200</div>
           <ul class="plan-features">
-            <li>Custom high-performance design</li>
-            <li>GSAP entrance animations</li>
-            <li>Mobile responsive build</li>
-            <li>1-week delivery time</li>
+            <li>Cozy vector layout design</li>
+            <li>GSAP scroll-triggered reveals</li>
+            <li>Fully responsive mobile view</li>
           </ul>
         </div>
-        <a href="#contact" class="plan-btn">Choose Plan</a>
+        <a href="#contact" class="card-btn">Select Plan</a>
       </div>
 
       <div class="pricing-card featured">
@@ -472,53 +490,51 @@
           <div class="plan-name">Studio Complete</div>
           <div class="plan-price">$3,500</div>
           <ul class="plan-features">
-            <li>Full multi-page custom web app</li>
-            <li>Advanced 3D &amp; portal animations</li>
-            <li>Interactive workflow elements</li>
-            <li>Priority ongoing support</li>
+            <li>Multi-page motion web build</li>
+            <li>Custom interactive illustrations</li>
+            <li>Priority scheduling &amp; support</li>
           </ul>
         </div>
-        <a href="#contact" class="plan-btn">Choose Plan</a>
+        <a href="#contact" class="card-btn">Select Plan</a>
       </div>
 
       <div class="pricing-card">
         <div>
-          <div class="plan-name">Custom Enterprise</div>
+          <div class="plan-name">Enterprise Scope</div>
           <div class="plan-price">Custom</div>
           <ul class="plan-features">
-            <li>Tailored web engineering architecture</li>
-            <li>Complex custom canvas graphics</li>
-            <li>Dedicated lead developer</li>
-            <li>Comprehensive SEO &amp; speed optimization</li>
+            <li>Full brand motion guidelines</li>
+            <li>Advanced canvas animations</li>
+            <li>Dedicated engineering lead</li>
           </ul>
         </div>
-        <a href="#contact" class="plan-btn">Contact Us</a>
+        <a href="#contact" class="card-btn">Contact Studio</a>
       </div>
     </div>
   </section>
 
-  <!-- Inquiry Form Section -->
+  <!-- Inquiry / Contact Form Section -->
   <section id="contact">
-    <div class="contact-container">
-      <h2 class="section-title" style="text-align: left; margin-bottom: 0.5rem;">Start Your Project</h2>
-      <p class="section-subtitle" style="text-align: left; margin-left: 0; margin-bottom: 2.5rem;">Fill out the details below and our team will get back to you within 24 hours.</p>
-      
+    <div class="contact-box">
+      <h2 class="section-title" style="text-align: left; margin-bottom: 0.5rem;">Let's work together!</h2>
+      <p class="section-subtitle" style="text-align: left; margin-left: 0; margin-bottom: 2.5rem;">Have a project in mind? Fill out the form below and I'll get back to you shortly.</p>
+
       <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully.');">
         <div class="form-grid">
           <div class="form-group">
             <label for="name">Your Name</label>
-            <input type="text" id="name" placeholder="John Doe" required>
+            <input type="text" id="name" placeholder="Andra" required>
           </div>
           <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="john@example.com" required>
+            <input type="email" id="email" placeholder="hello@example.com" required>
           </div>
           <div class="form-group full">
-            <label for="project">Project Details</label>
-            <textarea id="project" placeholder="Tell us about your project scope, timeline, and goals..." required></textarea>
+            <label for="msg">Project Details</label>
+            <textarea id="msg" placeholder="Tell me about your vision, timeline, and goals..." required></textarea>
           </div>
           <div class="form-group full">
-            <button type="submit" class="submit-btn">Send Inquiry</button>
+            <button type="submit" class="submit-btn">Send Inquiry ✨</button>
           </div>
         </div>
       </form>
@@ -526,35 +542,46 @@
   </section>
 
   <footer>
-    <p>&copy; 2026 yezhuththu.site — Motion Web Engineering Studio. All rights reserved.</p>
+    <p>&copy; 2026 yezhuththu.site — Crafted with cozy motion design.</p>
   </footer>
 
-  <!-- Motion Scripts -->
+  <!-- GSAP ScrollTrigger Animation Script -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Infinite Conveyor Loop
-      gsap.to("#workflowTrack", {
-        x: "-50%",
-        duration: 18,
-        ease: "none",
-        repeat: -1
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Entrance Animations on Load
+      gsap.from("header", { y: -30, opacity: 0, duration: 0.8, ease: "power3.out" });
+      gsap.from(".hero-content", { y: 40, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out" });
+      gsap.from(".hero-graphic-box", { scale: 0.9, opacity: 0, duration: 1.2, delay: 0.3, ease: "power3.out" });
+
+      // Scroll-Triggered Reveals for Pricing Cards
+      gsap.utils.toArray(".pricing-card").forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          },
+          y: 50,
+          opacity: 0,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: "power3.out"
+        });
       });
 
-      // Floating Gadget Animation
-      gsap.to("#consoleGadget", {
-        y: -10,
-        duration: 2,
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true
-      });
-
-      // Portal Spin
-      gsap.to(".portal-ring", {
-        rotation: 360,
-        duration: 30,
-        ease: "none",
-        repeat: -1
+      // Scroll-Triggered Reveal for Contact Form
+      gsap.from(".contact-box", {
+        scrollTrigger: {
+          trigger: ".contact-box",
+          start: "top 85%",
+          toggleActions: "play none none none"
+        },
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
       });
     });
   </script>
