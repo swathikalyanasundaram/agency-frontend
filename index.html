@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Notosan — Journey to Noto Nature Park</title>
+  <title>Foci Studio — Design that means business.</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,298 +17,168 @@
       padding: 0;
     }
 
-    html, body {
-      background-color: #0b0c10;
+    body, html {
+      width: 100%;
+      height: 100vh;
+      background-color: #000000;
       color: #ffffff;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      overflow-x: hidden;
-      height: 100vh;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-    }
-
-    /* Fixed Top Navigation Bar */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 5vw;
-      background: rgba(11, 12, 16, 0.4);
-      backdrop-filter: blur(12px);
-      z-index: 1000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.25rem;
-      letter-spacing: -0.01em;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: rgba(255, 255, 255, 0.75);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
-      cursor: pointer;
-    }
-
-    .nav-links a:hover {
-      color: #fff;
-    }
-
-    .register-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 0.5rem 1.25rem;
-      border-radius: 50px;
-      color: white !important;
-      font-weight: 600 !important;
-      transition: background 0.2s ease !important;
-    }
-
-    .register-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    /* Fullscreen Sections with Snap Alignment */
-    section {
-      position: relative;
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      align-items: center;
-      padding: 0 8vw;
-      background-size: cover;
-      background-position: center;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
       overflow: hidden;
-    }
-
-    /* Section Backgrounds */
-    .hero-section {
-      background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80');
-    }
-
-    .tranquility-section {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80');
-    }
-
-    .biodiversity-section {
-      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=80');
-    }
-
-    /* Content Styling */
-    .hero-content, .content-box {
-      max-width: 650px;
-      z-index: 2;
-    }
-
-    .subtitle-tag {
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 10px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 1rem;
-      letter-spacing: 0.02em;
     }
 
-    .hero-title {
-      font-size: clamp(4rem, 9vw, 9rem);
-      font-weight: 800;
-      line-height: 0.9;
-      letter-spacing: -0.03em;
-      margin-bottom: 2rem;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #FFFFFF 40%, rgba(255, 255, 255, 0.6) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    /* Main Container */
+    .hero-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .cta-btn {
-      display: inline-flex;
+    /* Central Content Box */
+    .central-content {
+      position: absolute;
+      text-align: center;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 12px;
-      background: white;
-      color: #111;
-      padding: 0.85rem 1.75rem;
-      border-radius: 50px;
+      pointer-events: auto;
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 600;
-      text-decoration: none;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+    }
+
+    .subtitle {
       font-size: 0.95rem;
-      transition: transform 0.2s ease, background 0.2s ease;
-      cursor: pointer;
-    }
-
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      background: #f0f0f0;
-    }
-
-    .section-category {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 0.5rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
     }
 
-    .section-heading {
-      font-size: clamp(3rem, 5vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-desc {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 2rem;
-    }
-
-    .text-link {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-      padding-bottom: 2px;
-      transition: border-color 0.2s;
-      cursor: pointer;
-    }
-
-    .text-link:hover {
-      border-color: #fff;
-    }
-
-    /* Continuous Moving Background Elements */
-    .moving-bird {
-      position: absolute;
-      top: 15%;
-      left: -10vw;
-      font-size: 1.5rem;
-      opacity: 0.8;
-      z-index: 1;
-      animation: flyAcross 14s linear infinite;
-    }
-
-    .bird-delay {
-      animation-delay: 5s;
-      top: 25%;
-    }
-
-    .drifting-cloud {
-      position: absolute;
-      top: 10%;
-      right: -20vw;
-      width: 300px;
-      height: 80px;
+    .contact-btn {
       background: rgba(255, 255, 255, 0.08);
-      filter: blur(30px);
-      border-radius: 50%;
-      z-index: 1;
-      animation: driftCloud 25s linear infinite;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: background 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
     }
 
-    @keyframes flyAcross {
-      0% {
-        transform: translateX(0) translateY(0);
-      }
-      50% {
-        transform: translateX(60vw) translateY(-20px);
-      }
-      100% {
-        transform: translateX(120vw) translateY(0);
-      }
+    .contact-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
-    @keyframes driftCloud {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-140vw);
-      }
+    /* Orbiting Carousel Stage */
+    .orbit-stage {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: rotateOrbit 40s linear infinite;
     }
 
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      section { padding: 0 6vw; }
+    .orbit-stage:hover {
+      animation-play-state: paused; /* Pause rotation on hover if desired */
+    }
+
+    /* Individual Image Cards */
+    .card {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      background: #111;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      /* Counter-rotate cards so they stay upright while orbiting */
+      animation: counterRotate 40s linear infinite;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Positioning cards in a wide circle radius (~380px from center) */
+    .card:nth-child(1)  { transform: rotate(0deg) translate(380px) rotate(0deg); }
+    .card:nth-child(2)  { transform: rotate(45deg) translate(380px) rotate(-45deg); }
+    .card:nth-child(3)  { transform: rotate(90deg) translate(380px) rotate(-90deg); }
+    .card:nth-child(4)  { transform: rotate(135deg) translate(380px) rotate(-135deg); }
+    .card:nth-child(5)  { transform: rotate(180deg) translate(380px) rotate(-180deg); }
+    .card:nth-child(6)  { transform: rotate(225deg) translate(380px) rotate(-225deg); }
+    .card:nth-child(7)  { transform: rotate(270deg) translate(380px) rotate(-270deg); }
+    .card:nth-child(8)  { transform: rotate(315deg) translate(380px) rotate(-315deg); }
+
+    /* Keyframe Animations */
+    @keyframes rotateOrbit {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes counterRotate {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 900px) {
+      .card { width: 100px; height: 100px; }
+      .card:nth-child(1)  { transform: rotate(0deg) translate(240px) rotate(0deg); }
+      .card:nth-child(2)  { transform: rotate(45deg) translate(240px) rotate(-45deg); }
+      .card:nth-child(3)  { transform: rotate(90deg) translate(240px) rotate(-90deg); }
+      .card:nth-child(4)  { transform: rotate(135deg) translate(240px) rotate(-135deg); }
+      .card:nth-child(5)  { transform: rotate(180deg) translate(240px) rotate(-180deg); }
+      .card:nth-child(6)  { transform: rotate(225deg) translate(240px) rotate(-225deg); }
+      .card:nth-child(7)  { transform: rotate(270deg) translate(240px) rotate(-270deg); }
+      .card:nth-child(8)  { transform: rotate(315deg) translate(240px) rotate(-315deg); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <header>
-    <a href="#hero" class="logo">Notosan</a>
-    <ul class="nav-links">
-      <li><a href="#hero">Community</a></li>
-      <li><a href="#tranquility">About</a></li>
-      <li><a href="#biodiversity">Support</a></li>
-      <li><a href="#hero">Contact</a></li>
-      <li><a href="#hero" class="register-btn">Register</a></li>
-    </ul>
-  </header>
-
-  <!-- Hero Section (VISITE) -->
-  <section id="hero" class="hero-section">
-    <div class="moving-bird">🕊️ 🕊️</div>
-    <div class="moving-bird bird-delay">🕊️</div>
-    <div class="drifting-cloud"></div>
-    <div class="hero-content">
-      <div class="subtitle-tag">
-        <span>⚡</span> Journey to new frontiers, Journey to Noto Nature Park
-      </div>
-      <h1 class="hero-title">Visite</h1>
-      <a href="#tranquility" class="cta-btn">Start the journey <span>→</span></a>
+  <div class="hero-container">
+    
+    <!-- Orbiting Images Carousel -->
+    <div class="orbit-stage">
+      <div class="card"><img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=400&q=80" alt="Work 1"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80" alt="Work 2"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80" alt="Work 3"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=400&q=80" alt="Work 4"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=80" alt="Work 5"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80" alt="Work 6"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80" alt="Work 7"></div>
+      <div class="card"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=400&q=80" alt="Work 8"></div>
     </div>
-  </section>
 
-  <!-- Tranquility Section -->
-  <section id="tranquility" class="tranquility-section">
-    <div class="moving-bird" style="animation-duration: 18s; top: 20%;">🕊️</div>
-    <div class="drifting-cloud" style="animation-duration: 30s; top: 30%;"></div>
-    <div class="content-box">
-      <div class="section-category">02 Experience</div>
-      <h2 class="section-heading">Tranquility</h2>
-      <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
-      <a href="#biodiversity" class="text-link">Learn more <span>→</span></a>
+    <!-- Centered Text and Action -->
+    <div class="central-content">
+      <h1 class="main-title">Design. Develop. Grow.</h1>
+      <p class="subtitle">Foci Studio - Design that means business.</p>
+      <a href="#contact" class="contact-btn">Get in touch</a>
     </div>
-  </section>
 
-  <!-- Biodiversity Section -->
-  <section id="biodiversity" class="biodiversity-section">
-    <div class="moving-bird" style="animation-duration: 12s; top: 12%;">🕊️ 🕊️</div>
-    <div class="drifting-cloud" style="animation-duration: 20s; top: 18%;"></div>
-    <div class="content-box">
-      <div class="section-category">03 Habitat</div>
-      <h2 class="section-heading">Biodiversity</h2>
-      <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
-      <a href="#hero" class="text-link">Learn more <span>→</span></a>
-    </div>
-  </section>
+  </div>
 
 </body>
 </html>
