@@ -307,32 +307,29 @@
   var IDLE_EASE = 0.06;       
 
   function frameForPointer(clientX, clientY){
-    var heroRect = hero.getBoundingClientRect();
     var stageRect = stage.getBoundingClientRect();
     
-    // Establish body center as the neutral origin point (0,0)
-    var centerX = stageRect.left + stageRect.width / 2;
-    var centerY = stageRect.top + stageRect.height * 0.35; // head/eye level anchor point
+    // Find the exact horizontal and vertical center of Clover's body on the screen
+    var bodyCenterX = stageRect.left + (stageRect.width / 2);
+    var bodyCenterY = stageRect.top + (stageRect.height * 0.45); // chest/head anchor
 
-    // Horizontal tracking bounds based on layout range
-    var minX = heroRect.left + 20;
-    var maxX = centerX;
+    // 1. Horizontal Tracking (Left to Right relative to his body)
+    // Distance from his body center, scaled against half the window width
+    var distanceX = clientX - bodyCenterX;
+    var maxDistX = window.innerWidth * 0.45; // range width for full turn
+    var normalizedX = Math.min(1, Math.max(-1, distanceX / maxDistX));
+
+    // Map -1..1 range to the 0..95 frames, with CENTER_FRAME (48) as straight ahead
+    var baseFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
+
+    // 2. Vertical Head Tilt Bias (Up/Down)
+    var distanceY = clientY - bodyCenterY;
+    var normalizedY = Math.min(1, Math.max(-1, distanceY / (window.innerHeight * 0.4)));
     
-    var tX = (clientX - minX) / (maxX - minX);
-    tX = Math.min(1, Math.max(0, tX));
+    // Slight frame nudge for vertical movement (adjust multiplier if needed)
+    var finalFrame = baseFrame + (normalizedY * 3);
 
-    // Base horizontal frame calculation (left to right)
-    var baseFrame = tX * (FRAME_COUNT - 1);
-
-    // Vertical offset calculation: 
-    // If clientY is above center, nudge frame slightly; if below, opposite bias
-    var offsetY = clientY - centerY;
-    var verticalFactor = Math.min(1, Math.max(-1, offsetY / (stageRect.height * 0.5)));
-    
-    // Blend a slight vertical tilt bias into the frame lookup
-    var adjustedFrame = baseFrame + (verticalFactor * 4);
-
-    return Math.min(FRAME_COUNT - 1, Math.max(0, adjustedFrame));
+    return Math.min(FRAME_COUNT - 1, Math.max(0, finalFrame));
   }
 
   function onPointerMove(e){
