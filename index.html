@@ -3,26 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>yezhuththu.site | Elite Web Engineering & Digital Agency</title>
+  <title>yezhuththu.site | Cinematic Parallax Adventure</title>
   
   <!-- Google Fonts & Lucide Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root[data-theme="dark"] {
       --bg-dark: #020617;
-      --bg-card: rgba(15, 23, 42, 0.7);
+      --bg-card: rgba(15, 23, 42, 0.75);
       --bg-nav: rgba(2, 6, 23, 0.85);
-      --accent-primary: #6366f1;
-      --accent-glow: #818cf8;
-      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --accent-yellow: #f59e0b;
+      --accent-glow: #fbbf24;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --border-color: rgba(255, 255, 255, 0.12);
-      --border-hover: rgba(99, 102, 241, 0.6);
       --form-bg: rgba(3, 7, 18, 0.9);
     }
 
@@ -42,15 +40,14 @@
       position: fixed; top: 0; width: 100%; padding: 22px 8%; display: flex; justify-content: space-between; align-items: center;
       background: var(--bg-nav); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-color); z-index: 1000;
-      transition: transform 0.3s ease;
     }
     .brand-logo { font-size: 1.6rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
-    .brand-logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .brand-logo span { color: var(--accent-yellow); text-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
     
     .nav-right { display: flex; align-items: center; gap: 24px; }
     .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.25s ease; }
-    .nav-links a:hover { color: var(--accent-glow); }
+    .nav-links a:hover { color: var(--accent-yellow); }
 
     /* Buttons */
     .btn {
@@ -58,77 +55,86 @@
       font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer; border: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .btn-primary { background: var(--accent-gradient); color: #ffffff; box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.5); }
-    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px -5px rgba(168, 85, 247, 0.6); }
+    .btn-primary { background: var(--accent-yellow); color: #020617; box-shadow: 0 10px 30px -5px rgba(245, 158, 11, 0.4); }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px -5px rgba(245, 158, 11, 0.6); background: #fbbf24; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); backdrop-filter: blur(10px); }
-    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.1); transform: translateY(-2px); }
+    .btn-outline:hover { border-color: var(--accent-yellow); background: rgba(245, 158, 11, 0.1); transform: translateY(-2px); }
 
-    /* Hero Section with Parallax Stage */
+    /* Cinematic Multi-Layer Parallax Hero Section */
     .hero {
-      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      padding: 160px 8% 100px; overflow: hidden; text-align: center; perspective: 1000px;
-    }
-    
-    .hero-graphics-bg {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
-      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #020617 70%);
-      transition: transform 0.1s ease-out; /* Smooth parallax response */
-    }
-    .glow-orb {
-      position: absolute; border-radius: 50%; filter: blur(120px); z-index: -1; pointer-events: none; opacity: 0.45;
-      transition: transform 0.2s cubic-bezier(0,0,0.2,1);
-    }
-    .orb-1 { width: 500px; height: 500px; background: #6366f1; top: -100px; left: 10%; animation: floatOrb 10s ease-in-out infinite alternate; }
-    .orb-2 { width: 600px; height: 600px; background: #ec4899; top: 20%; right: 5%; animation: floatOrb 12s ease-in-out infinite alternate-reverse; }
-    .orb-3 { width: 400px; height: 400px; background: #8b5cf6; bottom: -50px; left: 30%; animation: floatOrb 8s ease-in-out infinite alternate; }
-
-    @keyframes floatOrb {
-      0% { transform: translateY(0px) scale(1); }
-      100% { transform: translateY(40px) scale(1.08); }
+      position: relative; width: 100vw; height: 100vh; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    .grid-overlay {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 60px 60px; z-index: -1;
+    /* Parallax Depth Layers */
+    .parallax-layer {
+      position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
+      will-change: transform; pointer-events: none;
     }
 
-    .hero-content { max-width: 950px; margin: 0 auto; z-index: 1; transform-style: preserve-3d; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 99px;
-      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4);
-      color: var(--accent-glow); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
-      margin-bottom: 24px; backdrop-filter: blur(12px); box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+    /* Layer 1: Background Space/Stars */
+    .layer-space {
+      background: radial-gradient(circle at 50% 50%, #17102e 0%, #030307 80%);
+      z-index: 1;
     }
-    .hero-content h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.08; margin-bottom: 24px; letter-spacing: -2.5px; }
-    .hero-content h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-content p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 720px; margin-left: auto; margin-right: auto; }
-    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-
-    /* Scroll Reveal Animation Classes */
-    .reveal-item {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
-    }
-    .reveal-item.active {
-      opacity: 1;
-      transform: translateY(0);
+    .stars-bg {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(245,158,11,0.5) 1px, transparent 1px);
+      background-size: 120px 120px, 200px 200px;
+      background-position: 0 0, 40px 60px;
+      opacity: 0.6;
     }
 
-    /* Diagnostics Badge */
-    #videoStatusBadge {
-      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-      background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border-color);
-      padding: 10px 18px; border-radius: 14px; font-size: 0.8rem; font-weight: 600;
-      backdrop-filter: blur(16px); display: flex; align-items: center; gap: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6); color: var(--text-muted);
+    /* Layer 2: Deep Cave Top Frame */
+    .layer-cave-top {
+      background: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
+      filter: brightness(0.35) contrast(1.2);
+      transform: scale(1.05);
+      z-index: 3;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 85% 35%, 70% 42%, 50% 30%, 30% 40%, 15% 34%, 0 45%);
     }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; }
 
-    /* Bento Grid Services with Tilt Card Support */
+    /* Layer 3: Central Cinematic Content */
+    .layer-content {
+      position: relative; z-index: 4; text-align: center; max-width: 900px; padding: 0 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+    }
+    .adventure-tag {
+      font-family: serif; font-style: italic; font-size: 1.3rem; color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; line-height: 1; text-transform: uppercase;
+      color: var(--accent-yellow); letter-spacing: -2px;
+      text-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+    }
+    .enter-btn-box {
+      margin-top: 10px; border: 1px solid rgba(245, 158, 11, 0.4); padding: 12px 36px; border-radius: 99px;
+      background: rgba(245, 158, 11, 0.05); color: var(--accent-yellow); font-weight: 600; text-transform: uppercase;
+      letter-spacing: 3px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+      backdrop-filter: blur(10px);
+    }
+    .enter-btn-box:hover {
+      background: var(--accent-yellow); color: #020617; box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Layer 4: Foreground Cave Rocks & Creature Silhouettes */
+    .layer-cave-bottom {
+      background: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1800&q=80') bottom center/cover no-repeat;
+      filter: brightness(0.25) contrast(1.3);
+      z-index: 5;
+      clip-path: polygon(0 60%, 15% 68%, 32% 62%, 48% 75%, 65% 64%, 82% 70%, 100% 58%, 100% 100%, 0 100%);
+    }
+
+    /* UI Indicator Elements overlaying the hero */
+    .hero-hud {
+      position: absolute; bottom: 40px; left: 60px; right: 60px; display: flex; justify-content: space-between; align-items: center;
+      z-index: 10; font-family: monospace; font-size: 1.1rem; color: var(--accent-yellow); pointer-events: none;
+    }
+    .hero-hud span { color: var(--text-muted); font-size: 0.85rem; }
+
+    /* Scroll Reveal Section */
     .section { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
     .section-header { text-align: center; margin-bottom: 70px; }
     .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -1.5px; }
@@ -136,41 +142,36 @@
 
     .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .bento-card {
-      background: var(--bg-card); border: 1px solid var(--border-color); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-radius: 28px; padding: 40px; position: relative; 
-      transition: transform 0.2s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-      display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
-      transform-style: preserve-3d;
+      background: var(--bg-card); border: 1px solid var(--border-color); backdrop-filter: blur(24px);
+      border-radius: 28px; padding: 40px; position: relative; transition: all 0.4s ease;
     }
     .bento-card.large { grid-column: span 2; }
-    .bento-card:hover { border-color: var(--border-hover); box-shadow: 0 30px 70px rgba(99, 102, 241, 0.25); }
-    .bento-icon { width: 54px; height: 54px; border-radius: 16px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 28px; box-shadow: inset 0 0 15px rgba(99, 102, 241, 0.2); }
-    .bento-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
-    .bento-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
+    .bento-card:hover { border-color: var(--accent-yellow); transform: translateY(-6px); box-shadow: 0 20px 50px rgba(245, 158, 11, 0.15); }
+    .bento-icon { width: 54px; height: 54px; border-radius: 16px; background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-yellow); margin-bottom: 28px; }
+    .bento-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+    .bento-card p { color: var(--text-muted); line-height: 1.6; }
 
     /* Contact Lead Section */
     .quote-section {
       background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 36px; padding: 70px;
-      max-width: 960px; margin: 40px auto 120px; backdrop-filter: blur(30px); box-shadow: 0 30px 90px rgba(0,0,0,0.3);
+      max-width: 960px; margin: 40px auto 120px; backdrop-filter: blur(30px); box-shadow: 0 30px 90px rgba(0,0,0,0.4);
       position: relative; overflow: hidden;
     }
-    .quote-section::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-gradient);
-    }
+    .quote-section::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-yellow); }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
     .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
     .form-group.full { grid-column: span 2; }
     .form-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
     .form-control {
       background: var(--form-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px 20px;
-      color: var(--text-main); font-size: 1rem; transition: all 0.3s ease; font-family: inherit;
+      color: var(--text-main); font-size: 1rem; font-family: inherit; transition: border-color 0.3s;
     }
-    .form-control:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
+    .form-control:focus { outline: none; border-color: var(--accent-yellow); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
 
     footer { border-top: 1px solid var(--border-color); padding: 60px 8%; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.95rem; }
 
     @media(max-width: 968px) {
-      .hero-content h1 { font-size: 2.8rem; }
+      .hero-title { font-size: 3rem; }
       .bento-grid { grid-template-columns: 1fr; }
       .bento-card.large { grid-column: span 1; }
       .form-grid { grid-template-columns: 1fr; }
@@ -181,54 +182,58 @@
 </head>
 <body>
 
-  <!-- Live Status Indicator -->
-  <div id="videoStatusBadge">
-    <div class="status-dot"></div>
-    <span id="statusText">Pro Motion Parallax Engine Active</span>
-  </div>
-
   <!-- Navbar -->
-  <nav class="navbar" id="navbar">
+  <nav class="navbar">
     <a href="index.html" class="brand-logo">yezhuththu<span>.site</span></a>
-    
     <div class="nav-right">
       <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
-        <li><a href="pricing.html">Pricing Plans</a></li>
+        <li><a href="#services">Examples</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#quote">Contact</a></li>
       </ul>
       <a href="#quote" class="btn btn-primary">Start Project</a>
     </div>
   </nav>
 
-  <!-- High-End Graphics Hero Section -->
-  <header class="hero" id="heroSection">
-    <div class="hero-graphics-bg" id="heroBg">
-      <div class="grid-overlay"></div>
-      <div class="glow-orb orb-1" id="orb1"></div>
-      <div class="glow-orb orb-2" id="orb2"></div>
-      <div class="glow-orb orb-3" id="orb3"></div>
+  <!-- Cinematic Multi-Layer Parallax Hero Section -->
+  <header class="hero" id="parallaxHero">
+    <!-- Layer 1: Space & Stars (Moves slowest) -->
+    <div class="parallax-layer layer-space" data-speed="10">
+      <div class="stars-bg"></div>
     </div>
 
-    <div class="hero-content reveal-item">
-      <div class="hero-badge"><i data-lucide="sparkles" style="width: 16px;"></i> Next-Gen Engineering Studio</div>
-      <h1>Architecting <span>Digital Excellence</span> & Custom Web Systems</h1>
-      <p>We combine high-performance frontend engineering, robust backend infrastructure, and immersive design to scale your brand to the next level.</p>
-      <div class="hero-actions">
-        <a href="#quote" class="btn btn-primary">Request Custom Quote <i data-lucide="arrow-right" style="width: 18px;"></i></a>
-        <a href="pricing.html" class="btn btn-outline">Explore Packages</a>
+    <!-- Layer 2: Top Cave Frame (Moves medium-slow) -->
+    <div class="parallax-layer layer-cave-top" data-speed="25"></div>
+
+    <!-- Layer 3: Central Typography & Call to Action (Focus Layer) -->
+    <div class="parallax-layer layer-content" data-speed="40" style="display: flex; justify-content: center; align-items: center;">
+      <p class="adventure-tag">Lighting the Way to</p>
+      <h1 class="hero-title">Your Next Adventure</h1>
+      <a href="#quote" class="enter-btn-box">Enter</a>
+    </div>
+
+    <!-- Layer 4: Foreground Rocks (Moves fastest for dramatic depth) -->
+    <div class="parallax-layer layer-cave-bottom" data-speed="65"></div>
+
+    <!-- HUD Overlay elements matching image style -->
+    <div class="hero-hud">
+      <div>03 <span style="font-size: 0.75rem;">/ 04</span></div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <i data-lucide="arrow-up" style="width: 18px; color: var(--accent-yellow);"></i>
+        <i data-lucide="compass" style="width: 18px; color: var(--accent-yellow);"></i>
       </div>
     </div>
   </header>
 
   <!-- Bento Grid Services -->
   <section id="services" class="section">
-    <div class="section-header reveal-item">
+    <div class="section-header">
       <h2>Engineering Capabilities & Services</h2>
       <p>Comprehensive digital solutions built with precision, speed, and scale.</p>
     </div>
 
     <div class="bento-grid">
-      <div class="bento-card large reveal-item tilt-card">
+      <div class="bento-card large">
         <div>
           <div class="bento-icon"><i data-lucide="code-2"></i></div>
           <h3>Custom Web Engineering</h3>
@@ -236,7 +241,7 @@
         </div>
       </div>
 
-      <div class="bento-card reveal-item tilt-card">
+      <div class="bento-card">
         <div>
           <div class="bento-icon"><i data-lucide="shield-check"></i></div>
           <h3>Enterprise Security</h3>
@@ -244,7 +249,7 @@
         </div>
       </div>
 
-      <div class="bento-card reveal-item tilt-card">
+      <div class="bento-card">
         <div>
           <div class="bento-icon"><i data-lucide="database"></i></div>
           <h3>Dynamic Backends</h3>
@@ -252,7 +257,7 @@
         </div>
       </div>
 
-      <div class="bento-card reveal-item tilt-card">
+      <div class="bento-card">
         <div>
           <div class="bento-icon"><i data-lucide="layout"></i></div>
           <h3>UI/UX Brand Design</h3>
@@ -260,19 +265,11 @@
         </div>
       </div>
 
-      <div class="bento-card reveal-item tilt-card">
+      <div class="bento-card">
         <div>
           <div class="bento-icon"><i data-lucide="cloud"></i></div>
           <h3>Cloud DevOps & Hosting</h3>
           <p>Automated deployments, lightning-fast CDN caching, and 99.9% server uptime reliability.</p>
-        </div>
-      </div>
-
-      <div class="bento-card reveal-item tilt-card">
-        <div>
-          <div class="bento-icon"><i data-lucide="cpu"></i></div>
-          <h3>API Integrations</h3>
-          <p>Connect payment gateways, CRM tools, and third-party software seamlessly into your platform.</p>
         </div>
       </div>
     </div>
@@ -280,7 +277,7 @@
 
   <!-- Contact Lead Section -->
   <section id="quote" class="section" style="padding-top: 0;">
-    <div class="quote-section reveal-item">
+    <div class="quote-section">
       <div class="section-header" style="margin-bottom: 30px;">
         <h2>Start Your Project Today</h2>
         <p>Fill out the details below and our engineering team will get back to you promptly.</p>
@@ -327,7 +324,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="reveal-item">
+  <footer>
     <p>&copy; 2026 yezhuththu.site. All Rights Reserved.</p>
     <p>Powered by Advanced Frontend & Spring Boot Backend Systems.</p>
   </footer>
@@ -336,54 +333,34 @@
   <script>
     lucide.createIcons();
 
-    /* 1. CURSOR PARALOUSE & MOUSE MOVE EFFECT */
-    const heroSection = document.getElementById('heroSection');
-    const orb1 = document.getElementById('orb1');
-    const orb2 = document.getElementById('orb2');
-    const orb3 = document.getElementById('orb3');
+    /* CINEMATIC MOUSE PARALLAX EFFECT */
+    const hero = document.getElementById('parallaxHero');
+    const layers = document.querySelectorAll('.parallax-layer');
 
-    heroSection.addEventListener('mousemove', (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 40;
-      const y = (e.clientY / innerHeight - 0.5) * 40;
+    hero.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
 
-      orb1.style.transform = `translate(${x * 1.5}px, ${y * 1.5}px)`;
-      orb2.style.transform = `translate(${-x * 2}px, ${-y * 2}px)`;
-      orb3.style.transform = `translate(${x}px, ${y * 2}px)`;
-    });
-
-    /* 2. INTERACTIVE TILT EFFECT FOR BENTO CARDS */
-    const tiltCards = document.querySelectorAll('.tilt-card');
-    tiltCards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        card.style.transform = `perspective(1000px) rotateX(${-y / 15}deg) rotateY(${x / 15}deg) translateY(-6px)`;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+      layers.forEach(layer => {
+        const speed = layer.getAttribute('data-speed') || 20;
+        const x = (clientX - centerX) / speed;
+        const y = (clientY - centerY) / speed;
+        layer.style.transform = `translate(${x}px, ${y}px) scale(1.08)`;
       });
     });
 
-    /* 3. SCROLL REVEAL OBSERVER */
-    const observerOptions = {
-      threshold: 0.15
-    };
-
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
+    hero.addEventListener('mouseleave', () => {
+      layers.forEach(layer => {
+        layer.style.transform = `translate(0px, 0px) scale(1.05)`;
+        layer.style.transition = 'transform 0.5s ease-out';
       });
-    }, observerOptions);
+    });
 
-    document.querySelectorAll('.reveal-item').forEach(el => {
-      scrollObserver.observe(el);
+    hero.addEventListener('mouseenter', () => {
+      layers.forEach(layer => {
+        layer.style.transition = 'none';
+      });
     });
 
     /* Real Backend Spring Boot Form Submission Handler */
@@ -417,7 +394,7 @@
         if (response.ok || response.status === 200 || response.status === 201) {
           contactForm.innerHTML = `
             <div style="text-align: center; padding: 40px;">
-              <div style="font-size: 3.5rem; color: #10b981; margin-bottom: 16px;">✓</div>
+              <div style="font-size: 3.5rem; color: #f59e0b; margin-bottom: 16px;">✓</div>
               <h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 8px;">Inquiry Successfully Transmitted!</h3>
               <p style="color: var(--text-muted); font-size: 1.05rem;">Your project data has been securely saved to the backend database. Our engineers will review your specs shortly.</p>
             </div>
