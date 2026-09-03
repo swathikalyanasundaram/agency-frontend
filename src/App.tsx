@@ -1,115 +1,167 @@
-import { Menu } from 'lucide-react'
-import { CSSProperties, useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react';
+import { Sparkles, ArrowRight, Code2, ShieldCheck, Database, Layout, Cloud, Cpu, CheckCircle } from 'lucide-react';
 
-const BG_IMAGE_1 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85'
-const BG_IMAGE_2 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85'
-const SPOTLIGHT_R = 260
+export default function App() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    clientname: '',
+    email: '',
+    serviceType: 'Static Website',
+    estimatedBudget: 25000,
+    projectDetails: ''
+  });
 
-type RevealLayerProps = { image: string; cursorX: number; cursorY: number }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-function RevealLayer({ image, cursorX, cursorY }: RevealLayerProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [mask, setMask] = useState('none')
+    try {
+      const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          estimatedBudget: Number(formData.estimatedBudget)
+        })
+      });
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const drawMask = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      const context = canvas.getContext('2d')
-      if (!context) return
-      context.clearRect(0, 0, canvas.width, canvas.height)
-      const gradient = context.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, SPOTLIGHT_R)
-      gradient.addColorStop(0, 'rgba(255,255,255,1)')
-      gradient.addColorStop(0.4, 'rgba(255,255,255,1)')
-      gradient.addColorStop(0.6, 'rgba(255,255,255,0.75)')
-      gradient.addColorStop(0.75, 'rgba(255,255,255,0.4)')
-      gradient.addColorStop(0.88, 'rgba(255,255,255,0.12)')
-      gradient.addColorStop(1, 'rgba(255,255,255,0)')
-      context.fillStyle = gradient
-      context.beginPath()
-      context.arc(cursorX, cursorY, SPOTLIGHT_R, 0, Math.PI * 2)
-      context.fill()
-      setMask(canvas.toDataURL())
+      if (response.ok || response.status === 200 || response.status === 201) {
+        setSubmitted(true);
+      } else {
+        alert('Server error: ' + response.status);
+      }
+    } catch (err) {
+      alert('Could not reach backend server.');
+    } finally {
+      setLoading(false);
     }
-
-    drawMask()
-    window.addEventListener('resize', drawMask)
-    return () => window.removeEventListener('resize', drawMask)
-  }, [cursorX, cursorY])
-
-  const revealStyle: CSSProperties = {
-    backgroundImage: `url(${image})`,
-    maskImage: `url(${mask})`,
-    WebkitMaskImage: `url(${mask})`,
-    maskSize: '100% 100%',
-    WebkitMaskSize: '100% 100%',
-  }
-
-  return <>
-    <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ display: 'none' }} />
-    <div className="absolute inset-0 z-30 pointer-events-none bg-center bg-cover bg-no-repeat" style={revealStyle} />
-  </>
-}
-
-function App() {
-  const mouse = useRef({ x: -999, y: -999 })
-  const smooth = useRef({ x: -999, y: -999 })
-  const rafRef = useRef<number | null>(null)
-  const [cursorPos, setCursorPos] = useState({ x: -999, y: -999 })
-
-  useEffect(() => {
-    const onMouseMove = (event: MouseEvent) => { mouse.current = { x: event.clientX, y: event.clientY } }
-    const animate = () => {
-      smooth.current.x += (mouse.current.x - smooth.current.x) * 0.1
-      smooth.current.y += (mouse.current.y - smooth.current.y) * 0.1
-      setCursorPos({ x: smooth.current.x, y: smooth.current.y })
-      rafRef.current = requestAnimationFrame(animate)
-    }
-    window.addEventListener('mousemove', onMouseMove)
-    rafRef.current = requestAnimationFrame(animate)
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [])
+  };
 
   return (
-    <main className="min-h-screen bg-white tracking-[-0.02em]" style={{ fontFamily: "'Inter', sans-serif" }}>
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5">
-        <a href="#top" aria-label="Lithos home" className="flex items-center gap-2.5">
-          <svg width="26" height="26" viewBox="0 0 256 256" fill="#ffffff" aria-hidden="true"><path d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" /></svg>
-          <span className="text-white text-2xl font-playfair italic">Lithos</span>
+    <div style={{ backgroundColor: '#020617', color: '#f8fafc', fontFamily: "'Plus Jakarta Sans', sans-serif", minHeight: '100vh', overflowX: 'hidden' }}>
+      
+      {/* Navigation */}
+      <nav style={{ position: 'fixed', top: 0, width: '100%', padding: '20px 8%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(2, 6, 23, 0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255, 255, 255, 0.1)', zIndex: 1000 }}>
+        <a href="#" style={{ fontSize: '1.5rem', fontWeight: 800, color: '#f8fafc', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <Sparkles style={{ color: '#818cf8', width: '22px' }} /> yezhuththu
         </a>
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 items-center gap-1">
-          <button className="px-4 py-1.5 rounded-full text-sm font-medium text-white">Course</button>
-          {['Field Guides', 'Geology', 'Plans', 'Live Tour'].map((label) => <button key={label} className="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">{label}</button>)}
+        <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+          <a href="#services" style={{ color: '#94a3b8', textDecoration: 'none', fontWeight: 500 }}>Services</a>
+          <a href="pricing.html" style={{ color: '#94a3b8', textDecoration: 'none', fontWeight: 500 }}>Pricing</a>
+          <a href="admin.html" style={{ color: '#818cf8', textDecoration: 'none', fontWeight: 600 }}>Admin Portal</a>
+          <a href="#quote" style={{ background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: '#fff', padding: '10px 24px', borderRadius: '99px', fontWeight: 600, textDecoration: 'none' }}>Get Started</a>
         </div>
-        <button className="hidden md:block bg-white text-gray-900 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-gray-100">Sign Up</button>
-        <button className="md:hidden p-2 text-white" aria-label="Open menu"><Menu size={25} strokeWidth={1.75} /></button>
       </nav>
 
-      <section id="top" className="relative w-full overflow-hidden h-screen bg-black" style={{ height: '100dvh' }}>
-        <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat hero-zoom" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
-        <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
-        <div className="absolute top-[14%] left-0 right-0 z-50 flex flex-col items-center text-center px-5 pointer-events-none">
-          <h1 className="text-white leading-[0.95]">
-            <span className="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style={{ letterSpacing: '-0.05em', animationDelay: '0.25s' }}>Layers hold</span>
-            <span className="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style={{ letterSpacing: '-0.08em', animationDelay: '0.42s' }}>tales of time</span>
-          </h1>
+      {/* Hero Section */}
+      <header style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', padding: '160px 8% 80px', background: 'radial-gradient(circle at 50% 30%, #1e1b4b 0%, #020617 75%)' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 18px', borderRadius: '99px', background: 'rgba(99, 102, 241, 0.15)', border: '1px solid rgba(99, 102, 241, 0.4)', color: '#818cf8', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '24px' }}>
+          <Sparkles style={{ width: '14px' }} /> Premium Web Engineering Studio
         </div>
-        <div className="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px] z-50 hero-anim hero-fade" style={{ animationDelay: '0.7s' }}>
-          <p className="text-sm text-white/80 leading-relaxed">Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.</p>
+        <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 800, lineHeight: 1.05, maxWidth: '900px', marginBottom: '24px', letterSpacing: '-2px' }}>
+          Crafting <span style={{ background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Digital Masterpieces</span> & Web Systems
+        </h1>
+        <p style={{ fontSize: '1.2rem', color: '#94a3b8', maxWidth: '650px', marginBottom: '40px', lineHeight: 1.6 }}>
+          We architect ultra-fast, visually breathtaking, and secure websites that scale your digital footprint effortlessly.
+        </p>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'center' }}>
+          <a href="#quote" style={{ background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: '#fff', padding: '14px 32px', borderRadius: '99px', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', boxShadow: '0 10px 30px rgba(99, 102, 241, 0.4)' }}>
+            Start Your Project <ArrowRight style={{ width: '18px' }} />
+          </a>
         </div>
-        <div className="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] z-50 flex flex-col items-start gap-4 sm:gap-5 hero-anim hero-fade" style={{ animationDelay: '0.85s' }}>
-          <p className="text-xs sm:text-sm text-white/80 leading-relaxed">Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.</p>
-          <button className="bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95 hover:shadow-lg hover:shadow-[#e8702a]/30">Start Digging</button>
+      </header>
+
+      {/* Services Section */}
+      <section id="services" style={{ padding: '120px 8%', maxWidth: '1400px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: 800, marginBottom: '12px' }}>Engineering Capabilities</h2>
+          <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>Built for performance, scalability, and conversion.</p>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          {[
+            { icon: <Code2 />, title: "Custom Web Development", desc: "Hand-crafted architectures built using modern stacks for lightning-fast speeds." },
+            { icon: <ShieldCheck />, title: "Enterprise Security", desc: "Advanced data safeguards, SSL pipelines, and high-tier compliance standards." },
+            { icon: <Database />, title: "Robust Backends", desc: "Scalable REST APIs and synchronized real-time data backends." },
+            { icon: <Layout />, title: "Immersive UI/UX", desc: "Tailored visual designs that capture attention and build immediate brand trust." },
+            { icon: <Cloud />, title: "Cloud DevOps", desc: "Automated deployment pipelines and 99.9% uptime infrastructure." },
+            { icon: <Cpu />, title: "API Integrations", desc: "Seamless integration of payment gateways, CRMs, and custom software." },
+          ].map((s, idx) => (
+            <div key={idx} style={{ background: 'rgba(15, 23, 42, 0.7)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '24px', padding: '36px', backdropFilter: 'blur(20px)', transition: 'transform 0.3s ease' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(99, 102, 241, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#818cf8', marginBottom: '24px' }}>
+                {s.icon}
+              </div>
+              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '10px' }}>{s.title}</h3>
+              <p style={{ color: '#94a3b8', lineHeight: 1.6 }}>{s.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
-    </main>
-  )
-}
 
-export default App
+      {/* Inquiry Form Section */}
+      <section id="quote" style={{ padding: '40px 8% 120px', maxWidth: '900px', margin: '0 auto' }}>
+        <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(255, 255, 255, 0.12)', borderRadius: '32px', padding: '60px', backdropFilter: 'blur(30px)', boxShadow: '0 25px 60px rgba(0,0,0,0.5)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '4px', background: 'linear-gradient(135deg, #6366f1, #ec4899)' }}></div>
+          
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '10px' }}>Submit Project Inquiry</h2>
+            <p style={{ color: '#94a3b8' }}>Fill out your requirements below to connect directly with our engineering team.</p>
+          </div>
+
+          {submitted ? (
+            <div style={{ textAlign: 'center', padding: '40px 0' }}>
+              <CheckCircle style={{ width: '64px', color: '#10b981', marginBottom: '16px' }} />
+              <h3 style={{ fontSize: '1.6rem', fontWeight: 700, marginBottom: '8px' }}>Inquiry Transmitted Successfully!</h3>
+              <p style={{ color: '#94a3b8', marginBottom: '24px' }}>Your project data has been saved to the backend database.</p>
+              <a href="admin.html" style={{ background: '#6366f1', color: '#fff', padding: '12px 28px', borderRadius: '99px', textDecoration: 'none', fontWeight: 600 }}>View in Admin Dashboard</a>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Your Name</label>
+                  <input type="text" required value={formData.clientname} onChange={e => setFormData({...formData, clientname: e.target.value})} placeholder="Jane Doe" style={{ width: '100%', padding: '14px 18px', background: 'rgba(3, 7, 18, 0.9)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', color: '#fff', fontSize: '1rem' }} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Email Address</label>
+                  <input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} placeholder="jane@example.com" style={{ width: '100%', padding: '14px 18px', background: 'rgba(3, 7, 18, 0.9)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', color: '#fff', fontSize: '1rem' }} />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Service Required</label>
+                  <select value={formData.serviceType} onChange={e => setFormData({...formData, serviceType: e.target.value})} style={{ width: '100%', padding: '14px 18px', background: 'rgba(3, 7, 18, 0.9)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', color: '#fff', fontSize: '1rem' }}>
+                    <option value="Static Website">Static Website</option>
+                    <option value="Dynamic Enterprise">Dynamic Enterprise</option>
+                    <option value="E-Commerce Solution">E-Commerce Solution</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Estimated Budget (₹)</label>
+                  <input type="number" required value={formData.estimatedBudget} onChange={e => setFormData({...formData, estimatedBudget: Number(e.target.value)})} style={{ width: '100%', padding: '14px 18px', background: 'rgba(3, 7, 18, 0.9)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', color: '#fff', fontSize: '1rem' }} />
+                </div>
+              </div>
+
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#94a3b8', marginBottom: '8px' }}>Project Overview</label>
+                <textarea rows={4} value={formData.projectDetails} onChange={e => setFormData({...formData, projectDetails: e.target.value})} placeholder="Describe your web development goals..." style={{ width: '100%', padding: '14px 18px', background: 'rgba(3, 7, 18, 0.9)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '12px', color: '#fff', fontSize: '1rem', fontFamily: 'inherit' }}></textarea>
+              </div>
+
+              <button type="submit" disabled={loading} style={{ width: '100%', padding: '16px', background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: '#fff', border: 'none', borderRadius: '99px', fontSize: '1rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 10px 25px rgba(99, 102, 241, 0.4)' }}>
+                {loading ? 'Transmitting to Server...' : 'Send Inquiry'}
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', padding: '40px 8%', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>
+        <p>&copy; 2026 yezhuththu. All rights reserved. Powered by Spring Boot & React.</p>
+      </footer>
+
+    </div>
+  );
+}
