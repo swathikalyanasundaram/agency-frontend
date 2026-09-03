@@ -313,10 +313,7 @@
     var t = (clientX - rect.left) / rect.width;   
     t = Math.min(1, Math.max(0, t));
     
-    // Invert 't' so the sprite tracking matches mouse direction correctly
-    t = 1 - t;
-
-    return t * (FRAME_COUNT - 1);
+    return (1-t) * (FRAME_COUNT - 1);
   }
 
   function onPointerMove(e){
