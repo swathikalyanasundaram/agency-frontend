@@ -65,7 +65,7 @@ export default function App() {
         <p style={{ fontSize: '1.2rem', color: '#94a3b8', maxWidth: '650px', marginBottom: '40px', lineHeight: 1.6 }}>
           We architect ultra-fast, visually breathtaking, and secure websites that scale your digital footprint effortlessly.
         </p>
-        <div style={{ display: 'flex', gap: '16px', flexWrap: 'center' }}>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
           <a href="#quote" style={{ background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: '#fff', padding: '14px 32px', borderRadius: '99px', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', boxShadow: '0 10px 30px rgba(99, 102, 241, 0.4)' }}>
             Start Your Project <ArrowRight style={{ width: '18px' }} />
           </a>
@@ -88,7 +88,7 @@ export default function App() {
             { icon: <Cloud />, title: "Cloud DevOps", desc: "Automated deployment pipelines and 99.9% uptime infrastructure." },
             { icon: <Cpu />, title: "API Integrations", desc: "Seamless integration of payment gateways, CRMs, and custom software." },
           ].map((s, idx) => (
-            <div key={idx} style={{ background: 'rgba(15, 23, 42, 0.7)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '24px', padding: '36px', backdropFilter: 'blur(20px)', transition: 'transform 0.3s ease' }}>
+            <div key={idx} style={{ background: 'rgba(15, 23, 42, 0.7)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '24px', padding: '36px', backdropFilter: 'blur(20px)' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', background: 'rgba(99, 102, 241, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#818cf8', marginBottom: '24px' }}>
                 {s.icon}
               </div>
