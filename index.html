@@ -180,6 +180,7 @@
     width: var(--char-w);
     aspect-ratio: var(--frame-w) / var(--frame-h);
     overflow:hidden;
+    transform: translateZ(0);
     -webkit-mask-image: radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, black 32%, rgba(0,0,0,0.7) 55%, transparent 88%);
             mask-image: radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, black 32%, rgba(0,0,0,0.7) 55%, transparent 88%);
     -webkit-mask-repeat:no-repeat;
@@ -197,7 +198,6 @@
     max-width:none;
     display:block;
     will-change:transform;
-    transform:translate3d(0,0,0);
   }
 
   .char__ring{
@@ -289,9 +289,9 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Size the sprite image to the number of frames once it's loaded / on resize.
+  // Size the sprite image cleanly using offsetWidth for stable rounding
   function layoutImage(){
-    var displayW = charEl.clientWidth;
+    var displayW = charEl.offsetWidth;
     img.style.width = (displayW * FRAME_COUNT) + 'px';
     img.style.height = 'auto';
     return displayW;
@@ -313,7 +313,6 @@
     var rect = hero.getBoundingClientRect();
     var t = (clientX - rect.left) / rect.width;   // 0..1 across the whole hero
     t = Math.min(1, Math.max(0, t));
-    t = 1 - t;
     return t * (FRAME_COUNT - 1);
   }
 
@@ -349,8 +348,10 @@
 
     var rounded = Math.round(current);
     rounded = Math.min(FRAME_COUNT - 1, Math.max(0, rounded));
-    charEl.style.setProperty('--tx', (-rounded * displayWidth) + 'px');
-    img.style.transform = 'translate3d(' + (-rounded * displayWidth) + 'px,0,0)';
+    
+    // Pixel-snap offset translation to prevent shifting issues on the right edge
+    var offsetX = Math.round(-rounded * displayWidth);
+    img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
 
     var settled = Math.abs(goal - current) < 0.02;
     if (!settled || isActive){
@@ -368,7 +369,8 @@
 
   // Initial paint at the idle frame.
   function paintIdle(){
-    img.style.transform = 'translate3d(' + (-IDLE_FRAME * displayWidth) + 'px,0,0)';
+    var offsetX = Math.round(-IDLE_FRAME * displayWidth);
+    img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
   }
 
   if (img.complete){
@@ -396,7 +398,8 @@
     resizeT = setTimeout(function(){
       displayWidth = layoutImage();
       var rounded = Math.round(current);
-      img.style.transform = 'translate3d(' + (-rounded * displayWidth) + 'px,0,0)';
+      var offsetX = Math.round(-rounded * displayWidth);
+      img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
     }, 120);
   });
 
