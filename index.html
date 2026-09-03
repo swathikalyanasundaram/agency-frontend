@@ -37,6 +37,51 @@
       color: var(--text-dark);
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
+      overflow: hidden; /* Locked initially for video intro */
+    }
+
+    /* Immersive Video Intro Overlay */
+    #introOverlay {
+      position: fixed;
+      inset: 0;
+      background: #2d2a29;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .intro-box {
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+    }
+
+    #introVideo {
+      width: 100%;
+      border-radius: 20px;
+      border: 4px solid #fcfbfa;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .skip-btn {
+      margin-top: 25px;
+      background: transparent;
+      border: 2px solid #fcfbfa;
+      color: #fcfbfa;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .skip-btn:hover {
+      background: #fcfbfa;
+      color: #2d2a29;
     }
 
     /* Organic Background Blobs */
@@ -188,7 +233,7 @@
       transform: translateY(-2px);
     }
 
-    /* Moving Cartoon Illustration Stage */
+    /* Cozy Pinterest Illustration Box */
     .hero-graphic-box {
       position: relative;
       width: 100%;
@@ -203,30 +248,12 @@
       overflow: hidden;
     }
 
-    .cartoon-scene {
-      width: 90%;
-      height: 90%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .floating-cartoon {
       animation: floatCartoon 4s ease-in-out infinite alternate;
     }
     @keyframes floatCartoon {
-      0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-12px) rotate(2deg); }
-    }
-
-    .animated-bee {
-      position: absolute;
-      animation: flyBee 3s ease-in-out infinite alternate;
-    }
-    @keyframes flyBee {
-      0% { transform: translate(0, 0) rotate(-10deg); }
-      100% { transform: translate(15px, -15px) rotate(10deg); }
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
     }
 
     /* Standard Sections */
@@ -419,6 +446,17 @@
 </head>
 <body>
 
+  <!-- Fullscreen Intro Video Overlay (Plays First) -->
+  <div id="introOverlay">
+    <div class="intro-box">
+      <video id="introVideo" autoplay muted playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-lights-31998-large.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button class="skip-btn" onclick="skipIntro()">Skip Intro →</button>
+    </div>
+  </div>
+
   <!-- Background Blobs -->
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
@@ -437,7 +475,7 @@
     <a href="#contact" class="nav-btn">Schedule a Call</a>
   </header>
 
-  <!-- Hero Section with Moving Cartoon Graphics -->
+  <!-- Hero Section with Pinterest-Style Cozy Room Vector -->
   <section class="hero-section" id="home">
     <div class="hero-grid">
       <div class="hero-content">
@@ -448,31 +486,38 @@
         </div>
       </div>
 
-      <!-- Moving Cartoon Illustration Box -->
+      <!-- Pinterest-Style Cozy Vector Scene -->
       <div class="hero-graphic-box">
-        <div class="cartoon-scene">
-          <!-- Animated Cartoon Character SVG -->
-          <svg class="floating-cartoon" width="220" height="220" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M40 190C40 120 70 80 100 80C130 80 160 120 160 190" fill="#fde8e4" stroke="#2d2a29" stroke-width="4"/>
-            <path d="M75 190C75 145 125 145 125 190" fill="#2d2a29"/>
-            <path d="M60 145C60 115 140 115 140 145" fill="#f06449"/>
-            <circle cx="100" cy="95" r="32" fill="#fcd3c2" stroke="#2d2a29" stroke-width="3"/>
-            <path d="M72 85C72 65 128 65 128 85C128 100 115 95 100 95C85 95 72 100 72 85Z" fill="#2d2a29"/>
-            <circle cx="90" cy="95" r="3" fill="#2d2a29"/>
-            <circle cx="110" cy="95" r="3" fill="#2d2a29"/>
-            <path d="M96 103C98 107 102 107 104 103" stroke="#2d2a29" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
+        <div class="cartoon-scene" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+          <svg class="floating-cartoon" width="320" height="320" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background Wall & Floor Grid -->
+            <rect x="30" y="30" width="240" height="180" rx="20" fill="#fefae0" stroke="#2d2a29" stroke-width="4"/>
+            <path d="M30 210H270V250C270 261.046 261.046 270 250 270H50C38.9543 270 30 261.046 30 250V210Z" fill="#faedcd" stroke="#2d2a29" stroke-width="4"/>
+            
+            <!-- Cozy Window -->
+            <rect x="60" y="60" width="70" height="90" rx="10" fill="#e9edc9" stroke="#2d2a29" stroke-width="3"/>
+            <path d="M95 60V150M60 105H130" stroke="#2d2a29" stroke-width="3"/>
+            
+            <!-- Hanging Plant -->
+            <path d="M210 50V80" stroke="#2d2a29" stroke-width="2.5"/>
+            <path d="M195 80H225L220 110H200L195 80Z" fill="#ccd5ae" stroke="#2d2a29" stroke-width="3"/>
+            <circle cx="210" cy="75" r="12" fill="#606c38"/>
+            <circle cx="200" cy="65" r="10" fill="#606c38"/>
+            <circle cx="220" cy="68" r="11" fill="#606c38"/>
 
-          <!-- Moving Bees -->
-          <svg class="animated-bee" style="top: 20px; left: 20px;" width="45" height="30" viewBox="0 0 40 30" fill="none">
-            <ellipse cx="20" cy="15" rx="14" ry="10" fill="#facc15" stroke="#2d2a29" stroke-width="3"/>
-            <path d="M14 8L16 22M24 8L22 22" stroke="#2d2a29" stroke-width="3"/>
-            <path d="M12 5C12 2 17 0 20 5M20 5C23 0 28 2 28 5" fill="none" stroke="#2d2a29" stroke-width="2.5"/>
-          </svg>
+            <!-- Desk & Chair -->
+            <rect x="110" y="180" width="130" height="15" rx="4" fill="#d4a373" stroke="#2d2a29" stroke-width="3"/>
+            <path d="M125 195V240M225 195V240" stroke="#2d2a29" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Laptop & Lamp -->
+            <rect x="150" y="160" width="35" height="20" rx="3" fill="#adb5bd" stroke="#2d2a29" stroke-width="2.5"/>
+            <path d="M135 180H195" stroke="#2d2a29" stroke-width="2" stroke-linecap="round"/>
+            <path d="M245 240V120H260" stroke="#2d2a29" stroke-width="3" stroke-linecap="round"/>
+            <path d="M250 120L235 95H275L260 120Z" fill="#ffb703" stroke="#2d2a29" stroke-width="3"/>
 
-          <svg class="animated-bee" style="bottom: 25px; right: 25px; animation-delay: 1s;" width="45" height="30" viewBox="0 0 40 30" fill="none">
-            <ellipse cx="20" cy="15" rx="14" ry="10" fill="#facc15" stroke="#2d2a29" stroke-width="3"/>
-            <path d="M14 8L16 22M24 8L22 22" stroke="#2d2a29" stroke-width="3"/>
+            <!-- Coffee Mug -->
+            <rect x="70" y="185" width="22" height="25" rx="5" fill="white" stroke="#2d2a29" stroke-width="2.5"/>
+            <path d="M92 192C98 192 98 203 92 203" stroke="#2d2a29" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
         </div>
       </div>
@@ -570,15 +615,26 @@
     <p>&copy; 2026 yezhuththu.site — Crafted with cozy motion design.</p>
   </footer>
 
-  <!-- GSAP Animations & Backend Integration Script -->
+  <!-- Scripts: Intro Transition, GSAP, and Backend Integration -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      gsap.registerPlugin(ScrollTrigger);
+    function skipIntro() {
+      const overlay = document.getElementById('introOverlay');
+      const video = document.getElementById('introVideo');
+      
+      video.pause();
+      overlay.style.opacity = '0';
+      overlay.style.visibility = 'hidden';
+      document.body.style.overflow = 'auto'; // Unlock scroll
+    }
 
-      // Entrance Animations on Load
-      gsap.from("header", { y: -30, opacity: 0, duration: 0.8, ease: "power3.out" });
-      gsap.from(".hero-content", { y: 40, opacity: 0, duration: 1, delay: 0.2, ease: "power3.out" });
-      gsap.from(".hero-graphic-box", { scale: 0.9, opacity: 0, duration: 1.2, delay: 0.3, ease: "power3.out" });
+    document.addEventListener("DOMContentLoaded", () => {
+      // Handle Video Intro Ending
+      const video = document.getElementById('introVideo');
+      video.onended = () => {
+        skipIntro();
+      };
+
+      gsap.registerPlugin(ScrollTrigger);
 
       // Scroll-Triggered Reveals for Pricing Cards
       gsap.utils.toArray(".pricing-card").forEach((card, i) => {
