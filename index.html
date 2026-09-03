@@ -45,7 +45,6 @@
     isolation:isolate;
   }
 
-  /* soft drifting wool-light accents, purely decorative, very slow */
   .glow{
     position:absolute;
     border-radius:50%;
@@ -150,7 +149,6 @@
     50%{ opacity:0.45; transform:scale(0.72); }
   }
 
-  /* ---- character stage ---- */
   .stage{
     position:relative;
     flex: 0 0 auto;
@@ -201,14 +199,6 @@
     will-change:transform;
   }
 
-  .char__ring{
-    position:absolute;
-    inset:0;
-    z-index:3;
-    pointer-events:none;
-    border-radius:50%;
-  }
-
   footer{
     position:absolute;
     left:0; right:0; bottom:14px;
@@ -218,9 +208,7 @@
     color:rgba(255,248,236,0.55);
     letter-spacing:0.01em;
   }
-  footer a{ color:inherit; }
 
-  /* ---- layout: stack on narrow screens ---- */
   @media (max-width: 860px){
     .hero__inner{
       flex-direction:column;
@@ -278,7 +266,7 @@
   "use strict";
 
   var FRAME_COUNT = 96;
-  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2); // Frame 48 (Straight ahead)
+  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2);
 
   var hero   = document.getElementById('hero');
   var stage  = document.getElementById('stage');
@@ -306,23 +294,23 @@
   var lastClientX = 0;
   var lastClientY = 0;
 
-  var EASE = 0.12;            
+  var EASE = 0.15;            
   var IDLE_EASE = 0.06;       
 
   function frameForPointer(clientX, clientY){
     var stageRect = stage.getBoundingClientRect();
     
-    // Sheep's stomach / center body anchor point
+    // Body / Stomach center anchor point
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
     var bodyCenterY = stageRect.top + (stageRect.height * 0.55);
 
-    // --- HORIZONTAL TRACKING (Left / Right) ---
+    // Horizontal tracking direction
     var distanceX = clientX - bodyCenterX;
-    var maxRangeX = window.innerWidth * 0.38;
+    var maxRangeX = window.innerWidth * 0.4;
     var normalizedX = Math.min(1, Math.max(-1, distanceX / maxRangeX));
     var baseFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
 
-    // --- VERTICAL FRAME NUDGE (Up / Down) ---
+    // Vertical framing nudge
     var distanceY = clientY - bodyCenterY;
     var maxRangeY = window.innerHeight * 0.35;
     var normalizedY = Math.min(1, Math.max(-1, distanceY / maxRangeY));
@@ -367,11 +355,11 @@
     
     var offsetX = Math.round(-rounded * displayWidth);
     
-    // Stomach-anchored organic vertical translation matching cursor height
+    // Stomach-anchored vertical body translation
     var stageRect = stage.getBoundingClientRect();
     var bodyCenterY = stageRect.top + (stageRect.height * 0.55);
     var offsetY = isActive ? (lastClientY - bodyCenterY) : 0;
-    var verticalTranslate = Math.min(12, Math.max(-12, offsetY * 0.08));
+    var verticalTranslate = Math.min(10, Math.max(-10, offsetY * 0.06));
 
     img.style.transform = 'translate3d(' + offsetX + 'px, ' + verticalTranslate + 'px, 0)';
 
@@ -404,8 +392,9 @@
   }
 
   if (!reduceMotion){
-    window.addEventListener('mousemove', onPointerMove, { passive:true });
-    window.addEventListener('touchmove', onPointerMove, { passive:true });
+    // Attached directly to the hero section element so it captures events reliably
+    hero.addEventListener('mousemove', onPointerMove, { passive:true });
+    hero.addEventListener('touchmove', onPointerMove, { passive:true });
     hero.addEventListener('mouseleave', onPointerLeave);
     window.addEventListener('touchend', onPointerLeave, { passive:true });
     window.addEventListener('blur', onPointerLeave);
