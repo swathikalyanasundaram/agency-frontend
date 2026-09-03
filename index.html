@@ -294,18 +294,27 @@
   var EASE = 0.14;            
   var IDLE_EASE = 0.06;       
 
-  function frameForPointer(clientX){
+  function frameForPointer(clientX, clientY){
     var stageRect = stage.getBoundingClientRect();
     
     // Sheep's stomach / center body anchor point
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
+    var bodyCenterY = stageRect.top + (stageRect.height * 0.55);
 
-    // Horizontal tracking direction anchored around his body center
+    // --- HORIZONTAL TRACKING (Left / Right) ---
     var distanceX = clientX - bodyCenterX;
     var maxRangeX = window.innerWidth * 0.4;
     var normalizedX = Math.min(1, Math.max(-1, distanceX / maxRangeX));
-    
-    var finalFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
+    var horizontalFrames = normalizedX * CENTER_FRAME;
+
+    // --- VERTICAL TRACKING (Up / Down illusion mapping) ---
+    // Moving cursor UP (negative Y relative to stomach) shifts frames to create an upward look
+    var distanceY = clientY - bodyCenterY;
+    var maxRangeY = window.innerHeight * 0.35;
+    var normalizedY = Math.min(1, Math.max(-1, distanceY / maxRangeY));
+    var verticalFrames = -normalizedY * 10; // Negative so moving up shifts frame index accordingly
+
+    var finalFrame = CENTER_FRAME + horizontalFrames + verticalFrames;
 
     return Math.min(FRAME_COUNT - 1, Math.max(0, finalFrame));
   }
@@ -313,8 +322,9 @@
   function onPointerMove(e){
     if (reduceMotion) return;
     var clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+    var clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
     
-    target = frameForPointer(clientX);
+    target = frameForPointer(clientX, clientY);
     isActive = true;
     if (!hintDismissed){
       hintDismissed = true;
