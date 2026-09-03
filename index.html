@@ -42,6 +42,7 @@
       position: fixed; top: 0; width: 100%; padding: 22px 8%; display: flex; justify-content: space-between; align-items: center;
       background: var(--bg-nav); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border-color); z-index: 1000;
+      transition: transform 0.3s ease;
     }
     .brand-logo { font-size: 1.6rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
     .brand-logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -62,19 +63,20 @@
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); backdrop-filter: blur(10px); }
     .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.1); transform: translateY(-2px); }
 
-    /* High-End Graphics Hero Section */
+    /* Hero Section with Parallax Stage */
     .hero {
       position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      padding: 160px 8% 100px; overflow: hidden; text-align: center;
+      padding: 160px 8% 100px; overflow: hidden; text-align: center; perspective: 1000px;
     }
     
-    /* Luxury Background Graphic Grids & Glow Orbs */
     .hero-graphics-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden;
       background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #020617 70%);
+      transition: transform 0.1s ease-out; /* Smooth parallax response */
     }
     .glow-orb {
       position: absolute; border-radius: 50%; filter: blur(120px); z-index: -1; pointer-events: none; opacity: 0.45;
+      transition: transform 0.2s cubic-bezier(0,0,0.2,1);
     }
     .orb-1 { width: 500px; height: 500px; background: #6366f1; top: -100px; left: 10%; animation: floatOrb 10s ease-in-out infinite alternate; }
     .orb-2 { width: 600px; height: 600px; background: #ec4899; top: 20%; right: 5%; animation: floatOrb 12s ease-in-out infinite alternate-reverse; }
@@ -92,7 +94,7 @@
       background-size: 60px 60px; z-index: -1;
     }
 
-    .hero-content { max-width: 950px; margin: 0 auto; z-index: 1; }
+    .hero-content { max-width: 950px; margin: 0 auto; z-index: 1; transform-style: preserve-3d; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 99px;
       background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4);
@@ -104,6 +106,18 @@
     .hero-content p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 720px; margin-left: auto; margin-right: auto; }
     .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
+    /* Scroll Reveal Animation Classes */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-item.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* Diagnostics Badge */
     #videoStatusBadge {
       position: fixed; bottom: 24px; right: 24px; z-index: 9999;
@@ -114,7 +128,7 @@
     }
     .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; }
 
-    /* Bento Grid Services with Luxury Borders */
+    /* Bento Grid Services with Tilt Card Support */
     .section { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
     .section-header { text-align: center; margin-bottom: 70px; }
     .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -1.5px; }
@@ -123,11 +137,13 @@
     .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .bento-card {
       background: var(--bg-card); border: 1px solid var(--border-color); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-radius: 28px; padding: 40px; position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 28px; padding: 40px; position: relative; 
+      transition: transform 0.2s ease, border-color 0.4s ease, box-shadow 0.4s ease;
       display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+      transform-style: preserve-3d;
     }
     .bento-card.large { grid-column: span 2; }
-    .bento-card:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: 0 30px 70px rgba(99, 102, 241, 0.2); }
+    .bento-card:hover { border-color: var(--border-hover); box-shadow: 0 30px 70px rgba(99, 102, 241, 0.25); }
     .bento-icon { width: 54px; height: 54px; border-radius: 16px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 28px; box-shadow: inset 0 0 15px rgba(99, 102, 241, 0.2); }
     .bento-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
     .bento-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
@@ -168,11 +184,11 @@
   <!-- Live Status Indicator -->
   <div id="videoStatusBadge">
     <div class="status-dot"></div>
-    <span id="statusText">Elite Graphics Engine Active</span>
+    <span id="statusText">Pro Motion Parallax Engine Active</span>
   </div>
 
   <!-- Navbar -->
-  <nav class="navbar">
+  <nav class="navbar" id="navbar">
     <a href="index.html" class="brand-logo">yezhuththu<span>.site</span></a>
     
     <div class="nav-right">
@@ -185,15 +201,15 @@
   </nav>
 
   <!-- High-End Graphics Hero Section -->
-  <header class="hero">
-    <div class="hero-graphics-bg">
+  <header class="hero" id="heroSection">
+    <div class="hero-graphics-bg" id="heroBg">
       <div class="grid-overlay"></div>
-      <div class="glow-orb orb-1"></div>
-      <div class="glow-orb orb-2"></div>
-      <div class="glow-orb orb-3"></div>
+      <div class="glow-orb orb-1" id="orb1"></div>
+      <div class="glow-orb orb-2" id="orb2"></div>
+      <div class="glow-orb orb-3" id="orb3"></div>
     </div>
 
-    <div class="hero-content">
+    <div class="hero-content reveal-item">
       <div class="hero-badge"><i data-lucide="sparkles" style="width: 16px;"></i> Next-Gen Engineering Studio</div>
       <h1>Architecting <span>Digital Excellence</span> & Custom Web Systems</h1>
       <p>We combine high-performance frontend engineering, robust backend infrastructure, and immersive design to scale your brand to the next level.</p>
@@ -206,13 +222,13 @@
 
   <!-- Bento Grid Services -->
   <section id="services" class="section">
-    <div class="section-header">
+    <div class="section-header reveal-item">
       <h2>Engineering Capabilities & Services</h2>
       <p>Comprehensive digital solutions built with precision, speed, and scale.</p>
     </div>
 
     <div class="bento-grid">
-      <div class="bento-card large">
+      <div class="bento-card large reveal-item tilt-card">
         <div>
           <div class="bento-icon"><i data-lucide="code-2"></i></div>
           <h3>Custom Web Engineering</h3>
@@ -220,7 +236,7 @@
         </div>
       </div>
 
-      <div class="bento-card">
+      <div class="bento-card reveal-item tilt-card">
         <div>
           <div class="bento-icon"><i data-lucide="shield-check"></i></div>
           <h3>Enterprise Security</h3>
@@ -228,7 +244,7 @@
         </div>
       </div>
 
-      <div class="bento-card">
+      <div class="bento-card reveal-item tilt-card">
         <div>
           <div class="bento-icon"><i data-lucide="database"></i></div>
           <h3>Dynamic Backends</h3>
@@ -236,7 +252,7 @@
         </div>
       </div>
 
-      <div class="bento-card">
+      <div class="bento-card reveal-item tilt-card">
         <div>
           <div class="bento-icon"><i data-lucide="layout"></i></div>
           <h3>UI/UX Brand Design</h3>
@@ -244,7 +260,7 @@
         </div>
       </div>
 
-      <div class="bento-card">
+      <div class="bento-card reveal-item tilt-card">
         <div>
           <div class="bento-icon"><i data-lucide="cloud"></i></div>
           <h3>Cloud DevOps & Hosting</h3>
@@ -252,7 +268,7 @@
         </div>
       </div>
 
-      <div class="bento-card">
+      <div class="bento-card reveal-item tilt-card">
         <div>
           <div class="bento-icon"><i data-lucide="cpu"></i></div>
           <h3>API Integrations</h3>
@@ -264,7 +280,7 @@
 
   <!-- Contact Lead Section -->
   <section id="quote" class="section" style="padding-top: 0;">
-    <div class="quote-section">
+    <div class="quote-section reveal-item">
       <div class="section-header" style="margin-bottom: 30px;">
         <h2>Start Your Project Today</h2>
         <p>Fill out the details below and our engineering team will get back to you promptly.</p>
@@ -311,7 +327,7 @@
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="reveal-item">
     <p>&copy; 2026 yezhuththu.site. All Rights Reserved.</p>
     <p>Powered by Advanced Frontend & Spring Boot Backend Systems.</p>
   </footer>
@@ -319,6 +335,56 @@
   <!-- Scripts -->
   <script>
     lucide.createIcons();
+
+    /* 1. CURSOR PARALOUSE & MOUSE MOVE EFFECT */
+    const heroSection = document.getElementById('heroSection');
+    const orb1 = document.getElementById('orb1');
+    const orb2 = document.getElementById('orb2');
+    const orb3 = document.getElementById('orb3');
+
+    heroSection.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth - 0.5) * 40;
+      const y = (e.clientY / innerHeight - 0.5) * 40;
+
+      orb1.style.transform = `translate(${x * 1.5}px, ${y * 1.5}px)`;
+      orb2.style.transform = `translate(${-x * 2}px, ${-y * 2}px)`;
+      orb3.style.transform = `translate(${x}px, ${y * 2}px)`;
+    });
+
+    /* 2. INTERACTIVE TILT EFFECT FOR BENTO CARDS */
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        card.style.transform = `perspective(1000px) rotateX(${-y / 15}deg) rotateY(${x / 15}deg) translateY(-6px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+      });
+    });
+
+    /* 3. SCROLL REVEAL OBSERVER */
+    const observerOptions = {
+      threshold: 0.15
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-item').forEach(el => {
+      scrollObserver.observe(el);
+    });
 
     /* Real Backend Spring Boot Form Submission Handler */
     const contactForm = document.getElementById('contactForm');
