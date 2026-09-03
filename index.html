@@ -12,7 +12,6 @@
 
   <style>
     :root {
-      --bg-dark: #070914;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --accent-orange: #f97316;
@@ -24,7 +23,7 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-dark);
+      background-color: #070914;
       color: var(--text-main);
       overflow-x: hidden;
     }
@@ -32,7 +31,7 @@
     /* Navbar */
     .navbar {
       position: fixed; top: 0; width: 100%; padding: 24px 6%; display: flex; justify-content: space-between; align-items: center;
-      background: linear-gradient(to bottom, rgba(7, 9, 20, 0.9), rgba(7, 9, 20, 0)); backdrop-filter: blur(10px); z-index: 1000;
+      background: linear-gradient(to bottom, rgba(7, 9, 20, 0.8), rgba(7, 9, 20, 0)); backdrop-filter: blur(10px); z-index: 1000;
     }
     .logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
     
@@ -47,38 +46,37 @@
     }
     .btn-contact:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255,255,255,0.2); }
 
-    /* Split-Screen Layout Section */
-    .split-section {
-      position: relative; width: 100vw; height: 100vh; display: grid; grid-template-columns: 42% 58%; align-items: center;
-      padding: 0 6% 0 8%; background: #070914; overflow: hidden;
+    /* Full-Screen Immersive Section */
+    .hero-section {
+      position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; padding: 0 8%;
+      overflow: hidden;
     }
 
-    /* Left Side Content Box */
+    /* True Full-Screen Background Video */
+    .bg-video {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; pointer-events: none;
+      filter: brightness(0.55) contrast(1.15);
+    }
+
+    /* Cinematic Gradient Vignette Over Video */
+    .bg-overlay {
+      position: absolute; inset: 0; 
+      background: radial-gradient(circle at 75% 50%, rgba(7, 9, 20, 0.2) 0%, rgba(7, 9, 20, 0.85) 75%),
+                  linear-gradient(to right, rgba(7, 9, 20, 0.95) 0%, rgba(7, 9, 20, 0.6) 50%, rgba(7, 9, 20, 0.2) 100%);
+      z-index: 2; pointer-events: none;
+    }
+
+    /* Content Box Floating over Video */
     .content-box {
-      position: relative; z-index: 10; max-width: 480px; padding-top: 40px;
+      position: relative; z-index: 10; max-width: 500px; padding-top: 40px;
     }
 
     .content-box h2 {
-      font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; color: #fff; margin-bottom: 12px;
+      font-size: clamp(2rem, 2.8vw, 2.6rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; color: #fff; margin-bottom: 14px;
     }
 
     .content-box p {
-      color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; font-weight: 400;
-    }
-
-    /* Right Side Cinematic Video Frame Container */
-    .visual-frame-container {
-      position: relative; width: 100%; height: 75vh; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.08);
-      background: #0b0d1a; display: flex; align-items: center; justify-content: center;
-    }
-
-    .visual-frame-container video {
-      width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1);
-    }
-
-    .frame-vignette {
-      position: absolute; inset: 0; background: linear-gradient(to right, rgba(7,9,20,0.4) 0%, transparent 20%, transparent 80%, rgba(7,9,20,0.4) 100%); pointer-events: none;
+      color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 32px; font-weight: 400;
     }
 
     /* Side Navigation Indicators */
@@ -114,23 +112,21 @@
     <button class="indicator-dot"></button>
   </div>
 
-  <!-- Main Split Hero Section -->
-  <section class="split-section">
-    <!-- Left Column: Copy -->
+  <!-- Hero Section with Fullscreen Background Video -->
+  <section class="hero-section">
+    <!-- Full-bleed background video -->
+    <video class="bg-video" autoplay muted loop playsinline>
+      <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- Content Layer -->
     <div class="content-box">
       <h2>A Model For Success.</h2>
       <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process starts with our proprietary SolutionLab roadmap session.</p>
       
       <h2>Attentiveness as a Priority.</h2>
       <p>You and your project are important to us. Receive transparent, structured updates every step of the way to ensure total alignment and clarity.</p>
-    </div>
-
-    <!-- Right Column: Framed Cinematic Video Visual -->
-    <div class="visual-frame-container">
-      <video autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-code-and-graphs-31938-large.mp4" type="video/mp4">
-      </video>
-      <div class="frame-vignette"></div>
     </div>
   </section>
 
