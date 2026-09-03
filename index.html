@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Foci Studio — Design that means business.</title>
   
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -38,7 +37,6 @@
       align-items: center;
     }
 
-    /* Central Content Box */
     .central-content {
       position: absolute;
       text-align: center;
@@ -46,7 +44,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       pointer-events: auto;
     }
 
@@ -84,7 +82,6 @@
       border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* Orbiting Carousel Stage */
     .orbit-stage {
       position: absolute;
       width: 100%;
@@ -99,11 +96,10 @@
       animation-play-state: paused;
     }
 
-    /* Individual Image Cards */
     .card {
       position: absolute;
-      width: 110px;
-      height: 110px;
+      width: 140px;
+      height: 140px;
       background: #111;
       border-radius: 14px;
       overflow: hidden;
@@ -118,15 +114,14 @@
       object-fit: cover;
     }
 
-    /* Perfectly balanced orbital positioning radius (~310px) */
-    .card:nth-child(1)  { transform: rotate(0deg) translate(310px) rotate(0deg); }
-    .card:nth-child(2)  { transform: rotate(45deg) translate(310px) rotate(-45deg); }
-    .card:nth-child(3)  { transform: rotate(90deg) translate(310px) rotate(-90deg); }
-    .card:nth-child(4)  { transform: rotate(135deg) translate(310px) rotate(-135deg); }
-    .card:nth-child(5)  { transform: rotate(180deg) translate(310px) rotate(-180deg); }
-    .card:nth-child(6)  { transform: rotate(225deg) translate(310px) rotate(-225deg); }
-    .card:nth-child(7)  { transform: rotate(270deg) translate(310px) rotate(-270deg); }
-    .card:nth-child(8)  { transform: rotate(315deg) translate(310px) rotate(-315deg); }
+    .card:nth-child(1)  { transform: rotate(0deg) translate(480px) rotate(0deg); }
+    .card:nth-child(2)  { transform: rotate(45deg) translate(480px) rotate(-45deg); }
+    .card:nth-child(3)  { transform: rotate(90deg) translate(480px) rotate(-90deg); }
+    .card:nth-child(4)  { transform: rotate(135deg) translate(480px) rotate(-135deg); }
+    .card:nth-child(5)  { transform: rotate(180deg) translate(480px) rotate(-180deg); }
+    .card:nth-child(6)  { transform: rotate(225deg) translate(480px) rotate(-225deg); }
+    .card:nth-child(7)  { transform: rotate(270deg) translate(480px) rotate(-270deg); }
+    .card:nth-child(8)  { transform: rotate(315deg) translate(480px) rotate(-315deg); }
 
     @keyframes rotateOrbit {
       from { transform: rotate(0deg); }
@@ -138,23 +133,22 @@
       to { transform: rotate(0deg); }
     }
 
-    @media (max-width: 900px) {
-      .card { width: 85px; height: 85px; }
-      .card:nth-child(1)  { transform: rotate(0deg) translate(200px) rotate(0deg); }
-      .card:nth-child(2)  { transform: rotate(45deg) translate(200px) rotate(-45deg); }
-      .card:nth-child(3)  { transform: rotate(90deg) translate(200px) rotate(-90deg); }
-      .card:nth-child(4)  { transform: rotate(135deg) translate(200px) rotate(-135deg); }
-      .card:nth-child(5)  { transform: rotate(180deg) translate(200px) rotate(-180deg); }
-      .card:nth-child(6)  { transform: rotate(225deg) translate(200px) rotate(-225deg); }
-      .card:nth-child(7)  { transform: rotate(270deg) translate(200px) rotate(-270deg); }
-      .card:nth-child(8)  { transform: rotate(315deg) translate(200px) rotate(-315deg); }
+    @media (max-width: 1024px) {
+      .card { width: 110px; height: 110px; }
+      .card:nth-child(1)  { transform: rotate(0deg) translate(300px) rotate(0deg); }
+      .card:nth-child(2)  { transform: rotate(45deg) translate(300px) rotate(-45deg); }
+      .card:nth-child(3)  { transform: rotate(90deg) translate(300px) rotate(-90deg); }
+      .card:nth-child(4)  { transform: rotate(135deg) translate(300px) rotate(-135deg); }
+      .card:nth-child(5)  { transform: rotate(180deg) translate(300px) rotate(-180deg); }
+      .card:nth-child(6)  { transform: rotate(225deg) translate(300px) rotate(-225deg); }
+      .card:nth-child(7)  { transform: rotate(270deg) translate(300px) rotate(-270deg); }
+      .card:nth-child(8)  { transform: rotate(315deg) translate(300px) rotate(-315deg); }
     }
   </style>
 </head>
 <body>
 
   <div class="hero-container">
-    
     <div class="orbit-stage">
       <div class="card"><img src="https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&w=400&q=80" alt="Work 1"></div>
       <div class="card"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80" alt="Work 2"></div>
@@ -171,7 +165,6 @@
       <p class="subtitle">Foci Studio - Design that means business.</p>
       <a href="#contact" class="contact-btn">Get in touch</a>
     </div>
-
   </div>
 
 </body>
