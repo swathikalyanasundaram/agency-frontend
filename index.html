@@ -8,309 +8,551 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- GSAP Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
   <style>
     :root {
-      --bg-blue: #0070f3;
-      --accent-teal: #00e599;
-      --dark-teal: #00a86b;
-      --white: #ffffff;
-      --card-bg: rgba(255, 255, 255, 0.95);
+      --bg-light: #f8fafc;
+      --bg-white: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary-blue: #0284c7;
+      --accent-teal: #0d9488;
+      --border-color: #e2e8f0;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: var(--bg-blue);
-      color: var(--white);
+      background-color: var(--bg-light);
+      color: var(--text-main);
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
     /* Header Navigation */
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 5vw;
-      width: 100%;
-      z-index: 10;
+      padding: 1.2rem 5vw;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
     }
 
     .logo {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      color: var(--white);
+      color: var(--text-main);
       text-decoration: none;
-      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-blue);
     }
 
     .nav-btn {
-      background: var(--white);
-      color: var(--bg-blue);
-      padding: 0.6rem 1.5rem;
+      background: var(--text-main);
+      color: var(--bg-white);
+      padding: 0.6rem 1.4rem;
       border-radius: 50px;
       font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease;
+      font-size: 0.9rem;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .nav-btn:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
+      background: var(--primary-blue);
     }
 
-    /* Main Motion Stage */
-    .motion-stage {
+    /* Hero Motion Stage Section */
+    .motion-stage-section {
       position: relative;
-      flex: 1;
+      height: 90vh;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      width: 100%;
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border-color);
     }
 
-    /* Background Sparkles & Accents */
-    .sparkle {
-      position: absolute;
-      background: var(--white);
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      animation: twinkle 3s infinite ease-in-out alternate;
-    }
-    .s1 { width: 24px; height: 24px; top: 15%; right: 15%; }
-    .s2 { width: 18px; height: 18px; bottom: 20%; left: 10%; animation-delay: 1.5s; }
-
-    @keyframes twinkle {
-      0% { transform: scale(0.8) rotate(0deg); opacity: 0.6; }
-      100% { transform: scale(1.2) rotate(15deg); opacity: 1; }
-    }
-
-    /* Central Portal Ring */
     .portal-ring {
       position: absolute;
-      width: 320px;
-      height: 320px;
-      border: 35px solid var(--accent-teal);
+      width: 300px;
+      height: 300px;
+      border: 30px solid var(--accent-teal);
       border-radius: 50%;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.2), inset 0 10px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 20px 40px rgba(13, 148, 136, 0.15);
       z-index: 5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .portal-inner-glow {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
-    }
-
-    /* Scrolling Workflow Track */
     .workflow-track {
       position: absolute;
       display: flex;
-      gap: 40px;
+      gap: 35px;
       width: max-content;
       z-index: 2;
-      align-items: center;
     }
 
-    /* Mockup Browser Window Cards */
     .browser-card {
-      width: 300px;
-      height: 190px;
-      background: var(--card-bg);
+      width: 280px;
+      height: 180px;
+      background: var(--bg-white);
       border-radius: 12px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      border: 2px solid rgba(255,255,255,0.4);
+      border: 1px solid var(--border-color);
     }
 
     .browser-header {
-      background: #e2e8f0;
+      background: #f1f5f9;
       padding: 8px 12px;
       display: flex;
       gap: 6px;
       align-items: center;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .dot { width: 8px; height: 8px; border-radius: 50%; }
-    .dot-red { background: #ff5f56; }
-    .dot-yellow { background: #ffbd2e; }
-    .dot-green { background: #27c93f; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
 
     .browser-body {
-      padding: 15px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      flex: 1;
     }
 
     .mock-image {
       width: 100%;
-      height: 70px;
-      background: linear-gradient(135deg, #a78bfa, #f43f5e);
+      height: 60px;
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd);
       border-radius: 6px;
     }
 
     .mock-line {
-      height: 10px;
-      background: #cbd5e1;
+      height: 8px;
+      background: #e2e8f0;
       border-radius: 4px;
-      width: 80%;
+      width: 75%;
     }
-    .mock-line.short { width: 45%; }
+    .mock-line.short { width: 40%; }
 
-    /* Floating Interactive Console / Gadget */
     .console-gadget {
       position: absolute;
-      bottom: 10%;
-      right: 32%;
-      width: 140px;
-      height: 90px;
-      background: #1e1b4b;
-      border: 3px solid var(--accent-teal);
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      bottom: 15%;
+      right: 35%;
+      background: var(--text-main);
+      border: 2px solid var(--accent-teal);
+      border-radius: 14px;
+      padding: 10px 16px;
       z-index: 6;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
     }
 
     .console-badge {
-      background: #ec4899;
+      background: var(--accent-teal);
       color: white;
       font-family: 'Fredoka', sans-serif;
       font-size: 0.75rem;
-      padding: 3px 10px;
+      padding: 2px 8px;
       border-radius: 20px;
       font-weight: 600;
-      margin-bottom: 5px;
+      display: inline-block;
+      margin-bottom: 4px;
     }
 
     .console-text {
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: #94a3b8;
-      text-align: center;
       font-weight: 600;
     }
 
-    /* Footer Branding info */
-    footer {
+    /* General Section Layout */
+    section {
+      padding: 6rem 5vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
       text-align: center;
-      padding: 1.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 4rem;
+      max-width: 50ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .pricing-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-blue);
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--primary-blue);
+      position: relative;
+    }
+
+    .plan-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-price {
+      font-size: 2.5rem;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 1.5rem;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .plan-features li::before {
+      content: "✓ ";
+      color: var(--accent-teal);
+      font-weight: bold;
+    }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      background: var(--bg-light);
+      color: var(--text-main);
+      padding: 0.8rem;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .pricing-card.featured .plan-btn {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    .plan-btn:hover {
+      background: var(--primary-blue);
+      color: white;
+    }
+
+    /* Contact / Inquiry Form Section */
+    .contact-container {
+      background: var(--bg-white);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 4rem 3rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group.full {
+      grid-column: span 2;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-light);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--primary-blue);
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      background: var(--primary-blue);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+
+    .submit-btn:hover {
+      background: #02699d;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-white);
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
       font-size: 0.9rem;
       font-weight: 600;
-      opacity: 0.8;
-      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Navigation -->
   <header>
     <a href="#" class="logo">yezhuththu.site</a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
     <a href="#contact" class="nav-btn">Start Project</a>
   </header>
 
-  <div class="motion-stage">
-    <!-- Sparkles -->
-    <div class="sparkle s1"></div>
-    <div class="sparkle s2"></div>
+  <!-- Hero Motion Stage Section -->
+  <div class="motion-stage-section" id="home">
+    <div class="portal-ring"></div>
 
-    <!-- Center Portal Ring -->
-    <div class="portal-ring">
-      <div class="portal-inner-glow"></div>
-    </div>
-
-    <!-- Floating Interactive Console Box -->
     <div class="console-gadget" id="consoleGadget">
       <div class="console-badge">✨ Add</div>
       <div class="console-text">Motion Design &amp; Animation</div>
     </div>
 
-    <!-- Moving Workflow Conveyor Track -->
     <div class="workflow-track" id="workflowTrack">
-      <!-- Card 1 -->
       <div class="browser-card">
         <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #38bdf8, #818cf8);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+        <div class="browser-body"><div class="mock-image"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
       </div>
-      <!-- Card 2 -->
       <div class="browser-card">
         <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #f43f5e, #fb923c);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #fef08a, #fde047);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
       </div>
-      <!-- Card 3 -->
       <div class="browser-card">
         <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #10b981, #3b82f6);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #ccfbf1, #99f6e4);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
       </div>
-      <!-- Card 4 -->
       <div class="browser-card">
         <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #a855f7, #ec4899);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #fae8ff, #f5d0fe);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
       </div>
-      <!-- Card 5 -->
       <div class="browser-card">
         <div class="browser-header"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
-        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #eab308, #ef4444);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
+        <div class="browser-body"><div class="mock-image" style="background: linear-gradient(135deg, #ffedd5, #fed7aa);"></div><div class="mock-line"></div><div class="mock-line short"></div></div>
       </div>
     </div>
   </div>
 
+  <!-- Pricing Section -->
+  <section id="pricing">
+    <h2 class="section-title">Transparent Pricing</h2>
+    <p class="section-subtitle">Choose the perfect tier for your motion design and web engineering scope.</p>
+    
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div>
+          <div class="plan-name">Landing Page Motion</div>
+          <div class="plan-price">$1,200</div>
+          <ul class="plan-features">
+            <li>Custom high-performance design</li>
+            <li>GSAP entrance animations</li>
+            <li>Mobile responsive build</li>
+            <li>1-week delivery time</li>
+          </ul>
+        </div>
+        <a href="#contact" class="plan-btn">Choose Plan</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div>
+          <div class="plan-name">Studio Complete</div>
+          <div class="plan-price">$3,500</div>
+          <ul class="plan-features">
+            <li>Full multi-page custom web app</li>
+            <li>Advanced 3D &amp; portal animations</li>
+            <li>Interactive workflow elements</li>
+            <li>Priority ongoing support</li>
+          </ul>
+        </div>
+        <a href="#contact" class="plan-btn">Choose Plan</a>
+      </div>
+
+      <div class="pricing-card">
+        <div>
+          <div class="plan-name">Custom Enterprise</div>
+          <div class="plan-price">Custom</div>
+          <ul class="plan-features">
+            <li>Tailored web engineering architecture</li>
+            <li>Complex custom canvas graphics</li>
+            <li>Dedicated lead developer</li>
+            <li>Comprehensive SEO &amp; speed optimization</li>
+          </ul>
+        </div>
+        <a href="#contact" class="plan-btn">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inquiry Form Section -->
+  <section id="contact">
+    <div class="contact-container">
+      <h2 class="section-title" style="text-align: left; margin-bottom: 0.5rem;">Start Your Project</h2>
+      <p class="section-subtitle" style="text-align: left; margin-left: 0; margin-bottom: 2.5rem;">Fill out the details below and our team will get back to you within 24 hours.</p>
+      
+      <form onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully.');">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group full">
+            <label for="project">Project Details</label>
+            <textarea id="project" placeholder="Tell us about your project scope, timeline, and goals..." required></textarea>
+          </div>
+          <div class="form-group full">
+            <button type="submit" class="submit-btn">Send Inquiry</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <footer>
-    <p>yezhuththu.site — Motion Web Engineering Studio</p>
+    <p>&copy; 2026 yezhuththu.site — Motion Web Engineering Studio. All rights reserved.</p>
   </footer>
 
-  <!-- Animation Loop Script -->
+  <!-- Motion Scripts -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Continuous Infinite Conveyor Belt Scrolling Animation using GSAP
-      const track = document.getElementById("workflowTrack");
-      
-      // Animate track sliding horizontally infinitely
-      gsap.to(track, {
+      // Infinite Conveyor Loop
+      gsap.to("#workflowTrack", {
         x: "-50%",
-        duration: 16,
+        duration: 18,
         ease: "none",
         repeat: -1
       });
 
-      // Gentle floating animation for the console badge gadget
+      // Floating Gadget Animation
       gsap.to("#consoleGadget", {
-        y: -12,
+        y: -10,
         duration: 2,
         ease: "sine.inOut",
         repeat: -1,
         yoyo: true
       });
 
-      // Portal ring subtle rotation
+      // Portal Spin
       gsap.to(".portal-ring", {
         rotation: 360,
-        duration: 25,
+        duration: 30,
         ease: "none",
         repeat: -1
       });
