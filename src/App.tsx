@@ -1,19 +1,78 @@
-import { ArrowRight, BarChart3, Code2, Globe2, Menu, Search, Send, Sparkles } from 'lucide-react'
-import { CSSProperties, FormEvent, useEffect, useRef, useState } from 'react'
+import { Menu } from 'lucide-react'
+import { CSSProperties, useEffect, useRef, useState } from 'react'
 
-const services = [{ icon: Globe2, title: 'Web experiences', text: 'Distinctive websites built to turn attention into action.' }, { icon: Search, title: 'SEO & search', text: 'Technical SEO and content systems that get you found.' }, { icon: BarChart3, title: 'Digital marketing', text: 'Campaigns and analytics that make growth measurable.' }, { icon: Code2, title: 'Tech development', text: 'Practical software and integrations made for real work.' }]
-const page = location.pathname.includes('services') ? 'services' : location.pathname.includes('about') ? 'about' : location.pathname.includes('contact') ? 'contact' : 'home'
+const BG_IMAGE_1 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85'
+const BG_IMAGE_2 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85'
 const SPOTLIGHT_R = 260
-function CursorReveal(){
-  const canvas = useRef<HTMLCanvasElement>(null), mouse = useRef({x:-999,y:-999}), smooth = useRef({x:-999,y:-999}), raf = useRef(0)
-  const [mask,setMask] = useState('none')
-  useEffect(()=>{const move=(e:MouseEvent)=>{mouse.current={x:e.clientX,y:e.clientY}};const paint=()=>{const c=canvas.current;if(!c)return;c.width=innerWidth;c.height=innerHeight;const x=smooth.current.x,y=smooth.current.y,g=c.getContext('2d');if(!g)return;g.clearRect(0,0,c.width,c.height);const r=g.createRadialGradient(x,y,0,x,y,SPOTLIGHT_R);[[0,1],[.4,1],[.6,.75],[.75,.4],[.88,.12],[1,0]].forEach(([stop,alpha])=>r.addColorStop(stop,`rgba(255,255,255,${alpha})`));g.fillStyle=r;g.beginPath();g.arc(x,y,SPOTLIGHT_R,0,Math.PI*2);g.fill();setMask(c.toDataURL())};const loop=()=>{smooth.current.x+=(mouse.current.x-smooth.current.x)*.1;smooth.current.y+=(mouse.current.y-smooth.current.y)*.1;paint();raf.current=requestAnimationFrame(loop)};addEventListener('mousemove',move);raf.current=requestAnimationFrame(loop);return()=>{removeEventListener('mousemove',move);cancelAnimationFrame(raf.current)}},[])
-  const style:CSSProperties={backgroundImage:'url(/BG_IMAGE_2.jpg)',maskImage:`url(${mask})`,WebkitMaskImage:`url(${mask})`,maskSize:'100% 100%',WebkitMaskSize:'100% 100%'}
-  return <><div className="hero-base"/><canvas ref={canvas} style={{display:'none'}}/><div className="hero-reveal" style={style}/></>
+
+type Point = { x: number; y: number }
+
+function RevealLayer({ image, cursorX, cursorY }: { image: string; cursorX: number; cursorY: number }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [maskImage, setMaskImage] = useState('none')
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const draw = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const gradient = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, SPOTLIGHT_R)
+      gradient.addColorStop(0, 'rgba(255,255,255,1)')
+      gradient.addColorStop(0.4, 'rgba(255,255,255,1)')
+      gradient.addColorStop(0.6, 'rgba(255,255,255,0.75)')
+      gradient.addColorStop(0.75, 'rgba(255,255,255,0.4)')
+      gradient.addColorStop(0.88, 'rgba(255,255,255,0.12)')
+      gradient.addColorStop(1, 'rgba(255,255,255,0)')
+      ctx.fillStyle = gradient
+      ctx.beginPath()
+      ctx.arc(cursorX, cursorY, SPOTLIGHT_R, 0, Math.PI * 2)
+      ctx.fill()
+      setMaskImage(canvas.toDataURL())
+    }
+    draw()
+    window.addEventListener('resize', draw)
+    return () => window.removeEventListener('resize', draw)
+  }, [cursorX, cursorY])
+
+  const style: CSSProperties = { backgroundImage: `url(${image})`, maskImage: `url(${maskImage})`, WebkitMaskImage: `url(${maskImage})`, maskSize: '100% 100%', WebkitMaskSize: '100% 100%' }
+  return <><canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ display: 'none' }} /><div className="absolute inset-0 z-30 pointer-events-none bg-center bg-cover bg-no-repeat" style={style} /></>
 }
-function Header() { const [open, setOpen] = useState(false); return <header><a className="brand" href="/"><b>y</b>ezhuththu<span>.</span></a><nav>{[['Services','/services.html'],['Our story','/about.html'],['Contact','/contact.html']].map(([n,l])=><a href={l} key={l}>{n}</a>)}</nav><a className="head-cta" href="/contact.html">Start a project <ArrowRight size={15}/></a><button className="menu" onClick={()=>setOpen(!open)}><Menu/></button>{open&&<div className="mobile">{[['Services','/services.html'],['Our story','/about.html'],['Contact','/contact.html']].map(([n,l])=><a href={l} key={l}>{n}</a>)}</div>}</header> }
-function Cards(){return <div className="cards">{services.map(({icon:Icon,title,text},i)=><article className="card" key={title} style={{animationDelay:`${i*.1}s`}}><Icon/><small>YEZHUTHTHU / 0{i+1}</small><h3>{title}</h3><p>{text}</p><a href="/contact.html">Explore <ArrowRight size={16}/></a></article>)}</div>}
-function Form(){const [status,setStatus]=useState('');async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setStatus('Sending…');const f=new FormData(e.currentTarget);try{const r=await fetch('https://agency-backend-t8oq.onrender.com/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({clientname:f.get('name'),email:f.get('email'),serviceType:f.get('service'),projectDetails:f.get('details'),estimatedBudget:Number(f.get('budget'))})});if(!r.ok)throw Error();e.currentTarget.reset();setStatus('Thank you — your enquiry is on its way.')}catch{setStatus('Unable to send right now. Please try again.')}}return <form onSubmit={submit}><div className="form-grid"><label>Name<input name="name" required placeholder="Your name"/></label><label>Email<input type="email" name="email" required placeholder="you@company.com"/></label><label>Service<select name="service"><option>Website design & development</option><option>SEO & search strategy</option><option>Digital marketing</option><option>Tech development</option></select></label><label>Budget<select name="budget"><option value="100000">Under ₹1 lakh</option><option value="300000">₹1–3 lakh</option><option value="700000">₹3 lakh+</option></select></label></div><label>Project details<textarea name="details" required placeholder="What are you hoping to build?"/></label><button className="primary">Send enquiry <Send size={17}/></button>{status&&<p className="status">{status}</p>}</form>}
-function Home(){return <><section className="hero"><CursorReveal/><i className="orb a"/><div className="hero-content"><p className="eyebrow"><Sparkles size={14}/> DIGITAL STUDIO · INDIA & BEYOND</p><h1>Make your next<br/><em>move</em> matter.</h1><p className="lead">Yezhuththu builds sharp, high-performing digital homes for businesses ready to be remembered.</p><a className="primary" href="/contact.html">Build with us <ArrowRight size={17}/></a></div><p className="scroll">MOVE YOUR CURSOR TO EXPLORE ↓</p></section><section className="intro"><p className="eyebrow">DESIGNED FOR MOMENTUM</p><h2>Beautiful is the beginning.<br/><em>Useful</em> is the standard.</h2><p>We connect brand thinking, technology, and marketing into one clear system—so your business works harder online.</p></section><section className="content"><p className="eyebrow">CAPABILITIES</p><h2>Everything a growing<br/>digital presence needs.</h2><Cards/></section><div className="ticker">WEB DESIGN ✦ SEO ✦ DIGITAL GROWTH ✦ DEVELOPMENT ✦ WEB DESIGN ✦ SEO ✦</div><section className="closing"><p className="eyebrow">HAVE A BRIEF?</p><h2>Let’s make the internet<br/><em>work for you.</em></h2><a className="primary" href="/contact.html">Start a conversation <ArrowRight size={17}/></a></section></>}
-function Inner(){const title=page==='services'?<>Digital work that<br/><em>moves business.</em></>:page==='about'?<>Curious minds.<br/><em>Measured moves.</em></>:<>Let’s start with<br/>a <em>good question.</em></>;return <main className="inner"><p className="eyebrow">{page==='contact'?'TELL US WHAT’S NEXT':page==='about'?'THE YEZHUTHTHU WAY':'HOW WE HELP'}</p><h1>{title}</h1><p className="lead">{page==='contact'?'Share a few details about your idea. We will return with clear next steps.':page==='about'?'A compact digital studio for ambitious people who care about how their business shows up online.':'From your first click to your next customer, we design the full experience with intention.'}</p>{page==='services'?<Cards/>:page==='contact'?<Form/>:<div className="about-copy">We believe a strong digital presence is not decoration. It is an advantage you can build.</div>}</main>}
-export default function App(){return <><Header/>{page==='home'?<Home/>:<Inner/>}<footer><a className="brand" href="/"><b>y</b>ezhuththu<span>.</span></a><p>Websites, marketing, SEO and technology—made with purpose.</p><p>© 2026 Yezhuththu</p></footer></>}
+
+export default function App() {
+  const mouse = useRef<Point>({ x: -999, y: -999 })
+  const smooth = useRef<Point>({ x: -999, y: -999 })
+  const rafRef = useRef<number | null>(null)
+  const [cursorPos, setCursorPos] = useState<Point>({ x: -999, y: -999 })
+
+  useEffect(() => {
+    const onMove = (event: MouseEvent) => { mouse.current = { x: event.clientX, y: event.clientY } }
+    const animate = () => {
+      smooth.current.x += (mouse.current.x - smooth.current.x) * 0.1
+      smooth.current.y += (mouse.current.y - smooth.current.y) * 0.1
+      setCursorPos({ x: smooth.current.x, y: smooth.current.y })
+      rafRef.current = requestAnimationFrame(animate)
+    }
+    window.addEventListener('mousemove', onMove)
+    rafRef.current = requestAnimationFrame(animate)
+    return () => { window.removeEventListener('mousemove', onMove); if (rafRef.current !== null) cancelAnimationFrame(rafRef.current) }
+  }, [])
+
+  return <main className="min-h-screen bg-white tracking-[-0.02em]" style={{ fontFamily: "'Inter', sans-serif" }}>
+    <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5">
+      <a href="#top" aria-label="Lithos home" className="flex items-center gap-2.5"><svg width="26" height="26" viewBox="0 0 256 256" fill="#ffffff" aria-hidden="true"><path d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" /></svg><span className="text-white text-2xl font-playfair italic">Lithos</span></a>
+      <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 items-center gap-1"><button className="px-4 py-1.5 rounded-full text-sm font-medium text-white">Course</button>{['Field Guides', 'Geology', 'Plans', 'Live Tour'].map((label) => <button key={label} className="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">{label}</button>)}</div>
+      <button className="hidden md:block bg-white text-gray-900 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-gray-100">Sign Up</button><button className="md:hidden p-2 text-white" aria-label="Open menu"><Menu size={25} strokeWidth={1.75} /></button>
+    </nav>
+    <section id="top" className="relative w-full overflow-hidden h-screen bg-black" style={{ height: '100dvh' }}>
+      <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat hero-zoom" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
+      <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
+      <div className="absolute top-[14%] left-0 right-0 z-50 flex flex-col items-center text-center px-5 pointer-events-none"><h1 className="text-white leading-[0.95]"><span className="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style={{ letterSpacing: '-0.05em', animationDelay: '0.25s' }}>Layers hold</span><span className="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style={{ letterSpacing: '-0.08em', animationDelay: '0.42s' }}>tales of time</span></h1></div>
+      <div className="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px] z-50 hero-anim hero-fade" style={{ animationDelay: '0.7s' }}><p className="text-sm text-white/80 leading-relaxed">Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.</p></div>
+      <div className="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] z-50 flex flex-col items-start gap-4 sm:gap-5 hero-anim hero-fade" style={{ animationDelay: '0.85s' }}><p className="text-xs sm:text-sm text-white/80 leading-relaxed">Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.</p><button className="bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95 hover:shadow-lg hover:shadow-[#e8702a]/30">Start Digging</button></div>
+    </section>
+  </main>
+}
