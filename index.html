@@ -32,7 +32,7 @@
     /* Navbar */
     .navbar {
       position: fixed; top: 0; width: 100%; padding: 24px 6%; display: flex; justify-content: space-between; align-items: center;
-      background: linear-gradient(to bottom, rgba(7, 9, 20, 0.8), rgba(7, 9, 20, 0)); backdrop-filter: blur(10px); z-index: 1000;
+      background: linear-gradient(to bottom, rgba(7, 9, 20, 0.9), rgba(7, 9, 20, 0)); backdrop-filter: blur(10px); z-index: 1000;
     }
     .logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
     
@@ -47,40 +47,43 @@
     }
     .btn-contact:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255,255,255,0.2); }
 
-    /* Video Background Hero Section */
-    .hero-section {
-      position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; padding: 0 8%;
-      overflow: hidden; background: #070914;
+    /* Split-Screen Layout Section */
+    .split-section {
+      position: relative; width: 100vw; height: 100vh; display: grid; grid-template-columns: 42% 58%; align-items: center;
+      padding: 0 6% 0 8%; background: #070914; overflow: hidden;
     }
 
-    /* Cinematic Video Layer */
-    .video-container {
-      position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none;
-    }
-    .video-container video {
-      width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65) contrast(1.15);
-    }
-    /* Dark Vignette Overlay for Depth and Readability */
-    .video-overlay {
-      position: absolute; inset: 0; background: radial-gradient(circle at 70% 50%, rgba(7, 9, 20, 0.3) 0%, rgba(7, 9, 20, 0.85) 75%); z-index: 2; pointer-events: none;
-    }
-
-    /* Content Area (Left Side) */
+    /* Left Side Content Box */
     .content-box {
-      position: relative; z-index: 10; max-width: 480px; margin-top: 40px;
+      position: relative; z-index: 10; max-width: 480px; padding-top: 40px;
     }
 
-    .content-box h1 {
-      font-size: clamp(2.2rem, 3vw, 3.2rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; color: #fff; margin-bottom: 16px;
+    .content-box h2 {
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; color: #fff; margin-bottom: 12px;
     }
 
     .content-box p {
-      color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 28px; font-weight: 400;
+      color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 28px; font-weight: 400;
     }
 
-    /* Side Navigation Indicator Dots */
+    /* Right Side Cinematic Video Frame Container */
+    .visual-frame-container {
+      position: relative; width: 100%; height: 75vh; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #0b0d1a; display: flex; align-items: center; justify-content: center;
+    }
+
+    .visual-frame-container video {
+      width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1);
+    }
+
+    .frame-vignette {
+      position: absolute; inset: 0; background: linear-gradient(to right, rgba(7,9,20,0.4) 0%, transparent 20%, transparent 80%, rgba(7,9,20,0.4) 100%); pointer-events: none;
+    }
+
+    /* Side Navigation Indicators */
     .scroll-indicators {
-      position: fixed; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 1000;
+      position: fixed; right: 30px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 1000;
     }
     .indicator-dot {
       width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); border: none; cursor: pointer; transition: all 0.3s;
@@ -111,23 +114,23 @@
     <button class="indicator-dot"></button>
   </div>
 
-  <!-- Hero Section with Live Background Video -->
-  <section class="hero-section">
-    <div class="video-container">
-      <!-- High quality abstract neon/industrial fluid background video -->
+  <!-- Main Split Hero Section -->
+  <section class="split-section">
+    <!-- Left Column: Copy -->
+    <div class="content-box">
+      <h2>A Model For Success.</h2>
+      <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process starts with our proprietary SolutionLab roadmap session.</p>
+      
+      <h2>Attentiveness as a Priority.</h2>
+      <p>You and your project are important to us. Receive transparent, structured updates every step of the way to ensure total alignment and clarity.</p>
+    </div>
+
+    <!-- Right Column: Framed Cinematic Video Visual -->
+    <div class="visual-frame-container">
       <video autoplay muted loop playsinline>
         <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-with-code-and-graphs-31938-large.mp4" type="video/mp4">
       </video>
-    </div>
-    <div class="video-overlay"></div>
-
-    <!-- Content Box -->
-    <div class="content-box">
-      <h1>A Model For Success.</h1>
-      <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process starts with our proprietary SolutionLab roadmap session.</p>
-      
-      <h1>Attentiveness as a Priority.</h1>
-      <p>You and your project are important to us. Receive transparent, structured updates every step of the way to ensure total alignment and clarity.</p>
+      <div class="frame-vignette"></div>
     </div>
   </section>
 
