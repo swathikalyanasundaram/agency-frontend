@@ -64,77 +64,75 @@
     .hero {
       position: relative; width: 100vw; height: 100vh; overflow: hidden;
       display: flex; align-items: center; justify-content: center;
+      background: #030307;
     }
 
-    /* Parallax Depth Layers */
+    /* Absolute Parallax Containers */
     .parallax-layer {
-      position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
+      position: absolute; inset: -15px;
       will-change: transform; pointer-events: none;
+      transition: transform 0.1s cubic-bezier(0,0,0.2,1);
     }
 
-    /* Layer 1: Background Space/Stars */
+    /* Layer 1: Deep Cosmic Space Window */
     .layer-space {
-      background: radial-gradient(circle at 50% 50%, #17102e 0%, #030307 80%);
+      background: radial-gradient(circle at 50% 50%, #1a1236 0%, #030307 70%);
       z-index: 1;
     }
-    .stars-bg {
+    .stars-field {
       position: absolute; inset: 0;
-      background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(245,158,11,0.5) 1px, transparent 1px);
-      background-size: 120px 120px, 200px 200px;
-      background-position: 0 0, 40px 60px;
-      opacity: 0.6;
+      background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px), radial-gradient(rgba(245,158,11,0.6) 1px, transparent 1px);
+      background-size: 90px 90px, 150px 150px;
+      background-position: 0 0, 30px 40px;
+      opacity: 0.75;
     }
 
-    /* Layer 2: Deep Cave Top Frame */
-    .layer-cave-top {
-      background: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat;
-      filter: brightness(0.35) contrast(1.2);
-      transform: scale(1.05);
-      z-index: 3;
-      clip-path: polygon(0 0, 100% 0, 100% 45%, 85% 35%, 70% 42%, 50% 30%, 30% 40%, 15% 34%, 0 45%);
-    }
-
-    /* Layer 3: Central Cinematic Content */
+    /* Layer 2: Center Content Typography */
     .layer-content {
-      position: relative; z-index: 4; text-align: center; max-width: 900px; padding: 0 20px;
-      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      position: relative; z-index: 3; text-align: center; max-width: 900px; padding: 0 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      pointer-events: auto;
     }
     .adventure-tag {
-      font-family: serif; font-style: italic; font-size: 1.3rem; color: var(--text-muted);
-      letter-spacing: 1px;
+      font-family: serif; font-style: italic; font-size: 1.35rem; color: #cbd5e1;
+      letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
     }
     .hero-title {
       font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 800; line-height: 1; text-transform: uppercase;
       color: var(--accent-yellow); letter-spacing: -2px;
-      text-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+      text-shadow: 0 10px 40px rgba(245, 158, 11, 0.4);
     }
     .enter-btn-box {
-      margin-top: 10px; border: 1px solid rgba(245, 158, 11, 0.4); padding: 12px 36px; border-radius: 99px;
-      background: rgba(245, 158, 11, 0.05); color: var(--accent-yellow); font-weight: 600; text-transform: uppercase;
+      margin-top: 10px; border: 1px solid rgba(245, 158, 11, 0.5); padding: 12px 38px; border-radius: 99px;
+      background: rgba(245, 158, 11, 0.08); color: var(--accent-yellow); font-weight: 600; text-transform: uppercase;
       letter-spacing: 3px; font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; text-decoration: none;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
     .enter-btn-box:hover {
-      background: var(--accent-yellow); color: #020617; box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
+      background: var(--accent-yellow); color: #020617; box-shadow: 0 0 35px rgba(245, 158, 11, 0.7);
       transform: translateY(-2px);
     }
 
-    /* Layer 4: Foreground Cave Rocks & Creature Silhouettes */
-    .layer-cave-bottom {
-      background: url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1800&q=80') bottom center/cover no-repeat;
-      filter: brightness(0.25) contrast(1.3);
-      z-index: 5;
-      clip-path: polygon(0 60%, 15% 68%, 32% 62%, 48% 75%, 65% 64%, 82% 70%, 100% 58%, 100% 100%, 0 100%);
+    /* Layer 3: Realistic Rock Cave Framing Overlays (Top & Bottom) */
+    .layer-cave-frame {
+      background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2000&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.2) contrast(1.5);
+      z-index: 4;
+      /* Creates natural organic cave borders with heavy shadows looking into the center window */
+      mask-image: radial-gradient(circle at 50% 50%, transparent 42%, rgba(0,0,0,1) 75%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 42%, rgba(0,0,0,1) 75%);
     }
 
-    /* UI Indicator Elements overlaying the hero */
+    /* HUD Elements overlaying the bottom corners */
     .hero-hud {
       position: absolute; bottom: 40px; left: 60px; right: 60px; display: flex; justify-content: space-between; align-items: center;
       z-index: 10; font-family: monospace; font-size: 1.1rem; color: var(--accent-yellow); pointer-events: none;
     }
     .hero-hud span { color: var(--text-muted); font-size: 0.85rem; }
 
-    /* Scroll Reveal Section */
+    /* Standard Content Sections */
     .section { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
     .section-header { text-align: center; margin-bottom: 70px; }
     .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -1.5px; }
@@ -197,25 +195,22 @@
 
   <!-- Cinematic Multi-Layer Parallax Hero Section -->
   <header class="hero" id="parallaxHero">
-    <!-- Layer 1: Space & Stars (Moves slowest) -->
-    <div class="parallax-layer layer-space" data-speed="10">
-      <div class="stars-bg"></div>
+    <!-- Layer 1: Space & Stars (Moves slowest for deep background depth) -->
+    <div class="parallax-layer layer-space" data-speed="15">
+      <div class="stars-field"></div>
     </div>
 
-    <!-- Layer 2: Top Cave Frame (Moves medium-slow) -->
-    <div class="parallax-layer layer-cave-top" data-speed="25"></div>
-
-    <!-- Layer 3: Central Typography & Call to Action (Focus Layer) -->
-    <div class="parallax-layer layer-content" data-speed="40" style="display: flex; justify-content: center; align-items: center;">
+    <!-- Layer 2: Center Typography (Focus depth layer) -->
+    <div class="parallax-layer layer-content" data-speed="35" style="display: flex; justify-content: center; align-items: center;">
       <p class="adventure-tag">Lighting the Way to</p>
       <h1 class="hero-title">Your Next Adventure</h1>
       <a href="#quote" class="enter-btn-box">Enter</a>
     </div>
 
-    <!-- Layer 4: Foreground Rocks (Moves fastest for dramatic depth) -->
-    <div class="parallax-layer layer-cave-bottom" data-speed="65"></div>
+    <!-- Layer 3: Realistic Organic Cave Frame (Moves fastest for immediate foreground depth) -->
+    <div class="parallax-layer layer-cave-frame" data-speed="60"></div>
 
-    <!-- HUD Overlay elements matching image style -->
+    <!-- HUD Elements matching reference layout -->
     <div class="hero-hud">
       <div>03 <span style="font-size: 0.75rem;">/ 04</span></div>
       <div style="display: flex; gap: 15px; align-items: center;">
@@ -333,7 +328,7 @@
   <script>
     lucide.createIcons();
 
-    /* CINEMATIC MOUSE PARALLAX EFFECT */
+    /* CINEMATIC CURSOR PARALLAX ENGINE */
     const hero = document.getElementById('parallaxHero');
     const layers = document.querySelectorAll('.parallax-layer');
 
@@ -343,17 +338,19 @@
       const centerY = window.innerHeight / 2;
 
       layers.forEach(layer => {
-        const speed = layer.getAttribute('data-speed') || 20;
+        const speed = parseFloat(layer.getAttribute('data-speed')) || 20;
         const x = (clientX - centerX) / speed;
         const y = (clientY - centerY) / speed;
-        layer.style.transform = `translate(${x}px, ${y}px) scale(1.08)`;
+        // Inverse layer 3 direction for a true optical depth effect
+        const multiplier = layer.classList.contains('layer-space') ? -0.5 : 1;
+        layer.style.transform = `translate(${x * multiplier}px, ${y * multiplier}px) scale(1.08)`;
       });
     });
 
     hero.addEventListener('mouseleave', () => {
       layers.forEach(layer => {
-        layer.style.transform = `translate(0px, 0px) scale(1.05)`;
-        layer.style.transition = 'transform 0.5s ease-out';
+        layer.style.transform = `translate(0px, 0px) scale(1.03)`;
+        layer.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
       });
     });
 
