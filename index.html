@@ -52,13 +52,13 @@
       overflow: hidden;
     }
 
-    /* True Edge-to-Edge Background Video (Looping Nature Landscape) */
+    /* True Edge-to-Edge Background Video */
     .bg-video {
       position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -2; pointer-events: none;
       filter: brightness(0.85) contrast(1.05);
     }
 
-    /* Soft Vignette Overlay to Make Text Stand Out */
+    /* Soft Gradient Vignette Overlay */
     .bg-overlay {
       position: fixed; inset: 0; width: 100vw; height: 100vh;
       background: linear-gradient(to right, rgba(7, 9, 20, 0.85) 0%, rgba(7, 9, 20, 0.45) 50%, rgba(7, 9, 20, 0.15) 100%);
@@ -113,11 +113,11 @@
     <button class="indicator-dot"></button>
   </div>
 
-  <!-- Fullscreen Nature Video Background & Section -->
+  <!-- Hero Section -->
   <section class="hero-section">
-    <video class="bg-video" autoplay muted loop playsinline>
-      <!-- Direct WebM/MP4 stream link matching your landscape concept -->
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-tree-branches-in-the-breeze-1186-large.mp4" type="video/mp4">
+    <video class="bg-video" autoplay muted loop playsinline preload="auto">
+      <source src="background-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
     </video>
     <div class="bg-overlay"></div>
 
