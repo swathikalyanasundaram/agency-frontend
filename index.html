@@ -306,16 +306,24 @@
   var EASE = 0.12;            
   var IDLE_EASE = 0.06;       
 
- function frameForPointer(clientX){
+  function frameForPointer(clientX){
     var stageRect = stage.getBoundingClientRect();
+    
+    // Find Clover's absolute horizontal center point on the screen
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
 
-    // FIXED: Invert the distance so left = left-facing frames, right = right-facing frames
-    var distanceX = bodyCenterX - clientX; 
+    // Calculate distance from center: 
+    // (clientX - bodyCenterX) ensures moving right increases frame index, 
+    // and moving left decreases frame index.
+    var distanceX = clientX - bodyCenterX;
     
-    var maxRange = window.innerWidth * 0.38;
+    // Define the distance radius (in pixels) for a full head turn
+    var maxRange = window.innerWidth * 0.4;
+
+    // Normalize value from -1 (far left) to +1 (far right)
     var normalized = Math.min(1, Math.max(-1, distanceX / maxRange));
 
+    // Map the normalized position across the 96 frames centered perfectly at frame 48
     var frame = CENTER_FRAME + (normalized * CENTER_FRAME);
 
     return Math.min(FRAME_COUNT - 1, Math.max(0, frame));
