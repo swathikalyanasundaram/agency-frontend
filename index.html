@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notosan | Elite Cinematic Studio</title>
+  <title>Notosan | SolutionLab Elite Engineering</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -35,23 +35,23 @@
       position: fixed; top: 0; width: 100%; padding: 24px 6%; display: flex; justify-content: space-between; align-items: center;
       background: linear-gradient(to bottom, rgba(7, 9, 19, 0.95), rgba(7, 9, 19, 0)); backdrop-filter: blur(12px); z-index: 1000;
     }
-    .logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+    .logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
     
     .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
     .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
     .nav-links a:hover { color: #fff; }
 
-    .btn-register {
+    .btn-contact {
       background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-glass); color: #fff;
       padding: 10px 24px; border-radius: 99px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
       backdrop-filter: blur(10px); transition: all 0.2s;
     }
-    .btn-register:hover { background: rgba(255, 255, 255, 0.18); }
+    .btn-contact:hover { background: rgba(255, 255, 255, 0.18); }
 
     /* Scenic Sections */
     .scenic-section {
-      position: relative; width: 100vw; height: 100vh; display: flex; align-items: flex-end; padding: 8% 8%;
-      overflow: hidden; background: #070913;
+      position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; padding: 6% 8%;
+      overflow: hidden; background: #0b0d1a;
     }
 
     /* Interactive Parallax Stage */
@@ -66,31 +66,18 @@
 
     .vector-art-canvas { width: 100%; height: 100%; }
 
-    /* Content Styling */
+    /* Content Styling (Left Side Split Layout) */
     .content-box {
-      position: relative; z-index: 10; max-width: 600px; margin-bottom: 20px;
+      position: relative; z-index: 10; max-width: 520px;
     }
 
-    .section-tag {
-      display: inline-flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); margin-bottom: 16px;
+    .content-box h2 {
+      font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 16px; color: #fff;
     }
-
-    .content-box h1 {
-      font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
-    }
-    .content-box h1 span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent-orange); font-weight: 400; }
 
     .content-box p {
-      color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 35px;
+      color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;
     }
-
-    .btn-journey {
-      display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #070913;
-      padding: 14px 28px; border-radius: 99px; font-weight: 700; font-size: 0.95rem; text-decoration: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4); transition: transform 0.2s, background 0.2s;
-    }
-    .btn-journey:hover { transform: translateY(-2px); background: #f1f5f9; }
 
     /* Side Navigation Dots */
     .scroll-indicators {
@@ -101,26 +88,29 @@
     }
     .indicator-dot.active { background: var(--accent-orange); transform: scale(1.3); box-shadow: 0 0 12px var(--accent-orange); }
 
-    @keyframes floatGentle {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0px); }
+    @keyframes flowWater {
+      0% { opacity: 0.7; transform: translateY(0px); }
+      50% { opacity: 1; transform: translateY(6px); }
+      100% { opacity: 0.7; transform: translateY(0px); }
     }
-    .floating-element { animation: floatGentle 5s ease-in-out infinite; }
+    .animated-water { animation: flowWater 2s ease-in-out infinite; }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="#" class="logo">Notosan</a>
+    <a href="#" class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22 12 2"></polygon></svg>
+      Notosan
+    </a>
     <ul class="nav-links">
-      <li><a href="#community">Community</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#support">Support</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#lab">SolutionLab</a></li>
+      <li><a href="#clients">Clients</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
     </ul>
-    <a href="#register" class="btn-register">Register</a>
+    <a href="#contact" class="btn-contact">Contact</a>
   </nav>
 
   <!-- Side Scroll Indicators -->
@@ -129,127 +119,145 @@
     <button class="indicator-dot" onclick="scrollToSection(1)"></button>
   </div>
 
-  <!-- Section 1: Elite Sunset Mountain Vector Experience -->
+  <!-- Section 1: SolutionLab Magical Engineering Facility -->
   <section class="scenic-section" id="sec0">
     <div class="vector-stage">
       
-      <!-- Layer 1: Atmospheric Sky & Glowing Sun -->
-      <div class="parallax-layer" data-speed="8">
+      <!-- Layer 1: Background Walls & Industrial Machinery Silhouettes -->
+      <div class="parallax-layer" data-speed="10">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <radialGradient id="luxSun" cx="65%" cy="40%" r="60%">
-              <stop offset="0%" stop-color="#fffbeb" stop-opacity="1"/>
-              <stop offset="35%" stop-color="#fbbf24" stop-opacity="0.8"/>
-              <stop offset="70%" stop-color="#f97316" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#070913" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="luxSky" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#1e1035"/>
-              <stop offset="50%" stop-color="#4c1d95"/>
-              <stop offset="85%" stop-color="#7c2d12"/>
+            <linearGradient id="facilityBg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#181432"/>
+              <stop offset="50%" stop-color="#0f0c24"/>
               <stop offset="100%" stop-color="#070913"/>
             </linearGradient>
+            <linearGradient id="goldGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#f97316" stop-opacity="0.1"/>
+            </linearGradient>
           </defs>
-          <rect width="1440" height="900" fill="url(#luxSky)"/>
-          <circle cx="1000" cy="300" r="380" fill="url(#luxSun)"/>
-        </svg>
-      </div>
-
-      <!-- Layer 2: Floating Cloud Whisps & Distant Peaks -->
-      <div class="parallax-layer" data-speed="20">
-        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <g fill="#fed7aa" opacity="0.9" class="floating-element">
-            <path d="M 280,220 Q 292,202 304,220 Q 316,202 328,220 Q 304,232 280,220 Z"/>
-            <path d="M 350,180 Q 360,165 370,180 Q 380,165 390,180 Q 370,190 350,180 Z"/>
-            <path d="M 210,250 Q 220,235 230,250 Q 240,235 250,250 Q 230,260 210,250 Z"/>
-          </g>
-          <!-- Distant Ridgeline -->
-          <path d="M 0,800 L 320,450 Q 520,600 720,500 L 1150,340 L 1440,620 L 1440,900 L 0,900 Z" fill="#1b122c"/>
-        </svg>
-      </div>
-
-      <!-- Layer 3: Mid Mountain Range with Sophisticated Shading -->
-      <div class="parallax-layer" data-speed="38">
-        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 100,900 L 460,420 Q 650,560 840,510 L 1180,380 L 1440,750 L 1440,900 Z" fill="#2d1746"/>
-          <!-- Snowcap Highlights -->
-          <polygon points="460,420 515,485 460,515 405,485" fill="#f8fafc" opacity="0.95"/>
-          <polygon points="1180,380 1235,445 1180,470 1125,445" fill="#f8fafc" opacity="0.95"/>
-        </svg>
-      </div>
-
-      <!-- Layer 4: Foreground Hills & Cinematic Traveler -->
-      <div class="parallax-layer" data-speed="60">
-        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 0,900 C 400,720 950,800 1440,680 L 1440,900 Z" fill="#0d0918"/>
+          <rect width="1440" height="900" fill="url(#facilityBg)"/>
           
-          <!-- High-End Traveler Silhouette -->
-          <g transform="translate(1180, 510)">
-            <path d="M 40,165 L 65,260 L 15,260 Z" fill="url(#luxSun)"/>
-            <circle cx="40" cy="144" r="14" fill="#fbbf24"/>
-            <polygon points="5,138 75,138 40,110" fill="#d97706"/>
-            <path d="M 12,170 L -6,230" stroke="#fbbf24" stroke-width="4.5" stroke-linecap="round"/>
-            <path d="M 70,175 Q 92,155 98,132" fill="none" stroke="#f97316" stroke-width="5" stroke-linecap="round"/>
+          <!-- Background Pipes & Rigging Structure -->
+          <g stroke="#261c44" stroke-width="4" fill="none">
+            <path d="M 600,100 L 600,500 L 900,500 L 900,300" />
+            <path d="M 750,150 L 750,450" />
+            <path d="M 500,250 L 1100,250" />
+            <rect x="850" y="200" width="120" height="80" stroke="#32225a" fill="#120d24" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Layer 2: Main Facility Structure, Scaffolding & Waterfall Pillar -->
+      <div class="parallax-layer" data-speed="30">
+        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Industrial Scaffolding Rigs (Right Side) -->
+          <g stroke="#37285c" stroke-width="2.5" fill="none">
+            <line x1="1200" y1="200" x2="1200" y2="800" />
+            <line x1="1320" y1="250" x2="1320" y2="800" />
+            <line x1="1200" y1="350" x2="1320" y2="350" />
+            <line x1="1200" y1="500" x2="1320" y2="500" />
+            <line x1="1200" y1="650" x2="1320" y2="650" />
+            <path d="M 1200,350 L 1320,500 M 1320,350 L 1200,500" />
+            <path d="M 1200,500 L 1320,650 M 1320,500 L 1200,650" />
+          </g>
+
+          <!-- Majestic Waterfall Column -->
+          <g class="animated-water">
+            <rect x="950" y="180" width="180" height="340" fill="url(#goldGlow)" opacity="0.15" />
+            <path d="M 960,180 L 960,520 M 980,180 L 980,520 M 1000,180 L 1000,520 M 1020,180 L 1020,520 M 1040,180 L 1040,520 M 1060,180 L 1060,520 M 1080,180 L 1080,520 M 1100,180 L 1100,520 M 1120,180 L 1120,520" stroke="#38bdf8" stroke-width="2" opacity="0.6" />
+          </g>
+
+          <!-- Central Laboratory Platform & Glowing Gold Reactor Pillars -->
+          <g transform="translate(750, 360)">
+            <!-- Upper Platform -->
+            <rect x="50" y="120" width="350" height="25" fill="#251945" stroke="#4c3482" stroke-width="2"/>
+            <path d="M 70,145 L 70,260 M 225,145 L 225,260 M 380,145 L 380,260" stroke="#fbbf24" stroke-width="8" />
+            <!-- Glowing Base Spill / Gold Streams -->
+            <path d="M 65,260 L 75,320 M 220,260 L 230,320 M 375,260 L 385,320" stroke="#f97316" stroke-width="4" opacity="0.9" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Layer 3: Foreground Control Deck & Engineer Silhouette -->
+      <div class="parallax-layer" data-speed="55">
+        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Floor Base -->
+          <path d="M 0,780 L 1440,780 L 1440,900 L 0,900 Z" fill="#070913"/>
+          <line x1="0" y1="780" x2="1440" y2="780" stroke="#3b266a" stroke-width="4"/>
+
+          <!-- Left Foreground Interactive Console / Reactor Table -->
+          <g transform="translate(80, 600)">
+            <polygon points="20,120 180,90 220,180 0,180" fill="#161029" stroke="#4c3482" stroke-width="2"/>
+            <!-- Glowing Orbs / Hologram Spheres -->
+            <circle cx="80" cy="70" r="22" fill="#fbbf24" opacity="0.85"/>
+            <circle cx="140" cy="60" r="16" fill="#38bdf8" opacity="0.85"/>
+            <path d="M 20,135 L 200,105" stroke="#f97316" stroke-width="3"/>
+          </g>
+
+          <!-- Foreground Engineer Silhouette (Checking Hologram) -->
+          <g transform="translate(45, 620)">
+            <path d="M 25,60 L 40,160 L 10,160 Z" fill="#261c44"/>
+            <circle cx="25" cy="45" r="10" fill="#fbbf24"/>
+            <path d="M 35,70 L 60,75" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Right Side Industrial Walkway & Engineer Monitoring Waterfall -->
+          <path d="M 580,780 L 850,680 L 1440,680 L 1440,780 Z" fill="#0e0a1c" stroke="#2b1d4a" stroke-width="2"/>
+          <g transform="translate(1220, 570)">
+            <path d="M 20,40 L 35,110 L 5,110 Z" fill="#f97316"/>
+            <circle cx="20" cy="28" r="8" fill="#fbbf24"/>
+            <!-- Hologram Tablet Screen -->
+            <rect x="35" y="40" width="30" height="20" rx="3" fill="#38bdf8" opacity="0.9"/>
           </g>
         </svg>
       </div>
 
     </div>
 
+    <!-- Left Content Box -->
     <div class="content-box">
-      <div class="section-tag"><i data-lucide="mountain" style="width: 16px;"></i> Journey to New Frontiers</div>
-      <h1>Journey to <span>Noto Nature</span> Park</h1>
-      <p>Away from the manic energy of Japan's famous metropolises lies the ancient hamlet of Noto. Surprising and captivating in equal measure.</p>
-      <a href="#explore" class="btn-journey">Start the journey <i data-lucide="arrow-right" style="width: 18px;"></i></a>
+      <h2>A Model For Success.</h2>
+      <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process, which starts with our proprietary SolutionLab roadmap session, helps ensure the success of our clients time and again.</p>
+      
+      <h2>Attentive&shy;ness as a Priority.</h2>
+      <p>You and your project are important to us. Once we kick things off, you'll receive updates on your project in two distinct ways to guarantee clarity and alignment.</p>
     </div>
   </section>
 
-  <!-- Section 2: Magical Biodiversity Sanctuary -->
+  <!-- Section 2: Advanced Operations & Architecture -->
   <section class="scenic-section" id="sec1">
     <div class="vector-stage">
-      <!-- Sky Base -->
-      <div class="parallax-layer" data-speed="12">
+      <!-- Background Layer -->
+      <div class="parallax-layer" data-speed="15">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="forestMoon" cx="20%" cy="25%" r="50%">
-              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="#070913" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
           <rect width="1440" height="900" fill="#090d1f"/>
-          <circle cx="300" cy="220" r="400" fill="url(#forestMoon)"/>
+          <g stroke="#1d1536" stroke-width="3" fill="none">
+            <circle cx="720" cy="450" r="300" stroke-dasharray="10 15"/>
+            <circle cx="720" cy="450" r="200"/>
+          </g>
         </svg>
       </div>
 
-      <!-- Mid Forest Canopy Layer -->
-      <div class="parallax-layer" data-speed="30">
+      <!-- Mid Layer: Heavy Facility Machinery -->
+      <div class="parallax-layer" data-speed="35">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 0,900 L 0,550 Q 180,480 360,570 Q 580,460 800,540 Q 1100,430 1440,530 L 1440,900 Z" fill="#131c31"/>
+          <path d="M 0,900 L 0,600 Q 360,500 720,620 Q 1080,500 1440,600 L 1440,900 Z" fill="#131024"/>
         </svg>
       </div>
 
-      <!-- Foreground Slopes & Wildlife -->
+      <!-- Foreground Layer -->
       <div class="parallax-layer" data-speed="55">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 0,900 L 0,680 Q 240,620 500,690 Q 820,600 1180,700 L 1440,660 L 1440,900 Z" fill="#090d16"/>
-          
-          <g transform="translate(980, 560)">
-            <path d="M 28,85 L 34,150 L 22,150 Z" fill="#38bdf8" opacity="0.85"/>
-            <path d="M 66,75" fill="#38bdf8"/>
-            <path d="M 64,72 L 70,150 L 58,150 Z" fill="#38bdf8" opacity="0.85"/>
-            <path d="M 18,42 Q 50,30 82,52 L 92,100 L 22,95 Z" fill="#1e293b"/>
-            <circle cx="12" cy="28" r="10" fill="#1e293b"/>
-            <path d="M 6,18 Q 0,5 -6,-2" stroke="#38bdf8" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-          </g>
+          <path d="M 0,900 L 0,720 Q 400,680 800,740 Q 1150,690 1440,730 L 1440,900 Z" fill="#080712"/>
         </svg>
       </div>
     </div>
 
     <div class="content-box">
-      <div class="section-tag"><i data-lucide="sparkles" style="width: 16px;"></i> 02. Biodiversity</div>
-      <h1>Magical <span>Biodiversity</span></h1>
-      <p>Soaring peaks, lakes and endless flora combine to form a vibrant sanctuary of rare species. Experience the enchantment today.</p>
-      <a href="#learn" class="btn-journey">Explore sanctuary <i data-lucide="arrow-right" style="width: 18px;"></i></a>
+      <h2>Engineering Excellence.</h2>
+      <p>Our multidisciplinary team accelerates your learning curve and guides you past the many pitfalls of building custom software products.</p>
     </div>
   </section>
 
