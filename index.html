@@ -12,11 +12,12 @@
 
   <style>
     :root {
-      --bg-deep: #060810;
-      --accent-orange: #ff7a00;
-      --accent-gold: #ffb703;
+      --bg-dark: #070913;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
+      --accent-orange: #f97316;
+      --accent-gold: #fbbf24;
+      --border-glass: rgba(255, 255, 255, 0.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,15 +25,15 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-deep);
+      background-color: var(--bg-dark);
       color: var(--text-main);
       overflow-x: hidden;
     }
 
-    /* Cinematic Glass Navigation */
+    /* Navbar */
     .navbar {
       position: fixed; top: 0; width: 100%; padding: 24px 6%; display: flex; justify-content: space-between; align-items: center;
-      background: linear-gradient(to bottom, rgba(6, 8, 16, 0.9), rgba(6, 8, 16, 0)); backdrop-filter: blur(12px); z-index: 1000;
+      background: linear-gradient(to bottom, rgba(7, 9, 19, 0.9), rgba(7, 9, 19, 0)); backdrop-filter: blur(10px); z-index: 1000;
     }
     .logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
     
@@ -41,61 +42,49 @@
     .nav-links a:hover { color: #fff; }
 
     .btn-register {
-      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #fff;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-glass); color: #fff;
       padding: 10px 24px; border-radius: 99px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
       backdrop-filter: blur(10px); transition: all 0.2s;
     }
-    .btn-register:hover { background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.3); }
+    .btn-register:hover { background: rgba(255, 255, 255, 0.16); }
 
-    /* Immersive Storytelling Sections with Hand-Crafted Illustration Vibe */
+    /* Scenic Sections with Pure Vector Art Backgrounds */
     .scenic-section {
       position: relative; width: 100vw; height: 100vh; display: flex; align-items: flex-end; padding: 8% 8%;
-      overflow: hidden; background-size: cover; background-position: center;
+      overflow: hidden; background: linear-gradient(135deg, #181432 0%, #070913 60%);
     }
 
-    /* Magical Sunset & Vignette Overlays */
-    .scenic-section::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(15,10,25,0.2) 0%, rgba(10,8,20,0.5) 50%, rgba(6,8,16,0.98) 100%);
-      z-index: 1;
-    }
-
-    /* Section Backgrounds matching your exact visual reference */
-    .bg-mountains {
-      background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2200&auto=format&fit=crop');
-    }
-    .bg-waterfall {
-      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2200&auto=format&fit=crop');
+    /* Embedded Vector Art Composition Layers */
+    .vector-art-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;
     }
 
     .content-box {
-      position: relative; z-index: 10; max-width: 620px;
+      position: relative; z-index: 10; max-width: 600px; margin-bottom: 20px;
     }
 
     .section-tag {
       display: inline-flex; align-items: center; gap: 10px; font-size: 0.85rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 16px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); margin-bottom: 16px;
     }
 
     .content-box h1 {
-      font-size: clamp(3rem, 5.5vw, 5.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      font-size: clamp(3rem, 5.5vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
     }
     .content-box h1 span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent-orange); font-weight: 400; }
 
     .content-box p {
-      color: #cbd5e1; font-size: 1.15rem; line-height: 1.7; margin-bottom: 35px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      color: var(--text-muted); font-size: 1.1rem; line-height: 1.7; margin-bottom: 35px;
     }
 
     .btn-journey {
-      display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #060810;
-      padding: 14px 30px; border-radius: 99px; font-weight: 700; font-size: 0.95rem; text-decoration: none;
-      box-shadow: 0 10px 30px rgba(255, 122, 0, 0.3); transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+      display: inline-flex; align-items: center; gap: 12px; background: #fff; color: #070913;
+      padding: 14px 28px; border-radius: 99px; font-weight: 700; font-size: 0.95rem; text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.2s, background 0.2s;
     }
-    .btn-journey:hover { transform: translateY(-2px); background: #f8fafc; box-shadow: 0 15px 40px rgba(255, 122, 0, 0.5); }
+    .btn-journey:hover { transform: translateY(-2px); background: #f1f5f9; }
 
-    /* Floating Side Navigation Dots */
+    /* Side Navigation Dots */
     .scroll-indicators {
       position: fixed; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 16px; z-index: 1000;
     }
@@ -113,7 +102,7 @@
 </head>
 <body>
 
-  <!-- Cinematic Header -->
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="#" class="logo">Notosan</a>
     <ul class="nav-links">
@@ -131,23 +120,103 @@
     <button class="indicator-dot" onclick="scrollToSection(1)"></button>
   </div>
 
-  <!-- Scenic Section 1 -->
-  <section class="scenic-section bg-mountains" id="sec0">
+  <!-- Section 1: Vector Mountain Sunrise & Traveler -->
+  <section class="scenic-section" id="sec0">
+    <!-- Authentic Vector Illustration SVG Background -->
+    <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffedd5" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#f97316" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#070913" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#2e1065"/>
+          <stop offset="50%" stop-color="#7c2d12"/>
+          <stop offset="100%" stop-color="#070913"/>
+        </linearGradient>
+      </defs>
+      
+      <!-- Sky Background -->
+      <rect width="1440" height="900" fill="url(#skyGrad)"/>
+      
+      <!-- Glowing Sun -->
+      <circle cx="950" cy="350" r="280" fill="url(#sunGlow)"/>
+
+      <!-- Floating Vector Birds / Cranes -->
+      <g fill="#fed7aa" opacity="0.8">
+        <path d="M 300,200 Q 310,185 320,200 Q 330,185 340,200 Q 320,210 300,200 Z"/>
+        <path d="M 360,170 Q 368,158 376,170 Q 384,158 392,170 Q 376,178 360,170 Z"/>
+        <path d="M 240,230 Q 248,218 256,230 Q 264,218 272,230 Q 256,238 240,230 Z"/>
+      </g>
+
+      <!-- Back Mountain Range -->
+      <polygon points="0,700 350,380 700,550 1100,300 1440,600 1440,900 0,900" fill="#231b3b"/>
+      
+      <!-- Mid Snow-Capped Mountain Range -->
+      <polygon points="150,900 450,480 750,620 1050,420 1350,900" fill="#3b224c"/>
+      <polygon points="450,480 500,530 450,550 400,530" fill="#f8fafc" opacity="0.9"/>
+      <polygon points="1050,420 1100,480 1050,500 1000,480" fill="#f8fafc" opacity="0.9"/>
+
+      <!-- Foreground Slopes & Traveler Silhouette -->
+      <path d="M 0,900 C 400,750 900,820 1440,720 L 1440,900 Z" fill="#0f0c1b"/>
+      
+      <!-- Scenic Traveler Silhouette (Cone Hat & Staff) -->
+      <g transform="translate(1180, 560)">
+        <path d="M 40,160 L 60,240 L 20,240 Z" fill="#f97316"/> <!-- Robe -->
+        <circle cx="40" cy="145" r="14" fill="#fbbf24"/> <!-- Head -->
+        <polygon points="10,140 70,140 40,115" fill="#d97706"/> <!-- Straw Cone Hat -->
+        <path d="M 15,170 L 0,220" stroke="#fbbf24" stroke-width="4" stroke-linecap="round"/> <!-- Staff -->
+        <path d="M 65,175 Q 85,160 90,140" fill="none" stroke="#f97316" stroke-width="5" stroke-linecap="round"/> <!-- Pack / Backpack -->
+      </g>
+    </svg>
+
     <div class="content-box">
       <div class="section-tag"><i data-lucide="mountain" style="width: 16px;"></i> Journey to New Frontiers</div>
       <h1>Journey to <span>Noto Nature</span> Park</h1>
       <p>Away from the manic energy of Japan's famous metropolises lies the ancient hamlet of Noto. Surprising and captivating in equal measure.</p>
-      <a href="#journey" class="btn-journey">Start the journey <i data-lucide="arrow-right" style="width: 18px;"></i></a>
+      <a href="#explore" class="btn-journey">Start the journey <i data-lucide="arrow-right" style="width: 18px;"></i></a>
     </div>
   </section>
 
-  <!-- Scenic Section 2 -->
-  <section class="scenic-section bg-waterfall" id="sec1">
+  <!-- Section 2: Vector Forest & Wildlife Wonderland -->
+  <section class="scenic-section" id="sec1">
+    <!-- Vector Illustration Background 2 -->
+    <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="forestSky" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0f172a"/>
+          <stop offset="50%" stop-color="#1e1b4b"/>
+          <stop offset="100%" stop-color="#070913"/>
+        </linearGradient>
+        <radialGradient id="moonGlow" cx="20%" cy="30%" r="40%">
+          <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#070913" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <rect width="1440" height="900" fill="url(#forestSky)"/>
+      <circle cx="300" cy="250" r="350" fill="url(#moonGlow)"/>
+
+      <!-- Deep Vector Trees & Foliage Silhouettes -->
+      <path d="M 0,900 L 0,600 Q 150,550 300,620 Q 500,520 700,590 Q 1000,500 1440,580 L 1440,900 Z" fill="#111827"/>
+      <path d="M 0,900 L 0,720 Q 200,680 450,730 Q 750,650 1100,740 L 1440,700 L 1440,900 Z" fill="#0b0f19"/>
+
+      <!-- Stylized Vector Deer Silhouette -->
+      <g transform="translate(1000, 620)">
+        <path d="M 30,80 L 35,130 L 25,130 Z" fill="#38bdf8" opacity="0.9"/>
+        <path d="M 60,70 L 65,130 L 55,130 Z" fill="#38bdf8" opacity="0.9"/>
+        <path d="M 20,40 Q 50,30 75,50 L 85,90 L 25,85 Z" fill="#1e293b"/> <!-- Body -->
+        <circle cx="15" cy="30" r="10" fill="#1e293b"/> <!-- Head -->
+        <path d="M 10,22 Q 5,10 0,5" stroke="#38bdf8" stroke-width="3" fill="none"/> <!-- Antlers -->
+      </g>
+    </svg>
+
     <div class="content-box">
-      <div class="section-tag"><i data-lucide="sparkles" style="width: 16px;"></i> 03. Experience</div>
-      <h1>Pure <span>Tranquility</span></h1>
-      <p>Soaring peaks, lakes and endless waterfalls combine to form a habitat for a wholesome range of species. Experience the magic today.</p>
-      <a href="#learn" class="btn-journey">Learn more <i data-lucide="arrow-right" style="width: 18px;"></i></a>
+      <div class="section-tag"><i data-lucide="sparkles" style="width: 16px;"></i> 02. Biodiversity</div>
+      <h1>Magical <span>Biodiversity</span></h1>
+      <p>Soaring peaks, lakes and endless flora combine to form a vibrant sanctuary of rare species. Experience the enchantment today.</p>
+      <a href="#learn" class="btn-journey">Explore sanctuary <i data-lucide="arrow-right" style="width: 18px;"></i></a>
     </div>
   </section>
 
