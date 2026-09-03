@@ -1,161 +1,627 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Agency — Interactive Demo Kit</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>yezhuththu.site | Elite Web Engineering & Digital Agency</title>
+  
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- NEW: Three.js for the interactive particle field in the hero -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+
+  <style>
+    :root[data-theme="dark"] {
+      --bg-dark: #020617;
+      --bg-card: rgba(15, 23, 42, 0.7);
+      --bg-nav: rgba(2, 6, 23, 0.85);
+      --accent-primary: #6366f1;
+      --accent-glow: #818cf8;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.12);
+      --border-hover: rgba(99, 102, 241, 0.6);
+      --form-bg: rgba(3, 7, 18, 0.9);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none; /* custom cursor takes over — see NEW cursor block below */
+    }
+    /* Let native cursors work on touch devices and inside form fields */
+    input, textarea, select { cursor: auto; }
+    @media (hover: none) {
+      body, a, button, .btn { cursor: auto !important; }
+    }
+    a, button, .btn { cursor: none; }
+
+    /* NEW: visible focus state, since removing the native cursor shouldn't remove keyboard accessibility */
+    a:focus-visible, button:focus-visible, .form-control:focus-visible {
+      outline: 2px solid var(--accent-glow); outline-offset: 3px;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed; top: 0; width: 100%; padding: 22px 8%; display: flex; justify-content: space-between; align-items: center;
+      background: var(--bg-nav); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color); z-index: 1000;
+    }
+    .brand-logo { font-size: 1.6rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
+    .brand-logo span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.25s ease; }
+    .nav-links a:hover { color: var(--accent-glow); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; border-radius: 99px;
+      font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer; border: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-primary { background: var(--accent-gradient); color: #ffffff; box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.5); }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 40px -5px rgba(168, 85, 247, 0.6); }
+    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); backdrop-filter: blur(10px); }
+    .btn-outline:hover { border-color: var(--accent-primary); background: rgba(99, 102, 241, 0.1); transform: translateY(-2px); }
+
+    /* High-End Graphics Hero Section */
+    .hero {
+      position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 160px 8% 100px; overflow: hidden; text-align: center;
+    }
+    
+    /* Luxury Background Graphic Grids & Glow Orbs */
+    .hero-graphics-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -3; overflow: hidden;
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #020617 70%);
+    }
+
+    /* NEW: full-bleed video layer, tinted to match the indigo/purple brand palette */
+    .hero-video {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.4; filter: saturate(1.4) hue-rotate(220deg) brightness(0.9);
+      z-index: -3;
+    }
+    .hero-video-tint {
+      position: absolute; inset: 0; z-index: -3;
+      background: var(--accent-gradient); opacity: 0.22; mix-blend-mode: overlay;
+    }
+
+    /* NEW: Three.js particle canvas, sits above the video, below the grid/orbs */
+    #particle-canvas {
+      position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%;
+      mix-blend-mode: screen; pointer-events: none;
+    }
+
+    /* NEW: cursor-reactive spotlight that brightens the hero where you point */
+    .hero-spotlight {
+      position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background: radial-gradient(360px 360px at var(--sx, 50%) var(--sy, 20%), rgba(129,140,248,0.28), transparent 70%);
+      transition: background-position 0.1s linear;
+    }
+
+    .glow-orb {
+      position: absolute; border-radius: 50%; filter: blur(120px); z-index: -1; pointer-events: none; opacity: 0.45;
+    }
+    .orb-1 { width: 500px; height: 500px; background: #6366f1; top: -100px; left: 10%; animation: floatOrb 10s ease-in-out infinite alternate; }
+    .orb-2 { width: 600px; height: 600px; background: #ec4899; top: 20%; right: 5%; animation: floatOrb 12s ease-in-out infinite alternate-reverse; }
+    .orb-3 { width: 400px; height: 400px; background: #8b5cf6; bottom: -50px; left: 30%; animation: floatOrb 8s ease-in-out infinite alternate; }
+    /* NEW: wrapper each orb sits in, so scroll-parallax (JS) and the float keyframe (CSS) don't fight over the same transform */
+    .orb-parallax { position: absolute; inset: 0; will-change: transform; }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0px) scale(1); }
+      100% { transform: translateY(40px) scale(1.08); }
+    }
+
+    .grid-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px; z-index: -1;
+    }
+
+    .hero-content { max-width: 950px; margin: 0 auto; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 99px;
+      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4);
+      color: var(--accent-glow); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 24px; backdrop-filter: blur(12px); box-shadow: 0 0 25px rgba(99, 102, 241, 0.25);
+    }
+    .hero-content h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.08; margin-bottom: 24px; letter-spacing: -2.5px; }
+    .hero-content h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-content p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 720px; margin-left: auto; margin-right: auto; }
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* Diagnostics Badge */
+    #videoStatusBadge {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border-color);
+      padding: 10px 18px; border-radius: 14px; font-size: 0.8rem; font-weight: 600;
+      backdrop-filter: blur(16px); display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6); color: var(--text-muted);
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; }
+
+    /* Bento Grid Services with Luxury Borders */
+    .section { padding: 120px 8%; max-width: 1400px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 70px; }
+    .section-header h2 { font-size: 2.8rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -1.5px; }
+    .section-header p { color: var(--text-muted); font-size: 1.15rem; }
+
+    .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .bento-card {
+      background: var(--bg-card); border: 1px solid var(--border-color); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-radius: 28px; padding: 40px; position: relative; transition: transform 0.15s linear, border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+    }
+    .bento-card.large { grid-column: span 2; }
+    .bento-card:hover { border-color: var(--border-hover); box-shadow: 0 30px 70px rgba(99, 102, 241, 0.2); }
+    .bento-icon { width: 54px; height: 54px; border-radius: 16px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: var(--accent-glow); margin-bottom: 28px; box-shadow: inset 0 0 15px rgba(99, 102, 241, 0.2); }
+    .bento-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; letter-spacing: -0.5px; }
+    .bento-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
+
+    /* Contact Lead Section */
+    .quote-section {
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 36px; padding: 70px;
+      max-width: 960px; margin: 40px auto 120px; backdrop-filter: blur(30px); box-shadow: 0 30px 90px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden;
+    }
+    .quote-section::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent-gradient);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+    .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .form-group.full { grid-column: span 2; }
+    .form-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+    .form-control {
+      background: var(--form-bg); border: 1px solid var(--border-color); border-radius: 14px; padding: 16px 20px;
+      color: var(--text-main); font-size: 1rem; transition: all 0.3s ease; font-family: inherit;
+    }
+    .form-control:focus { outline: none; border-color: var(--accent-primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2); }
+
+    footer { border-top: 1px solid var(--border-color); padding: 60px 8%; display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.95rem; }
+
+    /* NEW: custom cursor — dot + trailing ring */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+      border-radius: 50%; transform: translate(-50%, -50%); will-change: transform;
+    }
+    .cursor-dot { width: 6px; height: 6px; background: var(--text-main); }
+    .cursor-ring {
+      width: 34px; height: 34px; border: 1px solid rgba(248, 250, 252, 0.5);
+      transition: width .25s cubic-bezier(0.16,1,0.3,1), height .25s cubic-bezier(0.16,1,0.3,1),
+                  border-color .25s ease, background .25s ease;
+    }
+    .cursor-ring.is-hover { width: 60px; height: 60px; background: rgba(99, 102, 241, 0.15); border-color: transparent; }
+
+    /* NEW: scroll reveal */
+    .reveal-up {
+      opacity: 0; transform: translateY(26px); filter: blur(6px);
+      transition: opacity .8s cubic-bezier(0.16,1,0.3,1), transform .8s cubic-bezier(0.16,1,0.3,1), filter .8s cubic-bezier(0.16,1,0.3,1);
+      transition-delay: calc(var(--d, 0) * 0.08s);
+    }
+    .reveal-up.in-view { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-up { opacity: 1; transform: none; filter: none; transition: none; }
+      .glow-orb { animation: none; }
+      .cursor-dot, .cursor-ring { display: none; }
+      body, a, button, .btn { cursor: auto; }
+    }
+
+    @media(max-width: 968px) {
+      .hero-content h1 { font-size: 2.8rem; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card.large { grid-column: span 1; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .nav-links { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Custom cursor -->
+  <!-- NEW: custom cursor elements -->
   <div class="cursor-dot" data-cursor-dot></div>
   <div class="cursor-ring" data-cursor-ring></div>
 
-  <!-- NAV -->
-  <nav class="nav" data-nav>
-    <a href="#" class="logo">forge<span>studio</span></a>
-    <div class="nav-links">
-      <a href="#work" data-cursor="hover">Work</a>
-      <a href="#capabilities" data-cursor="hover">Capabilities</a>
-      <a href="#stats" data-cursor="hover">Results</a>
-      <a href="#contact" data-cursor="hover">Contact</a>
+  <!-- Live Status Indicator -->
+  <div id="videoStatusBadge">
+    <div class="status-dot"></div>
+    <span id="statusText">Elite Graphics Engine Active</span>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-logo" data-cursor="hover">yezhuththu<span>.site</span></a>
+    
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#services" data-cursor="hover">Services</a></li>
+        <li><a href="pricing.html" data-cursor="hover">Pricing Plans</a></li>
+      </ul>
+      <a href="#quote" class="btn btn-primary magnetic" data-cursor="hover">Start Project</a>
     </div>
-    <button class="btn-ghost magnetic" data-cursor="hover">Start a project</button>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <video class="hero-video" autoplay muted loop playsinline
-      poster="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1600&auto=format&fit=crop">
-      <source src="https://assets.mixkit.co/nqnucc6axqivsp4u2gycoc2qg3v4" type="video/mp4" />
-    </video>
+  <!-- High-End Graphics Hero Section -->
+  <header class="hero" id="heroSection">
+    <div class="hero-graphics-bg">
+      <!-- NEW: video background (swap the <source> for your own footage) -->
+      <video class="hero-video" autoplay muted loop playsinline
+        poster="">
+        <source src="https://assets.mixkit.co/nqnucc6axqivsp4u2gycoc2qg3v4" type="video/mp4" />
+      </video>
+      <div class="hero-video-tint"></div>
 
+      <div class="grid-overlay"></div>
+
+      <div class="orb-parallax" data-speed="0.15"><div class="glow-orb orb-1"></div></div>
+      <div class="orb-parallax" data-speed="0.25"><div class="glow-orb orb-2"></div></div>
+      <div class="orb-parallax" data-speed="0.1"><div class="glow-orb orb-3"></div></div>
+    </div>
+
+    <!-- NEW: interactive particle field -->
     <canvas id="particle-canvas"></canvas>
-
-    <div class="hero-overlay" data-spotlight></div>
-    <div class="hero-grain"></div>
+    <!-- NEW: cursor spotlight -->
+    <div class="hero-spotlight" data-spotlight></div>
 
     <div class="hero-content">
-      <p class="eyebrow reveal-up" style="--d:0">Digital product & brand studio</p>
-      <h1 class="hero-title">
-        <span class="reveal-up" style="--d:1">We build brands</span>
-        <span class="reveal-up" style="--d:2">that <em>move</em>.</span>
-      </h1>
-      <p class="hero-sub reveal-up" style="--d:3">
-        Forge Studio partners with founders and product teams to design, build, and ship
-        experiences people remember — from first sketch to shipped code.
-      </p>
-      <div class="hero-cta reveal-up" style="--d:4">
-        <button class="btn-primary magnetic" data-cursor="hover">See our work</button>
-        <button class="btn-text magnetic" data-cursor="hover">Book a call →</button>
+      <div class="hero-badge reveal-up" style="--d:0"><i data-lucide="sparkles" style="width: 16px;"></i> Next-Gen Engineering Studio</div>
+      <h1 class="reveal-up" style="--d:1">Architecting <span>Digital Excellence</span> & Custom Web Systems</h1>
+      <p class="reveal-up" style="--d:2">We combine high-performance frontend engineering, robust backend infrastructure, and immersive design to scale your brand to the next level.</p>
+      <div class="hero-actions reveal-up" style="--d:3">
+        <a href="#quote" class="btn btn-primary magnetic" data-cursor="hover">Request Custom Quote <i data-lucide="arrow-right" style="width: 18px;"></i></a>
+        <a href="pricing.html" class="btn btn-outline magnetic" data-cursor="hover">Explore Packages</a>
       </div>
     </div>
+  </header>
 
-    <div class="scroll-cue">
-      <span></span>
-      <p>Scroll</p>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="work" id="work">
-    <div class="section-head">
-      <p class="eyebrow reveal-up">Selected work</p>
-      <h2 class="reveal-up">Projects that shipped, scaled, and stuck.</h2>
+  <!-- Bento Grid Services -->
+  <section id="services" class="section">
+    <div class="section-header">
+      <h2 class="reveal-up">Engineering Capabilities & Services</h2>
+      <p class="reveal-up" style="--d:1">Comprehensive digital solutions built with precision, speed, and scale.</p>
     </div>
 
-    <div class="work-grid">
-      <article class="work-card magnetic-card reveal-up" data-cursor="hover">
-        <div class="work-card-media" style="background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop')"></div>
-        <div class="work-card-meta"><h3>Nordwind</h3><span>Fintech · Product design</span></div>
-      </article>
-      <article class="work-card magnetic-card reveal-up" data-cursor="hover">
-        <div class="work-card-media" style="background-image:url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop')"></div>
-        <div class="work-card-meta"><h3>Cascade Labs</h3><span>SaaS · Full-stack build</span></div>
-      </article>
-      <article class="work-card magnetic-card reveal-up" data-cursor="hover">
-        <div class="work-card-media" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop')"></div>
-        <div class="work-card-meta"><h3>Halide Health</h3><span>Healthtech · Brand system</span></div>
-      </article>
-      <article class="work-card magnetic-card reveal-up" data-cursor="hover">
-        <div class="work-card-media" style="background-image:url('https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=1200&auto=format&fit=crop')"></div>
-        <div class="work-card-meta"><h3>Orbit Retail</h3><span>E-commerce · Growth</span></div>
-      </article>
-    </div>
-  </section>
-
-  <!-- PARALLAX MARQUEE -->
-  <section class="marquee-strip">
-    <div class="marquee-track" data-speed="0.25">
-      <span>Strategy</span><span>·</span><span>Design</span><span>·</span>
-      <span>Engineering</span><span>·</span><span>Growth</span><span>·</span>
-      <span>Strategy</span><span>·</span><span>Design</span><span>·</span>
-      <span>Engineering</span><span>·</span><span>Growth</span><span>·</span>
-    </div>
-  </section>
-
-  <!-- CAPABILITIES -->
-  <section class="capabilities" id="capabilities">
-    <div class="section-head">
-      <p class="eyebrow reveal-up">What we do</p>
-      <h2 class="reveal-up">Three disciplines. One team.</h2>
-    </div>
-    <div class="cap-grid">
-      <div class="cap-item reveal-up">
-        <span class="cap-index">01</span>
-        <h3>Product design</h3>
-        <p>Research-led UX and interface design for web and native products.</p>
+    <div class="bento-grid">
+      <div class="bento-card large magnetic-card reveal-up" data-cursor="hover">
+        <div>
+          <div class="bento-icon"><i data-lucide="code-2"></i></div>
+          <h3>Custom Web Engineering</h3>
+          <p>Hand-crafted architectures built using modern stacks to ensure lightning-fast load times, flawless responsiveness, and maximized conversion rates.</p>
+        </div>
       </div>
-      <div class="cap-item reveal-up">
-        <span class="cap-index">02</span>
-        <h3>Engineering</h3>
-        <p>Production-grade front and back-end builds, from MVP to scale.</p>
+
+      <div class="bento-card magnetic-card reveal-up" style="--d:1" data-cursor="hover">
+        <div>
+          <div class="bento-icon"><i data-lucide="shield-check"></i></div>
+          <h3>Enterprise Security</h3>
+          <p>Robust authentication layers, encrypted databases, and strict compliance standards.</p>
+        </div>
       </div>
-      <div class="cap-item reveal-up">
-        <span class="cap-index">03</span>
-        <h3>Brand & motion</h3>
-        <p>Identity systems and motion design that carry across every touchpoint.</p>
+
+      <div class="bento-card magnetic-card reveal-up" style="--d:2" data-cursor="hover">
+        <div>
+          <div class="bento-icon"><i data-lucide="database"></i></div>
+          <h3>Dynamic Backends</h3>
+          <p>Scalable APIs and real-time database architectures tailored to your exact workflows.</p>
+        </div>
+      </div>
+
+      <div class="bento-card magnetic-card reveal-up" style="--d:3" data-cursor="hover">
+        <div>
+          <div class="bento-icon"><i data-lucide="layout"></i></div>
+          <h3>UI/UX Brand Design</h3>
+          <p>Immersive wireframing and high-end visual designs that capture attention and build trust.</p>
+        </div>
+      </div>
+
+      <div class="bento-card magnetic-card reveal-up" style="--d:4" data-cursor="hover">
+        <div>
+          <div class="bento-icon"><i data-lucide="cloud"></i></div>
+          <h3>Cloud DevOps & Hosting</h3>
+          <p>Automated deployments, lightning-fast CDN caching, and 99.9% server uptime reliability.</p>
+        </div>
+      </div>
+
+      <div class="bento-card magnetic-card reveal-up" style="--d:5" data-cursor="hover">
+        <div>
+          <div class="bento-icon"><i data-lucide="cpu"></i></div>
+          <h3>API Integrations</h3>
+          <p>Connect payment gateways, CRM tools, and third-party software seamlessly into your platform.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- STATS -->
-  <section class="stats" id="stats">
-    <div class="stat reveal-up">
-      <span class="stat-number" data-count="120">0</span>
-      <p>Projects shipped</p>
-    </div>
-    <div class="stat reveal-up">
-      <span class="stat-number" data-count="98" data-suffix="%">0</span>
-      <p>Client retention</p>
-    </div>
-    <div class="stat reveal-up">
-      <span class="stat-number" data-count="14">0</span>
-      <p>Years in business</p>
-    </div>
-    <div class="stat reveal-up">
-      <span class="stat-number" data-count="32">0</span>
-      <p>People on the team</p>
+  <!-- Contact Lead Section -->
+  <section id="quote" class="section" style="padding-top: 0;">
+    <div class="quote-section reveal-up">
+      <div class="section-header" style="margin-bottom: 30px;">
+        <h2>Start Your Project Today</h2>
+        <p>Fill out the details below and our engineering team will get back to you promptly.</p>
+      </div>
+
+      <form id="contactForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="clientname">Your Name</label>
+            <input type="text" id="clientname" class="form-control" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" placeholder="john@example.com" required />
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="serviceType">Service Required</label>
+            <select id="serviceType" class="form-control" required>
+              <option value="" disabled selected>Select a package</option>
+              <option value="Static Website">Static Website (₹12,000)</option>
+              <option value="Dynamic Enterprise">Dynamic Enterprise (₹25,000)</option>
+              <option value="E-Commerce Solution">E-Commerce Solution (₹45,000)</option>
+              <option value="UI/UX Design">UI/UX Brand Design</option>
+              <option value="Cloud DevOps">Cloud DevOps & Hosting</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="estimatedBudget">Estimated Budget (₹)</label>
+            <input type="number" id="estimatedBudget" class="form-control" placeholder="25000" required />
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label for="projectDetails">Project Overview</label>
+          <textarea id="projectDetails" class="form-control" rows="4" placeholder="Tell us about your project goals and timeline..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary magnetic" style="width: 100%; padding: 18px;" data-cursor="hover">Submit Inquiry</button>
+      </form>
     </div>
   </section>
 
-  <!-- CONTACT / FOOTER -->
-  <footer id="contact">
-    <h2 class="reveal-up">Let's build something worth remembering.</h2>
-    <button class="btn-primary large magnetic reveal-up" data-cursor="hover">Start a project →</button>
-    <div class="footer-bottom">
-      <span>© 2026 Forge Studio</span>
-      <div class="footer-links">
-        <a href="#" data-cursor="hover">Instagram</a>
-        <a href="#" data-cursor="hover">LinkedIn</a>
-        <a href="#" data-cursor="hover">Dribbble</a>
-      </div>
-    </div>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 yezhuththu.site. All Rights Reserved.</p>
+    <p>Powered by Advanced Frontend & Spring Boot Backend Systems.</p>
   </footer>
 
-<script type="module" src="main.js"></script>
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    /* Real Backend Spring Boot Form Submission Handler — UNCHANGED */
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        clientname: document.getElementById('clientname').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        serviceType: document.getElementById('serviceType').value,
+        estimatedBudget: Number(document.getElementById('estimatedBudget').value),
+        projectDetails: document.getElementById('projectDetails').value.trim()
+      };
+
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Transmitting to Server...';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok || response.status === 200 || response.status === 201) {
+          contactForm.innerHTML = `
+            <div style="text-align: center; padding: 40px;">
+              <div style="font-size: 3.5rem; color: #10b981; margin-bottom: 16px;">✓</div>
+              <h3 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 8px;">Inquiry Successfully Transmitted!</h3>
+              <p style="color: var(--text-muted); font-size: 1.05rem;">Your project data has been securely saved to the backend database. Our engineers will review your specs shortly.</p>
+            </div>
+          `;
+        } else {
+          const errText = await response.text();
+          console.error('Server rejection:', errText);
+          alert('Server responded with an issue: ' + response.status);
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      } catch (err) {
+        console.error('Network Connection Error:', err);
+        alert('Could not reach backend server. Please check your network connection or Render server status.');
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+
+  <!-- NEW: interactive layer — cursor, magnetic buttons, spotlight, scroll reveal, parallax orbs, particle field -->
+  <script>
+    (function () {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isTouch = window.matchMedia('(hover: none)').matches;
+
+      /* ---------- 1. Custom cursor ---------- */
+      if (!isTouch && !reduceMotion) {
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorRing = document.querySelector('[data-cursor-ring]');
+        const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
+        const ring = { x: mouse.x, y: mouse.y };
+
+        cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
+        cursorRing.style.transform = `translate(${ring.x}px, ${ring.y}px) translate(-50%,-50%)`;
+
+        window.addEventListener('mousemove', (e) => {
+          mouse.x = e.clientX; mouse.y = e.clientY;
+          cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
+        });
+
+        document.querySelectorAll('[data-cursor="hover"]').forEach((el) => {
+          el.addEventListener('mouseenter', () => cursorRing.classList.add('is-hover'));
+          el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-hover'));
+        });
+
+        (function tick() {
+          ring.x += (mouse.x - ring.x) * 0.15;
+          ring.y += (mouse.y - ring.y) * 0.15;
+          cursorRing.style.transform = `translate(${ring.x}px, ${ring.y}px) translate(-50%,-50%)`;
+          requestAnimationFrame(tick);
+        })();
+      }
+
+      /* ---------- 2. Hero spotlight follows the cursor ---------- */
+      const heroSection = document.getElementById('heroSection');
+      const spotlight = document.querySelector('[data-spotlight]');
+      heroSection.addEventListener('mousemove', (e) => {
+        const rect = heroSection.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        spotlight.style.setProperty('--sx', `${x}%`);
+        spotlight.style.setProperty('--sy', `${y}%`);
+      });
+
+      /* ---------- 3. Magnetic buttons & cards ---------- */
+      if (!isTouch && !reduceMotion) {
+        document.querySelectorAll('.magnetic, .magnetic-card').forEach((el) => {
+          const strength = el.classList.contains('magnetic-card') ? 0.1 : 0.3;
+          el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const relX = e.clientX - rect.left - rect.width / 2;
+            const relY = e.clientY - rect.top - rect.height / 2;
+            el.style.transform = `translate(${relX * strength}px, ${relY * strength}px)`;
+          });
+          el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+        });
+      }
+
+      /* ---------- 4. Scroll reveal ---------- */
+      const revealEls = document.querySelectorAll('.reveal-up');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => revealObserver.observe(el));
+
+      /* ---------- 5. Parallax glow orbs on scroll ---------- */
+      const orbWrappers = document.querySelectorAll('.orb-parallax');
+      window.addEventListener('scroll', () => {
+        orbWrappers.forEach((el) => {
+          const speed = parseFloat(el.dataset.speed) || 0.15;
+          el.style.transform = `translateY(${window.scrollY * speed}px)`;
+        });
+      }, { passive: true });
+
+      /* ---------- 6. Three.js interactive particle field ---------- */
+      if (!reduceMotion && window.THREE) {
+        const canvas = document.getElementById('particle-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, innerWidth / heroSection.offsetHeight, 0.1, 100);
+        camera.position.z = 8;
+
+        const COUNT = 220;
+        const positions = new Float32Array(COUNT * 3);
+        const base = new Float32Array(COUNT * 3);
+        const vel = new Float32Array(COUNT * 3);
+        for (let i = 0; i < COUNT; i++) {
+          const x = (Math.random() - 0.5) * 14, y = (Math.random() - 0.5) * 8, z = (Math.random() - 0.5) * 6;
+          positions.set([x, y, z], i * 3);
+          base.set([x, y, z], i * 3);
+          vel.set([(Math.random() - 0.5) * 0.004, (Math.random() - 0.5) * 0.004, (Math.random() - 0.5) * 0.004], i * 3);
+        }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        // Sprite tinted with the brand's indigo/purple gradient
+        const spriteCanvas = document.createElement('canvas');
+        spriteCanvas.width = 64; spriteCanvas.height = 64;
+        const sctx = spriteCanvas.getContext('2d');
+        const grad = sctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        grad.addColorStop(0, 'rgba(255,255,255,1)');
+        grad.addColorStop(0.4, 'rgba(165,150,255,0.75)');
+        grad.addColorStop(1, 'rgba(165,150,255,0)');
+        sctx.fillStyle = grad; sctx.fillRect(0, 0, 64, 64);
+        const sprite = new THREE.CanvasTexture(spriteCanvas);
+
+        const material = new THREE.PointsMaterial({
+          size: 0.2, map: sprite, transparent: true, depthWrite: false,
+          blending: THREE.AdditiveBlending, opacity: 0.8,
+        });
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        const mouse3D = new THREE.Vector3(9999, 9999, 0);
+        window.addEventListener('mousemove', (e) => {
+          const rect = heroSection.getBoundingClientRect();
+          if (e.clientY < rect.top || e.clientY > rect.bottom) { mouse3D.set(9999, 9999, 0); return; }
+          const nx = (e.clientX / innerWidth) * 2 - 1;
+          const ny = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          const vector = new THREE.Vector3(nx, ny, 0.5).unproject(camera);
+          const dir = vector.sub(camera.position).normalize();
+          const distance = (0 - camera.position.z) / dir.z;
+          mouse3D.copy(camera.position).add(dir.multiplyScalar(distance));
+        });
+
+        function resize() {
+          const w = heroSection.offsetWidth, h = heroSection.offsetHeight;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function animate() {
+          const arr = geometry.attributes.position.array;
+          for (let i = 0; i < COUNT; i++) {
+            const ix = i * 3;
+            let x = arr[ix] + vel[ix], y = arr[ix + 1] + vel[ix + 1], z = arr[ix + 2] + vel[ix + 2];
+            x += (base[ix] - x) * 0.003; y += (base[ix + 1] - y) * 0.003; z += (base[ix + 2] - z) * 0.003;
+            const dx = x - mouse3D.x, dy = y - mouse3D.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 2.2) {
+              const force = (1 - dist / 2.2) * 0.06;
+              x += (dx / (dist || 1)) * force; y += (dy / (dist || 1)) * force;
+            }
+            arr[ix] = x; arr[ix + 1] = y; arr[ix + 2] = z;
+          }
+          geometry.attributes.position.needsUpdate = true;
+          points.rotation.y += 0.0005;
+          renderer.render(scene, camera);
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+    })();
+  </script>
 </body>
 </html>

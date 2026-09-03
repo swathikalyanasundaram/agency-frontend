@@ -32,7 +32,13 @@
       color: var(--text-main);
       line-height: 1.6;
       overflow-x: hidden;
+      cursor: none;
     }
+    input, textarea, select { cursor: auto; }
+    @media (hover: none) { body, a, button, .btn { cursor: auto !important; } }
+    a, button, .btn { cursor: none; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent-glow); outline-offset: 3px; }
+
     .navbar {
       position: fixed; top: 0; width: 100%; padding: 18px 8%; display: flex; justify-content: space-between; align-items: center;
       background: var(--bg-nav); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); z-index: 1000;
@@ -46,6 +52,13 @@
     .pricing-hero {
       position: relative; padding: 160px 8% 60px; text-align: center; overflow: hidden;
     }
+    /* NEW: soft glow orbs behind the pricing hero, for visual continuity with the homepage */
+    .pricing-hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+    .glow-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35; }
+    .p-orb-1 { width: 420px; height: 420px; background: #3b82f6; top: -80px; left: 8%; animation: pFloat 11s ease-in-out infinite alternate; }
+    .p-orb-2 { width: 380px; height: 380px; background: #8b5cf6; top: 10%; right: 10%; animation: pFloat 9s ease-in-out infinite alternate-reverse; }
+    @keyframes pFloat { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(30px) scale(1.06); } }
+
     .pricing-hero h1 { font-size: 3.2rem; font-weight: 800; margin-bottom: 16px; }
     .pricing-hero h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .pricing-hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
@@ -55,13 +68,13 @@
     }
     .pricing-card {
       background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 24px; padding: 40px;
-      position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; transition: border-color 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; justify-content: space-between;
     }
     .pricing-card.popular {
       border-color: var(--accent-primary);
       box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
     }
-    .pricing-card:hover { transform: translateY(-8px); border-color: var(--border-hover); }
+    .pricing-card:hover { border-color: var(--border-hover); }
     .popular-badge {
       position: absolute; top: -14px; right: 30px; background: var(--accent-gradient); color: white; padding: 4px 14px;
       font-size: 0.75rem; font-weight: 700; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em;
@@ -80,30 +93,66 @@
     
     footer { border-top: 1px solid var(--border-color); padding: 40px 8%; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
     footer a { color: var(--accent-glow); text-decoration: none; }
+
+    /* NEW: custom cursor */
+    .cursor-dot, .cursor-ring {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+      border-radius: 50%; transform: translate(-50%, -50%); will-change: transform;
+    }
+    .cursor-dot { width: 6px; height: 6px; background: var(--text-main); }
+    .cursor-ring {
+      width: 34px; height: 34px; border: 1px solid rgba(248, 250, 252, 0.5);
+      transition: width .25s cubic-bezier(0.16,1,0.3,1), height .25s cubic-bezier(0.16,1,0.3,1),
+                  border-color .25s ease, background .25s ease;
+    }
+    .cursor-ring.is-hover { width: 60px; height: 60px; background: rgba(59, 130, 246, 0.15); border-color: transparent; }
+
+    /* NEW: scroll reveal */
+    .reveal-up {
+      opacity: 0; transform: translateY(26px); filter: blur(6px);
+      transition: opacity .8s cubic-bezier(0.16,1,0.3,1), transform .8s cubic-bezier(0.16,1,0.3,1), filter .8s cubic-bezier(0.16,1,0.3,1);
+      transition-delay: calc(var(--d, 0) * 0.08s);
+    }
+    .reveal-up.in-view { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-up { opacity: 1; transform: none; filter: none; transition: none; }
+      .glow-orb { animation: none; }
+      .cursor-dot, .cursor-ring { display: none; }
+      body, a, button, .btn { cursor: auto; }
+    }
   </style>
 </head>
 <body>
+  <!-- NEW: custom cursor elements -->
+  <div class="cursor-dot" data-cursor-dot></div>
+  <div class="cursor-ring" data-cursor-ring></div>
+
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html" class="brand-logo">yezhuththu<span>.site</span></a>
+    <a href="index.html" class="brand-logo" data-cursor="hover">yezhuththu<span>.site</span></a>
     <ul class="nav-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="pricing.html">Pricing Plans</a></li>
-      <li><a href="index.html#quote">Contact Us</a></li>
+      <li><a href="index.html#services" data-cursor="hover">Services</a></li>
+      <li><a href="pricing.html" data-cursor="hover">Pricing Plans</a></li>
+      <li><a href="index.html#quote" data-cursor="hover">Contact Us</a></li>
     </ul>
-    <a href="index.html#quote" class="btn btn-primary" style="width: auto; padding: 10px 22px;">Get Started</a>
+    <a href="index.html#quote" class="btn btn-primary magnetic" style="width: auto; padding: 10px 22px;" data-cursor="hover">Get Started</a>
   </nav>
 
   <!-- Hero -->
   <header class="pricing-hero">
-    <h1>Transparent Pricing for <span>High-Performance</span> Websites</h1>
-    <p>Choose the ideal engineering plan tailored to elevate your business footprint and conversion rate.</p>
+    <div class="pricing-hero-bg">
+      <div class="glow-orb p-orb-1"></div>
+      <div class="glow-orb p-orb-2"></div>
+    </div>
+    <h1 class="reveal-up" style="--d:0">Transparent Pricing for <span>High-Performance</span> Websites</h1>
+    <p class="reveal-up" style="--d:1">Choose the ideal engineering plan tailored to elevate your business footprint and conversion rate.</p>
   </header>
 
   <!-- Pricing Cards Grid -->
   <main class="pricing-grid">
     <!-- Static Website -->
-    <div class="pricing-card">
+    <div class="pricing-card magnetic-card reveal-up" style="--d:0" data-cursor="hover">
       <div>
         <h3>Static Website</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;">Ideal for portfolios, local businesses, and landing pages.</p>
@@ -116,11 +165,11 @@
           <li><i data-lucide="check"></i> Lightning Deployment</li>
         </ul>
       </div>
-      <a href="index.html#quote" class="btn btn-outline">Choose Plan</a>
+      <a href="index.html#quote" class="btn btn-outline" data-cursor="hover">Choose Plan</a>
     </div>
 
     <!-- Dynamic Enterprise Website -->
-    <div class="pricing-card popular">
+    <div class="pricing-card popular magnetic-card reveal-up" style="--d:1" data-cursor="hover">
       <div class="popular-badge">Most Popular</div>
       <div>
         <h3>Dynamic Enterprise</h3>
@@ -134,11 +183,11 @@
           <li><i data-lucide="check"></i> Dynamic Database Architecture</li>
         </ul>
       </div>
-      <a href="index.html#quote" class="btn btn-primary">Choose Plan</a>
+      <a href="index.html#quote" class="btn btn-primary" data-cursor="hover">Choose Plan</a>
     </div>
 
     <!-- E-Commerce Solution -->
-    <div class="pricing-card">
+    <div class="pricing-card magnetic-card reveal-up" style="--d:2" data-cursor="hover">
       <div>
         <h3>E-Commerce Solution</h3>
         <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 6px;">Fully featured online store ready to drive automated sales.</p>
@@ -151,16 +200,72 @@
           <li><i data-lucide="check"></i> Priority 24/7 Support</li>
         </ul>
       </div>
-      <a href="index.html#quote" class="btn btn-outline">Choose Plan</a>
+      <a href="index.html#quote" class="btn btn-outline" data-cursor="hover">Choose Plan</a>
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2026 <a href="index.html">yezhuththu.site</a>. All Rights Reserved. Professional Web Solutions.</p>
+    <p>&copy; 2026 <a href="index.html" data-cursor="hover">yezhuththu.site</a>. All Rights Reserved. Professional Web Solutions.</p>
   </footer>
 
   <script>
     lucide.createIcons();
+
+    (function () {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const isTouch = window.matchMedia('(hover: none)').matches;
+
+      /* Custom cursor */
+      if (!isTouch && !reduceMotion) {
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorRing = document.querySelector('[data-cursor-ring]');
+        const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
+        const ring = { x: mouse.x, y: mouse.y };
+        cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
+        cursorRing.style.transform = `translate(${ring.x}px, ${ring.y}px) translate(-50%,-50%)`;
+
+        window.addEventListener('mousemove', (e) => {
+          mouse.x = e.clientX; mouse.y = e.clientY;
+          cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px) translate(-50%,-50%)`;
+        });
+        document.querySelectorAll('[data-cursor="hover"]').forEach((el) => {
+          el.addEventListener('mouseenter', () => cursorRing.classList.add('is-hover'));
+          el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-hover'));
+        });
+        (function tick() {
+          ring.x += (mouse.x - ring.x) * 0.15;
+          ring.y += (mouse.y - ring.y) * 0.15;
+          cursorRing.style.transform = `translate(${ring.x}px, ${ring.y}px) translate(-50%,-50%)`;
+          requestAnimationFrame(tick);
+        })();
+      }
+
+      /* Magnetic buttons & cards */
+      if (!isTouch && !reduceMotion) {
+        document.querySelectorAll('.magnetic, .magnetic-card').forEach((el) => {
+          const strength = el.classList.contains('magnetic-card') ? 0.06 : 0.3;
+          el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const relX = e.clientX - rect.left - rect.width / 2;
+            const relY = e.clientY - rect.top - rect.height / 2;
+            el.style.transform = `translate(${relX * strength}px, ${relY * strength}px)`;
+          });
+          el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+        });
+      }
+
+      /* Scroll reveal */
+      const revealEls = document.querySelectorAll('.reveal-up');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      revealEls.forEach((el) => revealObserver.observe(el));
+    })();
   </script>
 </body>
 </html>
