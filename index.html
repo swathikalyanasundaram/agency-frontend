@@ -278,7 +278,7 @@
   "use strict";
 
   var FRAME_COUNT = 96;
-  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2);
+  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2); // Frame 48 (Straight ahead)
 
   var hero   = document.getElementById('hero');
   var stage  = document.getElementById('stage');
@@ -303,35 +303,35 @@
   var hintDismissed = false;
   var raf = null;
 
-  var EASE = 0.10;            
+  var EASE = 0.12;            
   var IDLE_EASE = 0.06;       
 
-  function frameForPointer(clientX, clientY){
+  function frameForPointer(clientX){
     var stageRect = stage.getBoundingClientRect();
     
-    // Clover's exact horizontal center point on the page
+    // Exact center of Clover's body on the screen
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
 
-    // Calculate distance from his body center
+    // Distance of your cursor from the center of his body
     var distanceX = clientX - bodyCenterX;
     
-    // Define the distance threshold where he reaches his full left/right head turn (e.g., 400px range)
-    var maxDistX = 400; 
+    // The maximum pixel range from his body to trigger a full head turn (tweak this if needed)
+    var maxRange = window.innerWidth * 0.38;
 
-    // Normalize from -1 (left) to +1 (right), with 0 exactly at his body center
-    var normalizedX = Math.min(1, Math.max(-1, distanceX / maxDistX));
+    // Normalize value from -1 (fully left) to +1 (fully right), with 0 exactly at his body center
+    var normalized = Math.min(1, Math.max(-1, distanceX / maxRange));
 
-    // Map -1..1 directly across your 96 frames, centered perfectly at CENTER_FRAME (48)
-    var frame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
+    // Map precisely across the 96 frames centered on frame 48
+    var frame = CENTER_FRAME + (normalized * CENTER_FRAME);
 
     return Math.min(FRAME_COUNT - 1, Math.max(0, frame));
   }
+
   function onPointerMove(e){
     if (reduceMotion) return;
     var x = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
-    var y = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
     
-    target = frameForPointer(x, y);
+    target = frameForPointer(x);
     isActive = true;
     if (!hintDismissed){
       hintDismissed = true;
@@ -349,7 +349,7 @@
   function render(now){
     var breathing = 0;
     if (!isActive){
-      breathing = Math.sin(now * 0.0012) * 0.6;
+      breathing = Math.sin(now * 0.0012) * 0.5;
     }
 
     var ease = isActive ? EASE : IDLE_EASE;
@@ -360,11 +360,7 @@
     rounded = Math.min(FRAME_COUNT - 1, Math.max(0, rounded));
     
     var offsetX = Math.round(-rounded * displayWidth);
-    
-    // Apply smooth hardware-accelerated transform with a slight vertical sub-pixel translation 
-    // to give organic up/down head weight response
-    var verticalTranslate = isActive ? Math.min(4, Math.max(-4, (target - CENTER_FRAME) * 0.05)) : 0;
-    img.style.transform = 'translate3d(' + offsetX + 'px, ' + verticalTranslate + 'px, 0)';
+    img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
 
     var settled = Math.abs(goal - current) < 0.02;
     if (!settled || isActive){
@@ -409,10 +405,7 @@
     clearTimeout(resizeT);
     resizeT = setTimeout(function(){
       displayWidth = layoutImage();
-      var rounded = Math.round(current);
-      var offsetX = Math.round(-rounded * displayWidth);
-/************************************************************/
-      img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
+      paintIdle();
     }, 120);
   });
 
