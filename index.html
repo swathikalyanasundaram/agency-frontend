@@ -306,20 +306,21 @@
   var EASE = 0.10;            
   var IDLE_EASE = 0.06;       
 
-  function frameForClientX(clientX){
-    // Use the sheep's container element (stage) to find its absolute center point on screen
+ function frameForClientX(clientX){
+    var heroRect = hero.getBoundingClientRect();
     var stageRect = stage.getBoundingClientRect();
-    var stageCenterX = stageRect.left + stageRect.width / 2;
+    
+    // Define the active tracking range: 
+    // Start tracking from the left edge of the hero, and end at the center/right of Clover's stage
+    var minX = heroRect.left + 40; 
+    var maxX = stageRect.left + stageRect.width / 2;
 
-    // Calculate offset distance from the sheep's body center
-    var distanceX = clientX - stageCenterX;
-    var maxDistance = Math.max(stageCenterX, window.innerWidth - stageCenterX); // max boundary range
+    // Normalize cursor position within this specific character range (0 to 1)
+    var t = (clientX - minX) / (maxX - minX);
+    t = Math.min(1, Math.max(0, t));
 
-    // Normalize value from -1 (far left) to +1 (far right), with 0 being exactly at his body center
-    var normalized = Math.min(1, Math.max(-1, distanceX / maxDistance));
-
-    // Map normalized offset (-1 to 1) across the full 0..95 frame sequence centered around CENTER_FRAME
-    return CENTER_FRAME + (normalized * CENTER_FRAME);
+    // Map the local range precisely across your 96 frames
+    return t * (FRAME_COUNT - 1);
   }
 
   function onPointerMove(e){
