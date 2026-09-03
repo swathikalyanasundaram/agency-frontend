@@ -52,10 +52,15 @@
       overflow: hidden;
     }
 
-    /* True Edge-to-Edge Background Video */
+    /* Edge-to-Edge Background Videos for Seamless Crossfade Loop */
     .bg-video {
       position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -2; pointer-events: none;
       filter: brightness(0.85) contrast(1.05);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .bg-video.active {
+      opacity: 1;
     }
 
     /* Soft Gradient Vignette Overlay */
@@ -113,11 +118,13 @@
     <button class="indicator-dot"></button>
   </div>
 
-  <!-- Hero Section -->
+  <!-- Hero Section with Dual Background Videos for Infinite Seamless Loop -->
   <section class="hero-section">
-    <video class="bg-video" autoplay muted loop playsinline preload="auto">
+    <video class="bg-video active" autoplay muted playsinline preload="auto">
       <source src="background-video.mp4" type="video/mp4">
-      Your browser does not support the video tag.
+    </video>
+    <video class="bg-video next" autoplay muted playsinline preload="auto">
+      <source src="background-video.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
 
@@ -132,6 +139,36 @@
 
   <script>
     lucide.createIcons();
+
+    // Seamless Infinite Crossfade Controller
+    const video1 = document.querySelector('.bg-video.active');
+    const video2 = document.querySelector('.bg-video.next');
+
+    if (video1 && video2) {
+      video2.pause();
+      video2.currentTime = 0;
+
+      video1.addEventListener('timeupdate', () => {
+        if (video1.duration && video1.currentTime >= video1.duration - 1.0) {
+          if (video2.paused) {
+            video2.play();
+            video2.classList.add('active');
+            video1.classList.remove('active');
+          }
+        }
+      });
+
+      video2.addEventListener('timeupdate', () => {
+        if (video2.duration && video2.currentTime >= video2.duration - 1.0) {
+          if (video1.paused) {
+            video1.currentTime = 0;
+            video1.play();
+            video1.classList.add('active');
+            video2.classList.remove('active');
+          }
+        }
+      });
+    }
   </script>
 </body>
 </html>
