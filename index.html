@@ -46,27 +46,27 @@
     }
     .btn-contact:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255,255,255,0.2); }
 
-    /* Full-Screen Immersive Section */
+    /* Full-Screen Immersive Hero */
     .hero-section {
       position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; padding: 0 8%;
       overflow: hidden;
     }
 
-    /* True Full-Screen Background Video */
+    /* True Edge-to-Edge Background Video */
     .bg-video {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; pointer-events: none;
-      filter: brightness(0.55) contrast(1.15);
+      position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -2; pointer-events: none;
+      filter: brightness(0.5) contrast(1.1);
     }
 
-    /* Cinematic Gradient Vignette Over Video */
+    /* Immersive Cinematic Gradient Overlay */
     .bg-overlay {
-      position: absolute; inset: 0; 
-      background: radial-gradient(circle at 75% 50%, rgba(7, 9, 20, 0.2) 0%, rgba(7, 9, 20, 0.85) 75%),
-                  linear-gradient(to right, rgba(7, 9, 20, 0.95) 0%, rgba(7, 9, 20, 0.6) 50%, rgba(7, 9, 20, 0.2) 100%);
-      z-index: 2; pointer-events: none;
+      position: fixed; inset: 0; width: 100vw; height: 100vh;
+      background: radial-gradient(circle at 75% 50%, rgba(7, 9, 20, 0.15) 0%, rgba(7, 9, 20, 0.8) 75%),
+                  linear-gradient(to right, rgba(7, 9, 20, 0.95) 0%, rgba(7, 9, 20, 0.5) 50%, rgba(7, 9, 20, 0.2) 100%);
+      z-index: -1; pointer-events: none;
     }
 
-    /* Content Box Floating over Video */
+    /* Left Side Content Box */
     .content-box {
       position: relative; z-index: 10; max-width: 500px; padding-top: 40px;
     }
@@ -112,15 +112,13 @@
     <button class="indicator-dot"></button>
   </div>
 
-  <!-- Hero Section with Fullscreen Background Video -->
+  <!-- Fullscreen Video Background & Section -->
   <section class="hero-section">
-    <!-- Full-bleed background video -->
     <video class="bg-video" autoplay muted loop playsinline>
       <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
 
-    <!-- Content Layer -->
     <div class="content-box">
       <h2>A Model For Success.</h2>
       <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process starts with our proprietary SolutionLab roadmap session.</p>
