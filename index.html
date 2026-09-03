@@ -45,7 +45,6 @@
     isolation:isolate;
   }
 
-  /* soft drifting wool-light accents, purely decorative, very slow */
   .glow{
     position:absolute;
     border-radius:50%;
@@ -150,7 +149,6 @@
     50%{ opacity:0.45; transform:scale(0.72); }
   }
 
-  /* ---- character stage ---- */
   .stage{
     position:relative;
     flex: 0 0 auto;
@@ -180,6 +178,8 @@
     width: var(--char-w);
     aspect-ratio: var(--frame-w) / var(--frame-h);
     overflow:hidden;
+    transform: translateZ(0);
+    will-change: transform;
     -webkit-mask-image: radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, black 32%, rgba(0,0,0,0.7) 55%, transparent 88%);
             mask-image: radial-gradient(ellipse 58% 66% at 50% 38%, black 0%, black 32%, rgba(0,0,0,0.7) 55%, transparent 88%);
     -webkit-mask-repeat:no-repeat;
@@ -197,15 +197,6 @@
     max-width:none;
     display:block;
     will-change:transform;
-    transform:translate3d(0,0,0);
-  }
-
-  .char__ring{
-    position:absolute;
-    inset:0;
-    z-index:3;
-    pointer-events:none;
-    border-radius:50%;
   }
 
   footer{
@@ -217,9 +208,7 @@
     color:rgba(255,248,236,0.55);
     letter-spacing:0.01em;
   }
-  footer a{ color:inherit; }
 
-  /* ---- layout: stack on narrow screens ---- */
   @media (max-width: 860px){
     .hero__inner{
       flex-direction:column;
@@ -277,9 +266,7 @@
   "use strict";
 
   var FRAME_COUNT = 96;
-  var FRAME_W = 280;
-  var FRAME_H = 468;
-  var IDLE_FRAME = 0;
+  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2); // Frame 48 (Straight ahead)
 
   var hero   = document.getElementById('hero');
   var stage  = document.getElementById('stage');
@@ -289,9 +276,8 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Size the sprite image to the number of frames once it's loaded / on resize.
   function layoutImage(){
-    var displayW = charEl.clientWidth;
+    var displayW = charEl.offsetWidth;
     img.style.width = (displayW * FRAME_COUNT) + 'px';
     img.style.height = 'auto';
     return displayW;
@@ -299,29 +285,35 @@
 
   var displayWidth = layoutImage();
 
-  var current = IDLE_FRAME;   // eased, floating-point frame position
-  var target  = IDLE_FRAME;   // where we're easing toward
-  var isActive = false;       // true while the cursor is meaningfully engaging the hero
+  var current = CENTER_FRAME; 
+  var target  = CENTER_FRAME; 
+  var isActive = false;       
   var hintDismissed = false;
   var raf = null;
-  var lastMoveT = 0;
 
-  var EASE = 0.10;            // lower = softer / heavier follow
-  var IDLE_EASE = 0.06;       // slightly gentler settle back to rest
+  var EASE = 0.14;            
+  var IDLE_EASE = 0.06;       
 
-  function frameForClientX(clientX){
-    var rect = hero.getBoundingClientRect();
-    var t = (clientX - rect.left) / rect.width;   // 0..1 across the whole hero
-    t = Math.min(1, Math.max(0, t));
-    return t * (FRAME_COUNT - 1);
+  function frameForPointer(clientX){
+    var stageRect = stage.getBoundingClientRect();
+    var bodyCenterX = stageRect.left + (stageRect.width / 2);
+
+    // Clean horizontal tracking anchored purely to the X-axis
+    var distanceX = clientX - bodyCenterX;
+    var maxRangeX = window.innerWidth * 0.45;
+    var normalizedX = Math.min(1, Math.max(-1, distanceX / maxRangeX));
+    
+    var finalFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
+
+    return Math.min(FRAME_COUNT - 1, Math.max(0, finalFrame));
   }
 
   function onPointerMove(e){
     if (reduceMotion) return;
-    var x = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
-    target = frameForClientX(x);
+    var clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+    
+    target = frameForPointer(clientX);
     isActive = true;
-    lastMoveT = performance.now();
     if (!hintDismissed){
       hintDismissed = true;
       hint.classList.add('is-hidden');
@@ -331,15 +323,14 @@
 
   function onPointerLeave(){
     isActive = false;
-    target = IDLE_FRAME;
+    target = CENTER_FRAME;
     start();
   }
 
   function render(now){
     var breathing = 0;
     if (!isActive){
-      // gentle idle "breathing" life once settled near rest
-      breathing = Math.sin(now * 0.0012) * 0.6;
+      breathing = Math.sin(now * 0.0012) * 0.5;
     }
 
     var ease = isActive ? EASE : IDLE_EASE;
@@ -348,14 +339,15 @@
 
     var rounded = Math.round(current);
     rounded = Math.min(FRAME_COUNT - 1, Math.max(0, rounded));
-    charEl.style.setProperty('--tx', (-rounded * displayWidth) + 'px');
-    img.style.transform = 'translate3d(' + (-rounded * displayWidth) + 'px,0,0)';
+    
+    var offsetX = Math.round(-rounded * displayWidth);
+    img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
 
     var settled = Math.abs(goal - current) < 0.02;
     if (!settled || isActive){
       raf = requestAnimationFrame(render);
     } else {
-      raf = null; // stop the loop when at rest to save cycles
+      raf = null; 
     }
   }
 
@@ -365,9 +357,9 @@
     }
   }
 
-  // Initial paint at the idle frame.
   function paintIdle(){
-    img.style.transform = 'translate3d(' + (-IDLE_FRAME * displayWidth) + 'px,0,0)';
+    var offsetX = Math.round(-CENTER_FRAME * displayWidth);
+    img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
   }
 
   if (img.complete){
@@ -380,8 +372,8 @@
   }
 
   if (!reduceMotion){
-    window.addEventListener('mousemove', onPointerMove, { passive:true });
-    window.addEventListener('touchmove', onPointerMove, { passive:true });
+    hero.addEventListener('mousemove', onPointerMove, { passive:true });
+    hero.addEventListener('touchmove', onPointerMove, { passive:true });
     hero.addEventListener('mouseleave', onPointerLeave);
     window.addEventListener('touchend', onPointerLeave, { passive:true });
     window.addEventListener('blur', onPointerLeave);
@@ -394,8 +386,7 @@
     clearTimeout(resizeT);
     resizeT = setTimeout(function(){
       displayWidth = layoutImage();
-      var rounded = Math.round(current);
-      img.style.transform = 'translate3d(' + (-rounded * displayWidth) + 'px,0,0)';
+      paintIdle();
     }, 120);
   });
 
