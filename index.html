@@ -8,23 +8,9 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- GSAP & ScrollTrigger Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg-cream: #fcfbfa;
-      --text-dark: #2d2a29;
-      --text-muted: #6b6563;
-      --accent-pink: #f9e2df;
-      --accent-green: #e4efe0;
-      --coral: #f06449;
-      --border-soft: #eae3de;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -33,682 +19,237 @@
     }
 
     body {
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
+      background-color: #0b0c10;
+      color: #ffffff;
       font-family: 'Plus Jakarta Sans', sans-serif;
       overflow-x: hidden;
-      overflow: hidden; /* Locked initially for video intro */
     }
 
-    /* Immersive Video Intro Overlay */
-    #introOverlay {
-      position: fixed;
-      inset: 0;
-      background: #2d2a29;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-
-    .intro-box {
-      width: 90%;
-      max-width: 700px;
-      text-align: center;
-    }
-
-    #introVideo {
-      width: 100%;
-      border-radius: 20px;
-      border: 4px solid #fcfbfa;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
-
-    .skip-btn {
-      margin-top: 25px;
-      background: transparent;
-      border: 2px solid #fcfbfa;
-      color: #fcfbfa;
-      padding: 10px 24px;
-      border-radius: 50px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .skip-btn:hover {
-      background: #fcfbfa;
-      color: #2d2a29;
-    }
-
-    /* Organic Background Blobs */
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(60px);
-      z-index: 0;
-      pointer-events: none;
-    }
-    .blob-1 {
-      width: 450px; height: 450px;
-      background: var(--accent-pink);
-      top: -50px; left: -100px;
-      opacity: 0.8;
-    }
-    .blob-2 {
-      width: 500px; height: 500px;
-      background: var(--accent-green);
-      top: 35%; right: -100px;
-      opacity: 0.7;
-    }
-
-    /* Header Navigation */
+    /* Fixed Top Navigation Bar */
     header {
       position: fixed;
-      top: 0; left: 0; width: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 6vw;
-      background: rgba(252, 251, 250, 0.85);
-      backdrop-filter: blur(10px);
-      z-index: 100;
-      border-bottom: 1px solid var(--border-soft);
+      padding: 1.5rem 5vw;
+      background: rgba(11, 12, 16, 0.4);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text-dark);
-    }
-
-    .mini-avatar {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: var(--accent-pink);
-      border: 2px solid var(--text-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Fraunces', serif;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    .logo-text {
-      font-family: 'Fraunces', serif;
+    .logo {
+      font-weight: 700;
       font-size: 1.25rem;
-      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #fff;
+      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
       gap: 2.5rem;
       list-style: none;
+      align-items: center;
     }
 
     .nav-links a {
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.75);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 0.95rem;
-      transition: color 0.2s;
+      transition: color 0.2s ease;
     }
 
     .nav-links a:hover {
-      color: var(--coral);
+      color: #fff;
     }
 
-    .nav-btn {
-      background: var(--coral);
-      color: white;
-      padding: 0.6rem 1.4rem;
+    .register-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1.25rem;
       border-radius: 50px;
-      font-weight: 700;
-      text-decoration: none;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 14px rgba(240, 100, 73, 0.3);
-      transition: transform 0.2s;
+      color: white !important;
+      font-weight: 600 !important;
+      transition: background 0.2s ease !important;
     }
 
-    .nav-btn:hover {
-      transform: scale(1.04);
+    .register-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
-    /* Hero Section */
-    .hero-section {
+    /* Section Layouts */
+    section {
       position: relative;
-      min-height: 95vh;
+      height: 100vh;
+      width: 100%;
       display: flex;
       align-items: center;
-      padding: 10vh 6vw;
-      z-index: 1;
+      padding: 0 8vw;
+      background-size: cover;
+      background-position: center;
     }
 
-    .hero-grid {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 4rem;
+    /* Section 1: Hero */
+    .hero-section {
+      background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=80');
+    }
+
+    .hero-content {
+      max-width: 650px;
+      z-index: 2;
+    }
+
+    .subtitle-tag {
+      display: flex;
       align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
     }
 
-    .hero-content h1 {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(3rem, 5.5vw, 5rem);
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.02em;
+    .hero-title {
+      font-size: clamp(4rem, 9vw, 9rem);
+      font-weight: 800;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #FFFFFF 40%, rgba(255, 255, 255, 0.6) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .hero-content p {
-      font-size: 1.15rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      max-width: 44ch;
-    }
-
-    .schedule-btn {
+    .cta-btn {
       display: inline-flex;
       align-items: center;
-      background: var(--coral);
-      color: white;
-      padding: 0.9rem 2.2rem;
+      gap: 12px;
+      background: white;
+      color: #111;
+      padding: 0.85rem 1.75rem;
       border-radius: 50px;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(240, 100, 73, 0.35);
-      transition: transform 0.2s;
-    }
-
-    .schedule-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    /* Cozy Pinterest Illustration Box */
-    .hero-graphic-box {
-      position: relative;
-      width: 100%;
-      height: 450px;
-      background: white;
-      border: 2px solid var(--text-dark);
-      border-radius: 32px;
-      box-shadow: 12px 12px 0px var(--text-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .floating-cartoon {
-      animation: floatCartoon 4s ease-in-out infinite alternate;
-    }
-    @keyframes floatCartoon {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-8px); }
-    }
-
-    /* Standard Sections */
-    section {
-      padding: 7rem 6vw;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-title {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 4rem;
-      max-width: 45ch;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Pricing Section */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .pricing-card {
-      background: white;
-      border: 2px solid var(--text-dark);
-      border-radius: 24px;
-      padding: 3rem 2.5rem;
-      box-shadow: 8px 8px 0px var(--text-dark);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s ease;
-    }
-
-    .pricing-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .pricing-card.featured {
-      background: var(--accent-pink);
-    }
-
-    .plan-name {
-      font-family: 'Fraunces', serif;
-      font-size: 1.5rem;
       font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      background: #f0f0f0;
+    }
+
+    /* Section 2: Tranquility */
+    .tranquility-section {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80');
+    }
+
+    .content-box {
+      max-width: 540px;
+      z-index: 2;
+    }
+
+    .section-category {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
       margin-bottom: 0.5rem;
     }
 
-    .plan-price {
-      font-family: 'Fraunces', serif;
-      font-size: 3rem;
-      font-weight: 600;
-      color: var(--coral);
+    .section-heading {
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
       margin-bottom: 1.5rem;
     }
 
-    .plan-features {
-      list-style: none;
-      margin-bottom: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .plan-features li::before {
-      content: "✦ ";
-      color: var(--coral);
-      font-weight: bold;
-    }
-
-    .card-btn {
-      display: block;
-      text-align: center;
-      background: var(--text-dark);
-      color: white;
-      padding: 0.9rem;
-      border-radius: 50px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .card-btn:hover {
-      background: var(--coral);
-    }
-
-    /* Contact Form Section */
-    .contact-box {
-      background: white;
-      border: 2px solid var(--text-dark);
-      border-radius: 28px;
-      padding: 4rem;
-      box-shadow: 12px 12px 0px var(--text-dark);
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .form-group.full {
-      grid-column: span 2;
-    }
-
-    label {
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 1rem;
-      border: 2px solid var(--text-dark);
-      border-radius: 12px;
-      background: var(--bg-cream);
-      font-family: inherit;
+    .section-desc {
       font-size: 1rem;
-      outline: none;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    .text-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+      padding-bottom: 2px;
       transition: border-color 0.2s;
     }
 
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--coral);
-      background: white;
+    .text-link:hover {
+      border-color: #fff;
     }
 
-    textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .submit-btn {
-      background: var(--coral);
-      color: white;
-      border: 2px solid var(--text-dark);
-      padding: 1.1rem 2rem;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      cursor: pointer;
-      box-shadow: 4px 4px 0px var(--text-dark);
-      transition: transform 0.1s, box-shadow 0.1s;
-      width: 100%;
-    }
-
-    .submit-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0px var(--text-dark);
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      border-top: 2px solid var(--border-soft);
+    /* Section 3: Biodiversity */
+    .biodiversity-section {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=2000&q=80');
     }
 
     @media (max-width: 768px) {
-      .hero-grid { grid-template-columns: 1fr; text-align: center; }
-      .hero-content p { margin-left: auto; margin-right: auto; }
-      .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: span 1; }
       .nav-links { display: none; }
+      section { padding: 0 6vw; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fullscreen Intro Video Overlay (Plays First) -->
-  <div id="introOverlay">
-    <div class="intro-box">
-      <video id="introVideo" autoplay muted playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-screens-and-lights-31998-large.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <button class="skip-btn" onclick="skipIntro()">Skip Intro →</button>
-    </div>
-  </div>
-
-  <!-- Background Blobs -->
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-
-  <!-- Header -->
+  <!-- Top Navigation Bar -->
   <header>
-    <a href="#" class="logo-container">
-      <div class="mini-avatar">Y</div>
-      <span class="logo-text">yezhuththu</span>
-    </a>
+    <a href="#" class="logo">Notosan</a>
     <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#hero">Community</a></li>
+      <li><a href="#tranquility">About</a></li>
+      <li><a href="#biodiversity">Support</a></li>
+      <li><a href="#hero">Contact</a></li>
+      <li><a href="#hero" class="register-btn">Register</a></li>
     </ul>
-    <a href="#contact" class="nav-btn">Schedule a Call</a>
   </header>
 
-  <!-- Hero Section with Pinterest-Style Cozy Room Vector -->
-  <section class="hero-section" id="home">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <h1>Hello &amp; welcome!</h1>
-        <p>Hey, I'm a motion designer and illustrator crafting custom web animations and cozy vector interfaces that help your brand stand out.</p>
-        <div>
-          <a href="#contact" class="schedule-btn">Schedule a Call →</a>
-        </div>
+  <!-- Hero Section (VISITE) -->
+  <section id="hero" class="hero-section">
+    <div class="hero-content">
+      <div class="subtitle-tag">
+        <span>⚡</span> Journey to new frontiers, Journey to Noto Nature Park
       </div>
-
-      <!-- Pinterest-Style Cozy Vector Scene -->
-      <div class="hero-graphic-box">
-        <div class="cartoon-scene" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-          <svg class="floating-cartoon" width="320" height="320" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background Wall & Floor Grid -->
-            <rect x="30" y="30" width="240" height="180" rx="20" fill="#fefae0" stroke="#2d2a29" stroke-width="4"/>
-            <path d="M30 210H270V250C270 261.046 261.046 270 250 270H50C38.9543 270 30 261.046 30 250V210Z" fill="#faedcd" stroke="#2d2a29" stroke-width="4"/>
-            
-            <!-- Cozy Window -->
-            <rect x="60" y="60" width="70" height="90" rx="10" fill="#e9edc9" stroke="#2d2a29" stroke-width="3"/>
-            <path d="M95 60V150M60 105H130" stroke="#2d2a29" stroke-width="3"/>
-            
-            <!-- Hanging Plant -->
-            <path d="M210 50V80" stroke="#2d2a29" stroke-width="2.5"/>
-            <path d="M195 80H225L220 110H200L195 80Z" fill="#ccd5ae" stroke="#2d2a29" stroke-width="3"/>
-            <circle cx="210" cy="75" r="12" fill="#606c38"/>
-            <circle cx="200" cy="65" r="10" fill="#606c38"/>
-            <circle cx="220" cy="68" r="11" fill="#606c38"/>
-
-            <!-- Desk & Chair -->
-            <rect x="110" y="180" width="130" height="15" rx="4" fill="#d4a373" stroke="#2d2a29" stroke-width="3"/>
-            <path d="M125 195V240M225 195V240" stroke="#2d2a29" stroke-width="3" stroke-linecap="round"/>
-            
-            <!-- Laptop & Lamp -->
-            <rect x="150" y="160" width="35" height="20" rx="3" fill="#adb5bd" stroke="#2d2a29" stroke-width="2.5"/>
-            <path d="M135 180H195" stroke="#2d2a29" stroke-width="2" stroke-linecap="round"/>
-            <path d="M245 240V120H260" stroke="#2d2a29" stroke-width="3" stroke-linecap="round"/>
-            <path d="M250 120L235 95H275L260 120Z" fill="#ffb703" stroke="#2d2a29" stroke-width="3"/>
-
-            <!-- Coffee Mug -->
-            <rect x="70" y="185" width="22" height="25" rx="5" fill="white" stroke="#2d2a29" stroke-width="2.5"/>
-            <path d="M92 192C98 192 98 203 92 203" stroke="#2d2a29" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
+      <h1 class="hero-title">Visite</h1>
+      <a href="#tranquility" class="cta-btn">Start the journey <span>→</span></a>
     </div>
   </section>
 
-  <!-- Pricing Section -->
-  <section id="pricing">
-    <h2 class="section-title">Cozy Pricing Packages</h2>
-    <p class="section-subtitle">Transparent scope tiers built for projects of every size.</p>
-
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <div>
-          <div class="plan-name">Landing Page Motion</div>
-          <div class="plan-price">₹95,000</div>
-          <ul class="plan-features">
-            <li>Cozy vector layout design</li>
-            <li>GSAP scroll-triggered reveals</li>
-            <li>Fully responsive mobile view</li>
-          </ul>
-        </div>
-        <a href="#contact" class="card-btn">Select Plan</a>
-      </div>
-
-      <div class="pricing-card featured">
-        <div>
-          <div class="plan-name">Studio Complete</div>
-          <div class="plan-price">₹2,50,000</div>
-          <ul class="plan-features">
-            <li>Multi-page motion web build</li>
-            <li>Custom interactive illustrations</li>
-            <li>Priority scheduling &amp; support</li>
-          </ul>
-        </div>
-        <a href="#contact" class="card-btn">Select Plan</a>
-      </div>
-
-      <div class="pricing-card">
-        <div>
-          <div class="plan-name">Enterprise Scope</div>
-          <div class="plan-price">Custom</div>
-          <ul class="plan-features">
-            <li>Full brand motion guidelines</li>
-            <li>Advanced canvas animations</li>
-            <li>Dedicated engineering lead</li>
-          </ul>
-        </div>
-        <a href="#contact" class="card-btn">Contact Studio</a>
-      </div>
+  <!-- Tranquility Section -->
+  <section id="tranquility" class="tranquility-section">
+    <div class="content-box">
+      <div class="section-category">02 Experience</div>
+      <h2 class="section-heading">Tranquility</h2>
+      <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
+      <a href="#biodiversity" class="text-link">Learn more <span>→</span></a>
     </div>
   </section>
 
-  <!-- Working Backend Contact Section -->
-  <section id="contact">
-    <div class="contact-box">
-      <h2 class="section-title" style="text-align: left; margin-bottom: 0.5rem;">Let's work together!</h2>
-      <p class="section-subtitle" style="text-align: left; margin-left: 0; margin-bottom: 2.5rem;">Have a project in mind? Fill out the form below to submit your inquiry directly to the live backend database.</p>
-
-      <form id="contactForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" placeholder="Andra" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="hello@example.com" required>
-          </div>
-          <div class="form-group">
-            <label for="serviceType">Service Requested</label>
-            <select id="serviceType">
-              <option value="Landing Page Motion">Landing Page Motion</option>
-              <option value="Studio Complete">Studio Complete</option>
-              <option value="Enterprise Scope">Enterprise Scope</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="budget">Estimated Budget (₹)</label>
-            <input type="number" id="budget" placeholder="95000" value="95000" required>
-          </div>
-          <div class="form-group full">
-            <label for="msg">Project Details</label>
-            <textarea id="msg" placeholder="Tell me about your vision, timeline, and goals..." required></textarea>
-          </div>
-          <div class="form-group full">
-            <button type="submit" class="submit-btn">Send Inquiry ✨</button>
-          </div>
-        </div>
-      </form>
+  <!-- Biodiversity Section -->
+  <section id="biodiversity" class="biodiversity-section">
+    <div class="content-box">
+      <div class="section-category">03 Habitat</div>
+      <h2 class="section-heading">Biodiversity</h2>
+      <p class="section-desc">Away from the manic energy of Japan's famous metropolis lies the ancient hamlet of Noto. Surprising and captivating in equal measure, Noto is a region like no other. Soaring peaks, lakes and endless waterfalls combine to form a habitat for a biodiverse range of species.</p>
+      <a href="#hero" class="text-link">Learn more <span>→</span></a>
     </div>
   </section>
-
-  <footer>
-    <p>&copy; 2026 yezhuththu.site — Crafted with cozy motion design.</p>
-  </footer>
-
-  <!-- Scripts: Intro Transition, GSAP, and Backend Integration -->
-  <script>
-    function skipIntro() {
-      const overlay = document.getElementById('introOverlay');
-      const video = document.getElementById('introVideo');
-      
-      video.pause();
-      overlay.style.opacity = '0';
-      overlay.style.visibility = 'hidden';
-      document.body.style.overflow = 'auto'; // Unlock scroll
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      // Handle Video Intro Ending
-      const video = document.getElementById('introVideo');
-      video.onended = () => {
-        skipIntro();
-      };
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Scroll-Triggered Reveals for Pricing Cards
-      gsap.utils.toArray(".pricing-card").forEach((card, i) => {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none none"
-          },
-          y: 50,
-          opacity: 0,
-          duration: 0.8,
-          delay: i * 0.15,
-          ease: "power3.out"
-        });
-      });
-
-      // Scroll-Triggered Reveal for Contact Form
-      gsap.from(".contact-box", {
-        scrollTrigger: {
-          trigger: ".contact-box",
-          start: "top 85%",
-          toggleActions: "play none none none"
-        },
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out"
-      });
-
-      // Live Backend Form Handler
-      const contactForm = document.getElementById("contactForm");
-      contactForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
-        const submitBtn = e.target.querySelector(".submit-btn");
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = "Sending to Database...";
-        submitBtn.disabled = true;
-
-        const formData = {
-          clientname: document.getElementById("name").value,
-          email: document.getElementById("email").value,
-          serviceType: document.getElementById("serviceType").value,
-          projectDetails: document.getElementById("msg").value,
-          estimatedBudget: Number(document.getElementById("budget").value)
-        };
-
-        try {
-          const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(formData)
-          });
-
-          if (response.ok) {
-            alert("Success! Your message was sent and recorded in the admin backend database.");
-            contactForm.reset();
-          } else {
-            alert("Submission received a non-OK status from server. Please try again.");
-          }
-        } catch (err) {
-          console.error("Backend error:", err);
-          alert("Unable to reach the backend server. Please verify your connection.");
-        } finally {
-          submitBtn.innerText = originalText;
-          submitBtn.disabled = false;
-        }
-      });
-    });
-  </script>
 
 </body>
 </html>
