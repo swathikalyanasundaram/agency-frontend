@@ -266,7 +266,7 @@
   "use strict";
 
   var FRAME_COUNT = 96;
-  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2);
+  var CENTER_FRAME = Math.floor(FRAME_COUNT / 2); // Frame 48 (Straight ahead)
 
   var hero   = document.getElementById('hero');
   var stage  = document.getElementById('stage');
@@ -291,41 +291,30 @@
   var hintDismissed = false;
   var raf = null;
 
-  var lastClientX = 0;
-  var lastClientY = 0;
-
-  var EASE = 0.15;            
+  var EASE = 0.14;            
   var IDLE_EASE = 0.06;       
 
-  function frameForPointer(clientX, clientY){
+  function frameForPointer(clientX){
     var stageRect = stage.getBoundingClientRect();
     
-    // Body / Stomach center anchor point
+    // Sheep's stomach / center body anchor point
     var bodyCenterX = stageRect.left + (stageRect.width / 2);
-    var bodyCenterY = stageRect.top + (stageRect.height * 0.55);
 
-    // Horizontal tracking direction
+    // Horizontal tracking direction anchored around his body center
     var distanceX = clientX - bodyCenterX;
     var maxRangeX = window.innerWidth * 0.4;
     var normalizedX = Math.min(1, Math.max(-1, distanceX / maxRangeX));
-    var baseFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
-
-    // Vertical framing nudge
-    var distanceY = clientY - bodyCenterY;
-    var maxRangeY = window.innerHeight * 0.35;
-    var normalizedY = Math.min(1, Math.max(-1, distanceY / maxRangeY));
     
-    var finalFrame = baseFrame + (normalizedY * 4);
+    var finalFrame = CENTER_FRAME + (normalizedX * CENTER_FRAME);
 
     return Math.min(FRAME_COUNT - 1, Math.max(0, finalFrame));
   }
 
   function onPointerMove(e){
     if (reduceMotion) return;
-    lastClientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
-    lastClientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+    var clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
     
-    target = frameForPointer(lastClientX, lastClientY);
+    target = frameForPointer(clientX);
     isActive = true;
     if (!hintDismissed){
       hintDismissed = true;
@@ -354,14 +343,7 @@
     rounded = Math.min(FRAME_COUNT - 1, Math.max(0, rounded));
     
     var offsetX = Math.round(-rounded * displayWidth);
-    
-    // Stomach-anchored vertical body translation
-    var stageRect = stage.getBoundingClientRect();
-    var bodyCenterY = stageRect.top + (stageRect.height * 0.55);
-    var offsetY = isActive ? (lastClientY - bodyCenterY) : 0;
-    var verticalTranslate = Math.min(10, Math.max(-10, offsetY * 0.06));
-
-    img.style.transform = 'translate3d(' + offsetX + 'px, ' + verticalTranslate + 'px, 0)';
+    img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
 
     var settled = Math.abs(goal - current) < 0.02;
     if (!settled || isActive){
@@ -392,7 +374,6 @@
   }
 
   if (!reduceMotion){
-    // Attached directly to the hero section element so it captures events reliably
     hero.addEventListener('mousemove', onPointerMove, { passive:true });
     hero.addEventListener('touchmove', onPointerMove, { passive:true });
     hero.addEventListener('mouseleave', onPointerLeave);
