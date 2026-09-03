@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notosan | SolutionLab Elite Engineering</title>
+  <title>Notosan | Elite Cinematic Studio</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,12 +12,12 @@
 
   <style>
     :root {
-      --bg-dark: #070913;
+      --bg-dark: #070914;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --accent-orange: #f97316;
       --accent-gold: #fbbf24;
-      --border-glass: rgba(255, 255, 255, 0.12);
+      --border-glass: rgba(255, 255, 255, 0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,70 +30,67 @@
       overflow-x: hidden;
     }
 
-    /* Elite Navbar */
+    /* Navbar */
     .navbar {
       position: fixed; top: 0; width: 100%; padding: 24px 6%; display: flex; justify-content: space-between; align-items: center;
-      background: linear-gradient(to bottom, rgba(7, 9, 19, 0.95), rgba(7, 9, 19, 0)); backdrop-filter: blur(12px); z-index: 1000;
+      background: linear-gradient(to bottom, rgba(7, 9, 20, 0.9), rgba(7, 9, 20, 0)); backdrop-filter: blur(10px); z-index: 1000;
     }
-    .logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
+    .logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
     
-    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.2s; }
     .nav-links a:hover { color: #fff; }
 
     .btn-contact {
-      background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-glass); color: #fff;
-      padding: 10px 24px; border-radius: 99px; font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-glass); color: #fff;
+      padding: 10px 24px; border-radius: 99px; font-weight: 600; font-size: 0.85rem; text-decoration: none;
       backdrop-filter: blur(10px); transition: all 0.2s;
     }
-    .btn-contact:hover { background: rgba(255, 255, 255, 0.18); }
+    .btn-contact:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255,255,255,0.2); }
 
-    /* Scenic Sections */
-    .scenic-section {
-      position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; padding: 6% 8%;
-      overflow: hidden; background: #0b0d1a;
+    /* Scenic Hero Section */
+    .hero-section {
+      position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; padding: 0 8%;
+      overflow: hidden; background: #070914;
     }
 
-    /* Interactive Parallax Stage */
+    /* Parallax Vector Canvas Background */
     .vector-stage {
-      position: absolute; inset: -60px; width: calc(100% + 120px); height: calc(100% + 120px); pointer-events: none; z-index: 1;
+      position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); pointer-events: none; z-index: 1;
     }
-
     .parallax-layer {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      transition: transform 0.12s cubic-bezier(0.1, 0.7, 0.3, 1); will-change: transform;
+      transition: transform 0.1s cubic-bezier(0.1, 0.7, 0.3, 1); will-change: transform;
     }
-
     .vector-art-canvas { width: 100%; height: 100%; }
 
-    /* Content Styling (Left Side Split Layout) */
+    /* Content Area (Left Side) */
     .content-box {
-      position: relative; z-index: 10; max-width: 520px;
+      position: relative; z-index: 10; max-width: 480px; margin-top: 40px;
     }
 
-    .content-box h2 {
-      font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 16px; color: #fff;
+    .content-box h1 {
+      font-size: clamp(2.2rem, 3vw, 3.2rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; color: #fff; margin-bottom: 16px;
     }
 
     .content-box p {
-      color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;
+      color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin-bottom: 28px; font-weight: 400;
     }
 
-    /* Side Navigation Dots */
+    /* Side Navigation Indicator Dots */
     .scroll-indicators {
-      position: fixed; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 16px; z-index: 1000;
+      position: fixed; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 1000;
     }
     .indicator-dot {
-      width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: none; cursor: pointer; transition: all 0.3s;
+      width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); border: none; cursor: pointer; transition: all 0.3s;
     }
-    .indicator-dot.active { background: var(--accent-orange); transform: scale(1.3); box-shadow: 0 0 12px var(--accent-orange); }
+    .indicator-dot.active { background: var(--accent-orange); transform: scale(1.4); box-shadow: 0 0 10px var(--accent-orange); }
 
-    @keyframes flowWater {
-      0% { opacity: 0.7; transform: translateY(0px); }
-      50% { opacity: 1; transform: translateY(6px); }
-      100% { opacity: 0.7; transform: translateY(0px); }
+    @keyframes subtleGlow {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4)); }
     }
-    .animated-water { animation: flowWater 2s ease-in-out infinite; }
+    .glowing-element { animation: subtleGlow 4s ease-in-out infinite; }
   </style>
 </head>
 <body>
@@ -101,7 +98,7 @@
   <!-- Navbar -->
   <nav class="navbar">
     <a href="#" class="logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22 12 2"></polygon></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22 12 2"></polygon></svg>
       Notosan
     </a>
     <ul class="nav-links">
@@ -113,164 +110,134 @@
     <a href="#contact" class="btn-contact">Contact</a>
   </nav>
 
-  <!-- Side Scroll Indicators -->
+  <!-- Side Indicators -->
   <div class="scroll-indicators">
-    <button class="indicator-dot active" onclick="scrollToSection(0)"></button>
-    <button class="indicator-dot" onclick="scrollToSection(1)"></button>
+    <button class="indicator-dot active"></button>
+    <button class="indicator-dot"></button>
   </div>
 
-  <!-- Section 1: SolutionLab Magical Engineering Facility -->
-  <section class="scenic-section" id="sec0">
+  <!-- Hero Section -->
+  <section class="hero-section">
     <div class="vector-stage">
       
-      <!-- Layer 1: Background Walls & Industrial Machinery Silhouettes -->
+      <!-- Layer 1: Deep Background Atmosphere & Structural Piping -->
       <div class="parallax-layer" data-speed="10">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="facilityBg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#181432"/>
-              <stop offset="50%" stop-color="#0f0c24"/>
-              <stop offset="100%" stop-color="#070913"/>
+            <linearGradient id="bgSky" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#14122d"/>
+              <stop offset="60%" stop-color="#0b0a1a"/>
+              <stop offset="100%" stop-color="#05070f"/>
             </linearGradient>
-            <linearGradient id="goldGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#f97316" stop-opacity="0.1"/>
+            <linearGradient id="waterFallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+              <stop offset="50%" stop-color="#818cf8" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#070914" stop-opacity="0"/>
             </linearGradient>
           </defs>
-          <rect width="1440" height="900" fill="url(#facilityBg)"/>
+          <rect width="1440" height="900" fill="url(#bgSky)"/>
           
-          <!-- Background Pipes & Rigging Structure -->
-          <g stroke="#261c44" stroke-width="4" fill="none">
-            <path d="M 600,100 L 600,500 L 900,500 L 900,300" />
-            <path d="M 750,150 L 750,450" />
-            <path d="M 500,250 L 1100,250" />
-            <rect x="850" y="200" width="120" height="80" stroke="#32225a" fill="#120d24" />
+          <!-- Industrial Wall Pipes & Technical Grid Lines -->
+          <g stroke="#1e1836" stroke-width="3" fill="none" stroke-linecap="round">
+            <path d="M 520,80 L 520,380 L 980,380 L 980,220" />
+            <path d="M 680,120 L 680,340" />
+            <path d="M 420,220 L 1120,220" />
+            <rect x="900" y="140" width="140" height="90" rx="4" stroke="#251e45" fill="#0d0b1a"/>
           </g>
         </svg>
       </div>
 
-      <!-- Layer 2: Main Facility Structure, Scaffolding & Waterfall Pillar -->
-      <div class="parallax-layer" data-speed="30">
+      <!-- Layer 2: Main Facility Tower, Scaffolding & Waterfall Column -->
+      <div class="parallax-layer" data-speed="25">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Industrial Scaffolding Rigs (Right Side) -->
-          <g stroke="#37285c" stroke-width="2.5" fill="none">
-            <line x1="1200" y1="200" x2="1200" y2="800" />
-            <line x1="1320" y1="250" x2="1320" y2="800" />
-            <line x1="1200" y1="350" x2="1320" y2="350" />
-            <line x1="1200" y1="500" x2="1320" y2="500" />
-            <line x1="1200" y1="650" x2="1320" y2="650" />
-            <path d="M 1200,350 L 1320,500 M 1320,350 L 1200,500" />
-            <path d="M 1200,500 L 1320,650 M 1320,500 L 1200,650" />
+          <!-- Majestic Waterfall Column (Right Center) -->
+          <rect x="950" y="120" width="220" height="420" fill="url(#waterFallGrad)" opacity="0.35"/>
+          <g stroke="#38bdf8" stroke-width="1.5" opacity="0.5">
+            <line x1="970" y1="120" x2="970" y2="540"/>
+            <line x1="1000" y1="120" x2="1000" y2="540"/>
+            <line x1="1030" y1="120" x2="1030" y2="540"/>
+            <line x1="1060" y1="120" x2="1060" y2="540"/>
+            <line x1="1090" y1="120" x2="1090" y2="540"/>
+            <line x1="1120" y1="120" x2="1120" y2="540"/>
+            <line x1="1150" y1="120" x2="1150" y2="540"/>
           </g>
 
-          <!-- Majestic Waterfall Column -->
-          <g class="animated-water">
-            <rect x="950" y="180" width="180" height="340" fill="url(#goldGlow)" opacity="0.15" />
-            <path d="M 960,180 L 960,520 M 980,180 L 980,520 M 1000,180 L 1000,520 M 1020,180 L 1020,520 M 1040,180 L 1040,520 M 1060,180 L 1060,520 M 1080,180 L 1080,520 M 1100,180 L 1100,520 M 1120,180 L 1120,520" stroke="#38bdf8" stroke-width="2" opacity="0.6" />
+          <!-- Heavy Right-Side Scaffolding Rig -->
+          <g stroke="#2c224c" stroke-width="2" fill="none">
+            <line x1="1220" y1="150" x2="1220" y2="820"/>
+            <line x1="1350" y1="180" x2="1350" y2="820"/>
+            <line x1="1220" y1="300" x2="1350" y2="300"/>
+            <line x1="1220" y1="480" x2="1350" y2="480"/>
+            <line x1="1220" y1="660" x2="1350" y2="660"/>
+            <path d="M 1220,300 L 1350,480 M 1350,300 L 1220,480"/>
+            <path d="M 1220,480 L 1350,660 M 1350,480 L 1220,660"/>
           </g>
 
-          <!-- Central Laboratory Platform & Glowing Gold Reactor Pillars -->
-          <g transform="translate(750, 360)">
-            <!-- Upper Platform -->
-            <rect x="50" y="120" width="350" height="25" fill="#251945" stroke="#4c3482" stroke-width="2"/>
-            <path d="M 70,145 L 70,260 M 225,145 L 225,260 M 380,145 L 380,260" stroke="#fbbf24" stroke-width="8" />
-            <!-- Glowing Base Spill / Gold Streams -->
-            <path d="M 65,260 L 75,320 M 220,260 L 230,320 M 375,260 L 385,320" stroke="#f97316" stroke-width="4" opacity="0.9" />
+          <!-- Central Facility Platform & Glowing Amber Pillars -->
+          <g transform="translate(760, 340)">
+            <rect x="30" y="140" width="380" height="28" fill="#1b1535" stroke="#3b2d66" stroke-width="2" rx="3"/>
+            <!-- 3 Glowing Gold/Amber Columns -->
+            <path d="M 65,168 L 65,300" stroke="#fbbf24" stroke-width="12" stroke-linecap="round"/>
+            <path d="M 220,168 L 220,300" stroke="#fbbf24" stroke-width="12" stroke-linecap="round"/>
+            <path d="M 375,168 L 375,300" stroke="#fbbf24" stroke-width="12" stroke-linecap="round"/>
+            <!-- Base Glow Sparks -->
+            <circle cx="65" cy="305" r="5" fill="#f97316"/>
+            <circle cx="220" cy="305" r="5" fill="#f97316"/>
+            <circle cx="375" cy="305" r="5" fill="#f97316"/>
           </g>
         </svg>
       </div>
 
-      <!-- Layer 3: Foreground Control Deck & Engineer Silhouette -->
-      <div class="parallax-layer" data-speed="55">
+      <!-- Layer 3: Foreground Control Deck, Glowing Spheres & Silhouettes -->
+      <div class="parallax-layer" data-speed="45">
         <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Floor Base -->
-          <path d="M 0,780 L 1440,780 L 1440,900 L 0,900 Z" fill="#070913"/>
-          <line x1="0" y1="780" x2="1440" y2="780" stroke="#3b266a" stroke-width="4"/>
+          <!-- Dark Floor Base -->
+          <path d="M 0,760 L 1440,760 L 1440,900 L 0,900 Z" fill="#05070e"/>
+          <line x1="0" y1="760" x2="1440" y2="760" stroke="#31225a" stroke-width="3"/>
 
-          <!-- Left Foreground Interactive Console / Reactor Table -->
-          <g transform="translate(80, 600)">
-            <polygon points="20,120 180,90 220,180 0,180" fill="#161029" stroke="#4c3482" stroke-width="2"/>
-            <!-- Glowing Orbs / Hologram Spheres -->
-            <circle cx="80" cy="70" r="22" fill="#fbbf24" opacity="0.85"/>
-            <circle cx="140" cy="60" r="16" fill="#38bdf8" opacity="0.85"/>
-            <path d="M 20,135 L 200,105" stroke="#f97316" stroke-width="3"/>
+          <!-- Left Foreground Hologram Workstation Console -->
+          <g transform="translate(90, 580)" class="glowing-element">
+            <polygon points="10,140 190,110 230,195 0,195" fill="#110e22" stroke="#412f73" stroke-width="2"/>
+            <!-- Glowing Spheres / Orbs -->
+            <circle cx="85" cy="80" r="26" fill="#fbbf24" opacity="0.9"/>
+            <circle cx="150" cy="70" r="18" fill="#38bdf8" opacity="0.85"/>
+            <path d="M 15,155 L 210,125" stroke="#f97316" stroke-width="3"/>
           </g>
 
-          <!-- Foreground Engineer Silhouette (Checking Hologram) -->
-          <g transform="translate(45, 620)">
-            <path d="M 25,60 L 40,160 L 10,160 Z" fill="#261c44"/>
-            <circle cx="25" cy="45" r="10" fill="#fbbf24"/>
-            <path d="M 35,70 L 60,75" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+          <!-- Foreground Scientist Silhouette (Left) -->
+          <g transform="translate(50, 600)">
+            <path d="M 25,60 L 42,160 L 10,160 Z" fill="#17122b"/>
+            <circle cx="26" cy="44" r="10" fill="#fbbf24"/>
+            <path d="M 36,68 L 62,74" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
           </g>
 
-          <!-- Right Side Industrial Walkway & Engineer Monitoring Waterfall -->
-          <path d="M 580,780 L 850,680 L 1440,680 L 1440,780 Z" fill="#0e0a1c" stroke="#2b1d4a" stroke-width="2"/>
-          <g transform="translate(1220, 570)">
-            <path d="M 20,40 L 35,110 L 5,110 Z" fill="#f97316"/>
-            <circle cx="20" cy="28" r="8" fill="#fbbf24"/>
-            <!-- Hologram Tablet Screen -->
-            <rect x="35" y="40" width="30" height="20" rx="3" fill="#38bdf8" opacity="0.9"/>
+          <!-- Right Walkway & Monitoring Engineer -->
+          <path d="M 640,760 L 880,660 L 1440,660 L 1440,760 Z" fill="#0a0814" stroke="#251b42" stroke-width="2"/>
+          <g transform="translate(1210, 555)">
+            <path d="M 20,40 L 36,105 L 6,105 Z" fill="#f97316"/>
+            <circle cx="20" cy="27" r="8" fill="#fbbf24"/>
+            <!-- Hologram Tablet -->
+            <rect x="36" y="38" width="34" height="22" rx="3" fill="#38bdf8" opacity="0.95"/>
           </g>
         </svg>
       </div>
 
     </div>
 
-    <!-- Left Content Box -->
+    <!-- Content Box -->
     <div class="content-box">
-      <h2>A Model For Success.</h2>
-      <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process, which starts with our proprietary SolutionLab roadmap session, helps ensure the success of our clients time and again.</p>
+      <h1>A Model For Success.</h1>
+      <p>We've crafted a modular approach to conceptualizing, designing, implementing, and—most importantly—hosting custom software projects over time. Our process starts with our proprietary SolutionLab roadmap session.</p>
       
-      <h2>Attentive&shy;ness as a Priority.</h2>
-      <p>You and your project are important to us. Once we kick things off, you'll receive updates on your project in two distinct ways to guarantee clarity and alignment.</p>
+      <h1>Attentiveness as a Priority.</h1>
+      <p>You and your project are important to us. Receive transparent, structured updates every step of the way to ensure total alignment and clarity.</p>
     </div>
   </section>
 
-  <!-- Section 2: Advanced Operations & Architecture -->
-  <section class="scenic-section" id="sec1">
-    <div class="vector-stage">
-      <!-- Background Layer -->
-      <div class="parallax-layer" data-speed="15">
-        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="1440" height="900" fill="#090d1f"/>
-          <g stroke="#1d1536" stroke-width="3" fill="none">
-            <circle cx="720" cy="450" r="300" stroke-dasharray="10 15"/>
-            <circle cx="720" cy="450" r="200"/>
-          </g>
-        </svg>
-      </div>
-
-      <!-- Mid Layer: Heavy Facility Machinery -->
-      <div class="parallax-layer" data-speed="35">
-        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 0,900 L 0,600 Q 360,500 720,620 Q 1080,500 1440,600 L 1440,900 Z" fill="#131024"/>
-        </svg>
-      </div>
-
-      <!-- Foreground Layer -->
-      <div class="parallax-layer" data-speed="55">
-        <svg class="vector-art-canvas" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M 0,900 L 0,720 Q 400,680 800,740 Q 1150,690 1440,730 L 1440,900 Z" fill="#080712"/>
-        </svg>
-      </div>
-    </div>
-
-    <div class="content-box">
-      <h2>Engineering Excellence.</h2>
-      <p>Our multidisciplinary team accelerates your learning curve and guides you past the many pitfalls of building custom software products.</p>
-    </div>
-  </section>
-
-  <!-- Scripts -->
+  <!-- Interactive Parallax Script -->
   <script>
     lucide.createIcons();
 
-    function scrollToSection(index) {
-      const sections = document.querySelectorAll('.scenic-section');
-      sections[index].scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // High-Performance Parallax Engine
     document.addEventListener('mousemove', (e) => {
       const { clientX, clientY } = e;
       const centerX = window.innerWidth / 2;
@@ -278,30 +245,11 @@
       const mouseX = clientX - centerX;
       const mouseY = clientY - centerY;
 
-      document.querySelectorAll('.scenic-section').forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-          section.querySelectorAll('.parallax-layer').forEach(layer => {
-            const speed = layer.getAttribute('data-speed') || 20;
-            const x = (mouseX * speed) / 900;
-            const y = (mouseY * speed) / 900;
-            layer.style.transform = `translate(${-x}px, ${-y}px)`;
-          });
-        }
-      });
-    });
-
-    // Scroll Indicator Sync
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('.scenic-section');
-      const dots = document.querySelectorAll('.indicator-dot');
-      
-      sections.forEach((sec, idx) => {
-        const rect = sec.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-          dots.forEach(d => d.classList.remove('active'));
-          dots[idx].classList.add('active');
-        }
+      document.querySelectorAll('.parallax-layer').forEach(layer => {
+        const speed = layer.getAttribute('data-speed') || 15;
+        const x = (mouseX * speed) / 900;
+        const y = (mouseY * speed) / 900;
+        layer.style.transform = `translate(${-x}px, ${-y}px)`;
       });
     });
   </script>
