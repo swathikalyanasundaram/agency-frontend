@@ -289,7 +289,6 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Size the sprite image cleanly using offsetWidth for stable rounding
   function layoutImage(){
     var displayW = charEl.offsetWidth;
     img.style.width = (displayW * FRAME_COUNT) + 'px';
@@ -299,20 +298,24 @@
 
   var displayWidth = layoutImage();
 
-  var current = IDLE_FRAME;   // eased, floating-point frame position
-  var target  = IDLE_FRAME;   // where we're easing toward
-  var isActive = false;       // true while the cursor is meaningfully engaging the hero
+  var current = IDLE_FRAME;   
+  var target  = IDLE_FRAME;   
+  var isActive = false;       
   var hintDismissed = false;
   var raf = null;
   var lastMoveT = 0;
 
-  var EASE = 0.10;            // lower = softer / heavier follow
-  var IDLE_EASE = 0.06;       // slightly gentler settle back to rest
+  var EASE = 0.10;            
+  var IDLE_EASE = 0.06;       
 
   function frameForClientX(clientX){
     var rect = hero.getBoundingClientRect();
-    var t = (clientX - rect.left) / rect.width;   // 0..1 across the whole hero
+    var t = (clientX - rect.left) / rect.width;   
     t = Math.min(1, Math.max(0, t));
+    
+    // Invert 't' so the sprite tracking matches mouse direction correctly
+    t = 1 - t;
+
     return t * (FRAME_COUNT - 1);
   }
 
@@ -338,7 +341,6 @@
   function render(now){
     var breathing = 0;
     if (!isActive){
-      // gentle idle "breathing" life once settled near rest
       breathing = Math.sin(now * 0.0012) * 0.6;
     }
 
@@ -349,7 +351,6 @@
     var rounded = Math.round(current);
     rounded = Math.min(FRAME_COUNT - 1, Math.max(0, rounded));
     
-    // Pixel-snap offset translation to prevent shifting issues on the right edge
     var offsetX = Math.round(-rounded * displayWidth);
     img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
 
@@ -357,7 +358,7 @@
     if (!settled || isActive){
       raf = requestAnimationFrame(render);
     } else {
-      raf = null; // stop the loop when at rest to save cycles
+      raf = null; 
     }
   }
 
@@ -367,7 +368,6 @@
     }
   }
 
-  // Initial paint at the idle frame.
   function paintIdle(){
     var offsetX = Math.round(-IDLE_FRAME * displayWidth);
     img.style.transform = 'translate3d(' + offsetX + 'px, 0, 0)';
