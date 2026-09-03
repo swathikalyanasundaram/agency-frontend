@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>yezhuththu.site | Creative Studio & Illustration</title>
+  <title>Studio Portfolio | 3D Illustrative Parallax</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root {
-      --bg-deep: #0b0f19;
-      --bg-card: rgba(17, 24, 39, 0.7);
-      --purple-glow: #8b5cf6;
-      --pink-glow: #ec4899;
-      --cyan-glow: #06b6d4;
-      --text-main: #f9fafb;
+      --bg-canvas: #0f131a;
+      --card-bg: rgba(22, 28, 38, 0.75);
+      --accent-coral: #ff6b5b;
+      --accent-gold: #ffbc42;
+      --accent-purple: #845ec2;
+      --text-main: #f3f4f6;
       --text-muted: #9ca3af;
-      --border: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.08);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,122 +27,104 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-deep);
+      background-color: var(--bg-canvas);
       color: var(--text-main);
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
     /* Floating Navigation */
     .navbar {
-      position: fixed; top: 0; width: 100%; padding: 20px 6%; display: flex; justify-content: space-between; align-items: center;
-      background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); z-index: 1000;
+      position: fixed; top: 0; width: 100%; padding: 22px 6%; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(15, 19, 26, 0.85); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-subtle); z-index: 1000;
     }
-    .logo { font-size: 1.4rem; font-weight: 800; color: #fff; text-decoration: none; }
-    .logo span { background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .brand { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .brand span { color: var(--accent-coral); }
     
-    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
     .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
     .nav-links a:hover { color: #fff; }
 
-    .btn-pill {
-      background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow)); color: #fff; padding: 12px 26px;
-      border-radius: 99px; font-weight: 600; font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer;
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4); transition: transform 0.2s, box-shadow 0.2s;
+    .btn-action {
+      background: var(--accent-coral); color: #fff; padding: 12px 26px; border-radius: 99px;
+      font-weight: 600; font-size: 0.9rem; text-decoration: none; box-shadow: 0 10px 25px rgba(255, 107, 91, 0.35);
+      transition: all 0.25s ease;
     }
-    .btn-pill:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(139, 92, 246, 0.6); }
+    .btn-action:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(255, 107, 91, 0.5); }
 
-    /* Hero Section with Illustrative 3D Depth Composition */
+    /* Hero Section with Illustrative Composition */
     .hero {
       position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center;
-      padding: 0 8%; overflow: hidden; background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0b0f19 70%);
+      padding: 0 8%; overflow: hidden; background: radial-gradient(circle at 70% 30%, #221c35 0%, var(--bg-canvas) 70%);
     }
 
-    /* Dynamic Ambient Background Glow Orbs */
-    .ambient-orb {
-      position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 1;
+    /* Atmospheric Backlight Glows */
+    .glow-blob {
+      position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 1;
     }
-    .orb-1 { width: 400px; height: 400px; background: rgba(139, 92, 246, 0.25); top: 10%; left: 15%; }
-    .orb-2 { width: 350px; height: 350px; background: rgba(236, 72, 153, 0.2); bottom: 10%; right: 15%; }
+    .blob-1 { width: 450px; height: 450px; background: rgba(132, 94, 194, 0.18); top: 15%; right: 10%; }
+    .blob-2 { width: 400px; height: 400px; background: rgba(255, 107, 91, 0.12); bottom: 10%; left: 10%; }
 
-    .hero-container {
-      position: relative; z-index: 10; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; max-width: 1300px; width: 100%;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(3rem, 5.5vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
-    }
-    .hero-text h1 span {
-      background: linear-gradient(135deg, #c084fc, #f472b6, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-text p { color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; margin-bottom: 35px; max-width: 520px; }
-
-    .hero-actions { display: flex; gap: 16px; align-items: center; }
-    .btn-outline { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: #fff; padding: 12px 26px; border-radius: 99px; font-weight: 600; text-decoration: none; backdrop-filter: blur(10px); transition: background 0.2s; }
-    .btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
-
-    /* Interactive 3D Illustration Graphic Card */
-    .illustration-wrapper {
-      position: relative; width: 100%; height: 440px; display: flex; align-items: center; justify-content: center;
-      perspective: 1000px;
+    .hero-grid {
+      position: relative; z-index: 10; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; max-width: 1300px; width: 100%;
     }
 
-    .floating-card {
-      position: absolute; background: var(--bg-card); border: 1px solid var(--border); border-radius: 28px;
-      padding: 24px; backdrop-filter: blur(20px); box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-      transition: transform 0.1s ease-out; will-change: transform;
+    .hero-copy h1 {
+      font-size: clamp(3rem, 5.5vw, 5.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 22px;
+    }
+    .hero-copy h1 span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent-gold); font-weight: 400; }
+    .hero-copy p { color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; margin-bottom: 35px; max-width: 500px; }
+
+    .hero-buttons { display: flex; gap: 16px; align-items: center; }
+    .btn-subtle { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: #fff; padding: 12px 26px; border-radius: 99px; font-weight: 600; text-decoration: none; backdrop-filter: blur(10px); transition: background 0.2s; }
+    .btn-subtle:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Interactive 3D Illustrative Stage Container */
+    .illustration-stage {
+      position: relative; width: 100%; height: 460px; display: flex; align-items: center; justify-content: center;
+      perspective: 1200px;
     }
 
-    /* Main central artwork element styled like modern design pins */
-    .card-main {
-      width: 340px; height: 320px; background: linear-gradient(145deg, #1e1b4b, #311042);
-      border-radius: 32px; border: 1px solid rgba(139, 92, 246, 0.3); display: flex; flex-direction: column;
-      justify-content: flex-end; padding: 30px; position: relative; overflow: hidden;
-    }
-    .card-main::before {
-      content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(236,72,153,0.4) 0%, transparent 60%);
-    }
-    .card-main h3 { font-size: 1.5rem; font-weight: 700; position: relative; z-index: 2; margin-bottom: 6px; }
-    .card-main p { font-size: 0.85rem; color: var(--text-muted); position: relative; z-index: 2; }
-
-    /* Floating Accent Badge 1 */
-    .badge-top {
-      top: 20px; right: 10px; display: flex; align-items: center; gap: 12px; z-index: 3;
-    }
-    .icon-box {
-      width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, var(--purple-glow), var(--pink-glow));
-      display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold;
+    .layer-item {
+      position: absolute; transition: transform 0.1s cubic-bezier(0,0,0.2,1); will-change: transform;
     }
 
-    /* Floating Accent Badge 2 */
-    .badge-bottom {
-      bottom: 20px; left: 0px; z-index: 3; display: flex; align-items: center; gap: 10px;
-      background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border); padding: 12px 18px; border-radius: 18px;
+    /* Main Center Card (Illustrative Theme) */
+    .stage-card-main {
+      width: 360px; height: 360px; background: linear-gradient(135deg, #2b2142, #1b1626);
+      border-radius: 36px; border: 1px solid rgba(132, 94, 194, 0.3); box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 36px; position: relative; overflow: hidden;
+    }
+    .stage-card-main::before {
+      content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 30% 20%, rgba(255, 188, 66, 0.25) 0%, transparent 60%);
+    }
+    .stage-card-main h3 { font-size: 1.6rem; font-weight: 700; position: relative; z-index: 2; margin-bottom: 6px; }
+    .stage-card-main p { font-size: 0.9rem; color: var(--text-muted); position: relative; z-index: 2; }
+
+    /* Floating UI Badge Top-Right */
+    .stage-badge-top {
+      top: 15px; right: -10px; display: flex; align-items: center; gap: 12px; z-index: 3;
+      background: var(--card-bg); border: 1px solid var(--border-subtle); padding: 12px 20px; border-radius: 20px;
+      backdrop-filter: blur(16px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    }
+    .badge-icon {
+      width: 38px; height: 38px; border-radius: 12px; background: var(--accent-coral);
+      display: flex; align-items: center; justify-content: center; color: #fff;
     }
 
-    /* Standard Sections */
-    .section { padding: 120px 8%; max-width: 1300px; margin: 0 auto; }
-    .section-header { text-align: center; margin-bottom: 60px; }
-    .section-header h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -1px; }
-    .section-header p { color: var(--text-muted); font-size: 1.1rem; }
-
-    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .feature-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 36px;
-      backdrop-filter: blur(20px); transition: transform 0.3s, border-color 0.3s;
+    /* Floating UI Badge Bottom-Left */
+    .stage-badge-bottom {
+      bottom: 20px; left: -20px; z-index: 3; display: flex; align-items: center; gap: 14px;
+      background: var(--card-bg); border: 1px solid var(--border-subtle); padding: 14px 22px; border-radius: 20px;
+      backdrop-filter: blur(16px); box-shadow: 0 15px 35px rgba(0,0,0,0.4);
     }
-    .feature-card:hover { transform: translateY(-5px); border-color: var(--purple-glow); }
-    .feature-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(139, 92, 246, 0.15); color: #c084fc; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-    .feature-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
-    .feature-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
-
-    footer { border-top: 1px solid var(--border); padding: 40px 8%; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+    .dot-indicator { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; }
 
     @media(max-width: 968px) {
-      .hero-container { grid-template-columns: 1fr; text-align: center; padding-top: 80px; }
-      .hero-actions { justify-content: center; }
-      .hero-text p { margin: 0 auto 35px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .illustration-wrapper { height: 360px; }
+      .hero-grid { grid-template-columns: 1fr; text-align: center; padding-top: 80px; }
+      .hero-buttons { justify-content: center; }
+      .hero-copy p { margin: 0 auto 35px; }
+      .illustration-stage { height: 380px; }
     }
   </style>
 </head>
@@ -150,93 +132,65 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="#" class="logo">yezhuththu<span>.site</span></a>
+    <a href="#" class="brand">Studio<span>.3D</span></a>
     <ul class="nav-links">
-      <li><a href="#features">Work</a></li>
-      <li><a href="#about">Studio</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#studio">Studio</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="btn-pill">Let's Talk</a>
+    <a href="#contact" class="btn-action">Start Project</a>
   </nav>
 
-  <!-- Hero Section with Illustrative 3D Graphic Composition -->
-  <header class="hero" id="heroSection">
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
+  <!-- Hero Section -->
+  <header class="hero" id="heroArea">
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
 
-    <div class="hero-container">
-      <div class="hero-text">
-        <h1>Immersive Digital <span>Illustrations</span> & Web Design</h1>
-        <p>Crafting stunning interactive experiences, vector 3D visuals, and seamless custom web platforms that captivate audiences.</p>
-        <div class="hero-actions">
-          <a href="#features" class="btn-pill">Explore Work</a>
-          <a href="#contact" class="btn-outline">Get in Touch</a>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <h1>Bringing Creative <span>Visions</span> to Life</h1>
+        <p>An immersive design studio blending rich 3D illustrative aesthetics with modern high-performance web engineering.</p>
+        <div class="hero-buttons">
+          <a href="#work" class="btn-action">View Portfolio</a>
+          <a href="#contact" class="btn-subtle">Get in Touch</a>
         </div>
       </div>
 
-      <!-- Interactive 3D Art Composition Container -->
-      <div class="illustration-wrapper" id="artWrapper">
-        <!-- Floating Element Back -->
-        <div class="floating-card badge-top" id="badgeTop" data-speed="15">
-          <div class="icon-box"><i data-lucide="sparkles"></i></div>
-          <div style="background: var(--bg-card); padding: 10px 16px; border-radius: 12px; border: 1px solid var(--border); font-size: 0.85rem; font-weight: 600;">3D Vector Art</div>
-        </div>
-
-        <!-- Main Central Illustration Card -->
-        <div class="floating-card card-main" id="cardMain" data-speed="25">
-          <h3>Creative Studio</h3>
-          <p>Next-gen design assets</p>
-        </div>
-
-        <!-- Floating Element Front -->
-        <div class="floating-card badge-bottom" id="badgeBottom" data-speed="40">
-          <i data-lucide="activity" style="color: #38bdf8; width: 20px;"></i>
+      <!-- Interactive 3D Composition Stage -->
+      <div class="illustration-stage" id="stage">
+        <!-- Floating Badge Top -->
+        <div class="layer-item stage-badge-top" id="badgeTop" data-speed="18">
+          <div class="badge-icon"><i data-lucide="pen-tool"></i></div>
           <div>
-            <div style="font-size: 0.8rem; font-weight: 700;">Live Motion Parallax</div>
-            <div style="font-size: 0.7rem; color: var(--text-muted);">Interactive depth engine</div>
+            <div style="font-size: 0.85rem; font-weight: 700;">3D Illustration</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">Spatial Design</div>
+          </div>
+        </div>
+
+        <!-- Main Center Card -->
+        <div class="layer-item stage-card-main" id="cardMain" data-speed="32">
+          <h3>Interactive Art</h3>
+          <p>Layered depth & motion design</p>
+        </div>
+
+        <!-- Floating Badge Bottom -->
+        <div class="layer-item stage-badge-bottom" id="badgeBottom" data-speed="45">
+          <div class="dot-indicator"></div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 700;">Live Motion Engine</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">Reactive depth physics</div>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Features / Capabilities Section -->
-  <section id="features" class="section">
-    <div class="section-header">
-      <h2>Studio Capabilities</h2>
-      <p>High-end artistic execution backed by robust modern engineering.</p>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon"><i data-lucide="layers"></i></div>
-        <h3>3D & Vector Illustration</h3>
-        <p>Custom-tailored assets, aesthetic spatial gradients, and layered composition designs.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i data-lucide="cpu"></i></div>
-        <h3>Interactive Motion</h3>
-        <p>Smooth cursor-reactive physics, smooth scrolling, and engaging dynamic micro-interactions.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i data-lucide="zap"></i></div>
-        <h3>Performance Engineering</h3>
-        <p>Lightning-fast frontend builds optimized for high conversion rates and fluid frame rates.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2026 yezhuththu.site. All Rights Reserved.</p>
-  </footer>
-
   <!-- Scripts -->
   <script>
     lucide.createIcons();
 
-    /* INTERACTIVE MOUSE PARALLAX ART ENGINE */
-    const hero = document.getElementById('heroSection');
+    /* MOUSE PARALLAX ENGINE */
+    const hero = document.getElementById('heroArea');
     const cardMain = document.getElementById('cardMain');
     const badgeTop = document.getElementById('badgeTop');
     const badgeBottom = document.getElementById('badgeBottom');
@@ -246,12 +200,12 @@
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
 
-      const moveX = (clientX - centerX) / 25;
-      const moveY = (clientY - centerY) / 25;
+      const x = (clientX - centerX) / 25;
+      const y = (clientY - centerY) / 25;
 
-      cardMain.style.transform = `translate(${moveX * 1.2}px, ${moveY * 1.2}px) rotateY(${moveX * 0.5}deg)`;
-      badgeTop.style.transform = `translate(${moveX * 2.2}px, ${moveY * 2.2}px)`;
-      badgeBottom.style.transform = `translate(${moveX * 0.7}px, ${moveY * 0.7}px)`;
+      cardMain.style.transform = `translate(${x * 0.8}px, ${y * 0.8}px) rotateY(${x * 0.4}deg)`;
+      badgeTop.style.transform = `translate(${x * 2.2}px, ${y * 2.2}px)`;
+      badgeBottom.style.transform = `translate(${x * 1.4}px, ${y * 1.4}px)`;
     });
 
     hero.addEventListener('mouseleave', () => {
