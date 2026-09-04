@@ -65,12 +65,27 @@ export default function App() {
   const rafRef = useRef<number | null>(null)
   const [cursorPos, setCursorPos] = useState<Point>({ x: -999, y: -999 })
 
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  // Parallax translation state for extended pages
+  const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 })
+
+  // Form states mapping to your Spring Boot Lead entity fields
+  const [formData, setFormData] = useState({
+    clientname: '',
+    email: '',
+    serviceType: 'Static Website',
+    estimatedBudget: 12000,
+    projectOverview: ''
+  })
+  const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
     const onMove = (event: MouseEvent) => {
       mouse.current = { x: event.clientX, y: event.clientY }
+      
+      const px = (event.clientX / window.innerWidth - 0.5) * 30
+      const py = (event.clientY / window.innerHeight - 0.5) * 30
+      setParallaxOffset({ x: px, y: py })
     }
 
     const animate = () => {
@@ -89,25 +104,44 @@ export default function App() {
     }
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const newSubmission = {
-      id: Date.now(),
-      ...formData,
-      date: new Date().toLocaleString()
+    setSubmitting(true)
+
+    try {
+      const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          clientname: formData.clientname.trim(),
+          email: formData.email.trim(),
+          serviceType: formData.serviceType,
+          estimatedBudget: Number(formData.estimatedBudget),
+          projectOverview: formData.projectOverview.trim() || 'No overview provided'
+        })
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({ clientname: '', email: '', serviceType: 'Static Website', estimatedBudget: 12000, projectOverview: '' })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        alert('Server rejection status: ' + response.status)
+      }
+    } catch (err) {
+      console.error('Network Error:', err)
+      alert('Could not reach backend database server. Please check your network connection.')
+    } finally {
+      setSubmitting(false)
     }
-
-    const existing = JSON.parse(localStorage.getItem('yezhuththu_submissions') || '[]')
-    localStorage.setItem('yezhuththu_submissions', JSON.stringify([newSubmission, ...existing]))
-
-    setSubmitted(true)
-    setFormData({ name: '', email: '', message: '' })
-    setTimeout(() => setSubmitted(false), 4000)
   }
 
   return (
     <main className="min-h-screen bg-black text-white tracking-[-0.02em] font-sans selection:bg-purple-500 selection:text-white">
-      {/* Navigation bar */}
+      {/* Navigation bar - Admin link removed for security and privacy */}
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 py-4 sm:px-10 bg-black/50 backdrop-blur-xl border-b border-white/10">
         <a href="#home" className="flex items-center gap-2 text-decoration-none">
           <span className="text-white text-xl font-bold tracking-tight">yezhuththu<span className="text-purple-400">.site</span></span>
@@ -117,7 +151,6 @@ export default function App() {
           <a href="#home" className="text-xs font-medium text-white hover:text-purple-300 transition-colors">Home</a>
           <a href="#services" className="text-xs font-medium text-white/70 hover:text-white transition-colors">Services</a>
           <a href="#contact" className="text-xs font-medium text-white/70 hover:text-white transition-colors">Contact</a>
-          <a href="admin.html" target="_blank" className="text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors">Admin Dashboard</a>
         </div>
 
         <a href="#contact" className="hidden md:inline-flex items-center gap-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-xs font-semibold px-5 py-2.5 rounded-full hover:opacity-90 transition-all shadow-lg shadow-purple-500/20">
@@ -128,7 +161,7 @@ export default function App() {
         </button>
       </nav>
 
-      {/* Page 1: Pristine Spotlight Hero */}
+      {/* Page 1: Pristine Spotlight Hero (Untouched) */}
       <section id="home" className="relative w-full h-screen bg-black flex items-center justify-center" style={{ height: '100dvh' }}>
         <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat opacity-90" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
         <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
@@ -157,10 +190,16 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 2: Services / Capabilities */}
+      {/* Page 2: Motion Graphics & Parallax Services Section */}
       <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/5">
-        {/* Ambient background glow mimicking the mountain palette */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-[140px] pointer-events-none" />
+        <div 
+          className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-gradient-to-tr from-purple-600/15 to-indigo-600/15 rounded-full blur-[120px] pointer-events-none transition-transform duration-300 ease-out"
+          style={{ transform: `translate(${parallaxOffset.x * 1.5}px, ${parallaxOffset.y * 1.5}px)` }}
+        />
+        <div 
+          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-tr from-pink-600/10 to-purple-600/15 rounded-full blur-[120px] pointer-events-none transition-transform duration-300 ease-out"
+          style={{ transform: `translate(${-parallaxOffset.x * 1.2}px, ${-parallaxOffset.y * 1.2}px)` }}
+        />
 
         <div className="relative z-10 max-w-6xl w-full text-center">
           <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-3 block">What We Offer</span>
@@ -168,7 +207,7 @@ export default function App() {
           <p className="text-white/60 max-w-lg mx-auto mb-16 text-sm sm:text-base">Comprehensive digital solutions built with enterprise grade precision.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="group bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 hover:border-purple-500/40 p-8 rounded-3xl transition-all duration-300 backdrop-blur-xl">
+            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-xl hover:-translate-y-1">
               <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
                 <Globe size={22} />
               </div>
@@ -179,7 +218,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="group bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 hover:border-purple-500/40 p-8 rounded-3xl transition-all duration-300 backdrop-blur-xl">
+            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-xl hover:-translate-y-1">
               <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                 <Megaphone size={22} />
               </div>
@@ -190,7 +229,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="group bg-white/[0.02] hover:bg-white/[0.04] border border-white/10 hover:border-purple-500/40 p-8 rounded-3xl transition-all duration-300 backdrop-blur-xl">
+            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-xl hover:-translate-y-1">
               <div className="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-110 transition-transform">
                 <Search size={22} />
               </div>
@@ -204,15 +243,18 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 3: Backend Connected Contact / Quote Form */}
+      {/* Page 3: Immersive Parallax Contact Section connected to Java Backend */}
       <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/5">
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-900/10 rounded-full blur-[140px] pointer-events-none" />
+        <div 
+          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-900/20 to-pink-900/15 rounded-full blur-[140px] pointer-events-none transition-transform duration-300 ease-out"
+          style={{ transform: `translate(${-parallaxOffset.x * 1.5}px, ${parallaxOffset.y * 1.2}px)` }}
+        />
 
-        <div className="relative z-10 w-full max-w-xl bg-white/[0.02] border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-xl shadow-2xl">
+        <div className="relative z-10 w-full max-w-xl bg-white/[0.02] border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-2xl shadow-2xl">
           <div className="text-center mb-8">
             <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-2 block">Get in Touch</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Start Your Project</h2>
-            <p className="text-white/60 text-xs sm:text-sm">Submit details below to sync directly with your admin dashboard.</p>
+            <p className="text-white/60 text-xs sm:text-sm">Submit your project specs to securely save to the backend database.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -221,8 +263,8 @@ export default function App() {
               <input 
                 type="text" 
                 required
-                value={formData.name}
-                onChange={e => setFormData({...formData, name: e.target.value})}
+                value={formData.clientname}
+                onChange={e => setFormData({...formData, clientname: e.target.value})}
                 placeholder="John Doe"
                 className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
               />
@@ -238,22 +280,51 @@ export default function App() {
                 className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
               />
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5 text-left">
+                <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Service Required</label>
+                <select 
+                  value={formData.serviceType}
+                  onChange={e => setFormData({...formData, serviceType: e.target.value})}
+                  className="bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors cursor-pointer"
+                >
+                  <option value="Static Website">Static Website</option>
+                  <option value="Dynamic Website">Dynamic Website</option>
+                  <option value="Studio Complete">Studio Complete</option>
+                  <option value="E-Commerce Solution">E-Commerce Solution</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1.5 text-left">
+                <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Estimated Budget (₹)</label>
+                <input 
+                  type="number"
+                  required
+                  value={formData.estimatedBudget}
+                  onChange={e => setFormData({...formData, estimatedBudget: Number(e.target.value)})}
+                  placeholder="12000"
+                  className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
+                />
+              </div>
+            </div>
             <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Project Requirements</label>
+              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Project Overview</label>
               <textarea 
                 rows={4}
-                required
-                value={formData.message}
-                onChange={e => setFormData({...formData, message: e.target.value})}
+                value={formData.projectOverview}
+                onChange={e => setFormData({...formData, projectOverview: e.target.value})}
                 placeholder="Tell us about your project goals..."
                 className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors resize-none"
               />
             </div>
-            <button type="submit" className="mt-2 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3.5 rounded-xl hover:opacity-95 transition-all shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2">
-              Submit Request <ArrowRight size={16} />
+            <button 
+              type="submit" 
+              disabled={submitting}
+              className="mt-2 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3.5 rounded-xl hover:opacity-95 transition-all shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 disabled:opacity-50"
+            >
+              {submitting ? 'Transmitting...' : 'Submit Request'} <ArrowRight size={16} />
             </button>
             {submitted && (
-              <p className="text-emerald-400 text-xs text-center font-medium mt-2 animate-fade-in">✓ Success! Submission securely saved to storage backend.</p>
+              <p className="text-emerald-400 text-xs text-center font-medium mt-2 animate-fade-in">✓ Success! Inquiry securely saved to your backend database.</p>
             )}
           </form>
         </div>
