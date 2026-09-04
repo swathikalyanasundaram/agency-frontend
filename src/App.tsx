@@ -64,11 +64,8 @@ export default function App() {
   const smooth = useRef<Point>({ x: -999, y: -999 })
   const rafRef = useRef<number | null>(null)
   const [cursorPos, setCursorPos] = useState<Point>({ x: -999, y: -999 })
-
-  // Parallax translation state for extended pages
   const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 })
 
-  // Form states mapping to your Spring Boot Lead entity fields
   const [formData, setFormData] = useState({
     clientname: '',
     email: '',
@@ -82,9 +79,8 @@ export default function App() {
   useEffect(() => {
     const onMove = (event: MouseEvent) => {
       mouse.current = { x: event.clientX, y: event.clientY }
-      
-      const px = (event.clientX / window.innerWidth - 0.5) * 30
-      const py = (event.clientY / window.innerHeight - 0.5) * 30
+      const px = (event.clientX / window.innerWidth - 0.5) * 45
+      const py = (event.clientY / window.innerHeight - 0.5) * 45
       setParallaxOffset({ x: px, y: py })
     }
 
@@ -108,6 +104,10 @@ export default function App() {
     e.preventDefault()
     setSubmitting(true)
 
+    const finalOverview = formData.projectOverview.trim() !== '' 
+      ? formData.projectOverview.trim() 
+      : 'No overview provided'
+
     try {
       const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
         method: 'POST',
@@ -120,7 +120,7 @@ export default function App() {
           email: formData.email.trim(),
           serviceType: formData.serviceType,
           estimatedBudget: Number(formData.estimatedBudget),
-          projectOverview: formData.projectOverview.trim() || 'No overview provided'
+          projectOverview: finalOverview
         })
       })
 
@@ -141,7 +141,7 @@ export default function App() {
 
   return (
     <main className="min-h-screen bg-black text-white tracking-[-0.02em] font-sans selection:bg-purple-500 selection:text-white">
-      {/* Navigation bar - Admin link removed for security and privacy */}
+      {/* Navigation bar - Admin link kept hidden for privacy */}
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 py-4 sm:px-10 bg-black/50 backdrop-blur-xl border-b border-white/10">
         <a href="#home" className="flex items-center gap-2 text-decoration-none">
           <span className="text-white text-xl font-bold tracking-tight">yezhuththu<span className="text-purple-400">.site</span></span>
@@ -190,16 +190,18 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 2: Motion Graphics & Parallax Services Section */}
-      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/5">
+      {/* Page 2: Ultimate Motion Graphics & Rotating Parallax Orbs */}
+      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/10">
+        {/* Rotating & Floating Background Motion Orbs */}
         <div 
-          className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-gradient-to-tr from-purple-600/15 to-indigo-600/15 rounded-full blur-[120px] pointer-events-none transition-transform duration-300 ease-out"
-          style={{ transform: `translate(${parallaxOffset.x * 1.5}px, ${parallaxOffset.y * 1.5}px)` }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-600/25 via-purple-600/20 to-pink-500/15 rounded-full blur-[140px] pointer-events-none transition-transform duration-500 ease-out animate-pulse"
+          style={{ transform: `translate(${parallaxOffset.x * 2}px, ${parallaxOffset.y * 2}px) scale(1.1)` }}
         />
         <div 
-          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-gradient-to-tr from-pink-600/10 to-purple-600/15 rounded-full blur-[120px] pointer-events-none transition-transform duration-300 ease-out"
-          style={{ transform: `translate(${-parallaxOffset.x * 1.2}px, ${-parallaxOffset.y * 1.2}px)` }}
+          className="absolute bottom-1/4 right-1/4 w-[550px] h-[550px] bg-gradient-to-tr from-pink-600/20 via-indigo-600/25 to-purple-800/20 rounded-full blur-[150px] pointer-events-none transition-transform duration-500 ease-out"
+          style={{ transform: `translate(${-parallaxOffset.x * 1.8}px, ${-parallaxOffset.y * 1.8}px) scale(1.05)` }}
         />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(99,102,241,0.08)_0%,transparent_100%)] pointer-events-none" />
 
         <div className="relative z-10 max-w-6xl w-full text-center">
           <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-3 block">What We Offer</span>
@@ -207,8 +209,8 @@ export default function App() {
           <p className="text-white/60 max-w-lg mx-auto mb-16 text-sm sm:text-base">Comprehensive digital solutions built with enterprise grade precision.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-xl hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-purple-500/60 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2 hover:scale-[1.02]">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
                 <Globe size={22} />
               </div>
               <h3 className="text-white font-semibold text-lg mb-2">01. Website Building</h3>
@@ -218,8 +220,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-xl hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-indigo-500/60 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2 hover:scale-[1.02]">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                 <Megaphone size={22} />
               </div>
               <h3 className="text-white font-semibold text-lg mb-2">02. Digital Marketing</h3>
@@ -229,8 +231,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-xl hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-pink-500/60 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2 hover:scale-[1.02]">
+              <div className="w-12 h-12 rounded-2xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-110 transition-transform">
                 <Search size={22} />
               </div>
               <h3 className="text-white font-semibold text-lg mb-2">03. SEO & Technical</h3>
@@ -243,14 +245,14 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 3: Immersive Parallax Contact Section connected to Java Backend */}
-      <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/5">
+      {/* Page 3: Immersive Stacking Contact Section connected to Java Backend */}
+      <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/10">
         <div 
-          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-900/20 to-pink-900/15 rounded-full blur-[140px] pointer-events-none transition-transform duration-300 ease-out"
-          style={{ transform: `translate(${-parallaxOffset.x * 1.5}px, ${parallaxOffset.y * 1.2}px)` }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-purple-900/30 via-indigo-900/20 to-pink-900/25 rounded-full blur-[160px] pointer-events-none transition-transform duration-500 ease-out"
+          style={{ transform: `translate(calc(-50% + ${parallaxOffset.x * 1.5}px), calc(-50% + ${parallaxOffset.y * 1.5}px))` }}
         />
 
-        <div className="relative z-10 w-full max-w-xl bg-white/[0.02] border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-2xl shadow-2xl">
+        <div className="relative z-10 w-full max-w-xl bg-white/[0.03] border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-3xl shadow-2xl hover:border-purple-500/40 transition-all duration-500">
           <div className="text-center mb-8">
             <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-2 block">Get in Touch</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Start Your Project</h2>
