@@ -1,336 +1,215 @@
-import { Menu, ArrowRight, CheckCircle2, Sparkles, Globe, Megaphone, Search } from 'lucide-react'
-import { CSSProperties, useEffect, useRef, useState } from 'react'
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | yezhuththu.site</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-const BG_IMAGE_1 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85'
-const BG_IMAGE_2 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85'
-const SPOTLIGHT_R = 260
-
-type Point = { x: number; y: number }
-
-function RevealLayer({ image, cursorX, cursorY }: { image: string; cursorX: number; cursorY: number }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [maskImage, setMaskImage] = useState('none')
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const draw = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const gradient = ctx.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, SPOTLIGHT_R)
-      gradient.addColorStop(0, 'rgba(255,255,255,1)')
-      gradient.addColorStop(0.4, 'rgba(255,255,255,1)')
-      gradient.addColorStop(0.6, 'rgba(255,255,255,0.75)')
-      gradient.addColorStop(0.75, 'rgba(255,255,255,0.4)')
-      gradient.addColorStop(0.88, 'rgba(255,255,255,0.12)')
-      gradient.addColorStop(1, 'rgba(255,255,255,0)')
-
-      ctx.fillStyle = gradient
-      ctx.beginPath()
-      ctx.arc(cursorX, cursorY, SPOTLIGHT_R, 0, Math.PI * 2)
-      ctx.fill()
-
-      setMaskImage(canvas.toDataURL())
+  <style>
+    :root[data-theme="dark"] {
+      --bg-dark: #020617;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-nav: rgba(2, 6, 23, 0.85);
+      --accent-primary: #6366f1;
+      --accent-glow: #818cf8;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.12);
+      --border-hover: rgba(99, 102, 241, 0.6);
     }
 
-    draw()
-    window.addEventListener('resize', draw)
-    return () => window.removeEventListener('resize', draw)
-  }, [cursorX, cursorY])
-
-  const style: CSSProperties = {
-    backgroundImage: `url(${image})`,
-    maskImage: `url(${maskImage})`,
-    WebkitMaskImage: `url(${maskImage})`,
-    maskSize: '100% 100%',
-    WebkitMaskSize: '100% 100%'
-  }
-
-  return (
-    <>
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ display: 'none' }} />
-      <div className="absolute inset-0 z-30 pointer-events-none bg-center bg-cover bg-no-repeat" style={style} />
-    </>
-  )
-}
-
-export default function App() {
-  const mouse = useRef<Point>({ x: -999, y: -999 })
-  const smooth = useRef<Point>({ x: -999, y: -999 })
-  const rafRef = useRef<number | null>(null)
-  const [cursorPos, setCursorPos] = useState<Point>({ x: -999, y: -999 })
-  const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 })
-
-  const [formData, setFormData] = useState({
-    clientname: '',
-    email: '',
-    serviceType: 'Static Website',
-    estimatedBudget: 12000,
-    projectOverview: ''
-  })
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-
-  useEffect(() => {
-    const onMove = (event: MouseEvent) => {
-      mouse.current = { x: event.clientX, y: event.clientY }
-      const px = (event.clientX / window.innerWidth - 0.5) * 45
-      const py = (event.clientY / window.innerHeight - 0.5) * 45
-      setParallaxOffset({ x: px, y: py })
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 40px 6%;
+      min-height: 100vh;
     }
 
-    const animate = () => {
-      smooth.current.x += (mouse.current.x - smooth.current.x) * 0.1
-      smooth.current.y += (mouse.current.y - smooth.current.y) * 0.1
-      setCursorPos({ x: smooth.current.x, y: smooth.current.y })
-      rafRef.current = requestAnimationFrame(animate)
+    .admin-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 24px;
     }
-
-    window.addEventListener('mousemove', onMove)
-    rafRef.current = requestAnimationFrame(animate)
-
-    return () => {
-      window.removeEventListener('mousemove', onMove)
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+    .admin-header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; }
+    .admin-header h1 span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .back-btn {
+      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4);
+      color: var(--accent-glow); padding: 10px 20px; border-radius: 99px; font-weight: 600;
+      text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease;
     }
-  }, [])
+    .back-btn:hover { background: rgba(99, 102, 241, 0.3); }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitting(true)
+    /* Metrics Grid */
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+    .metric-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 24px; backdrop-filter: blur(20px);
+    }
+    .metric-card h3 { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
+    .metric-card .value { font-size: 2rem; font-weight: 700; color: var(--text-main); }
 
-    const finalOverview = formData.projectOverview.trim() !== '' 
-      ? formData.projectOverview.trim() 
-      : 'No overview provided'
+    /* Search & Controls */
+    .controls-bar { margin-bottom: 24px; }
+    .search-input {
+      width: 100%; max-width: 400px; background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 18px;
+      color: var(--text-main); font-size: 0.95rem; font-family: inherit; outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--accent-primary); }
 
-    try {
-      const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          clientname: formData.clientname.trim(),
-          email: formData.email.trim(),
-          serviceType: formData.serviceType,
-          estimatedBudget: Number(formData.estimatedBudget),
-          projectOverview: finalOverview
-        })
-      })
+    /* Table Wrapper */
+    .table-container {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 24px; overflow-x: auto; backdrop-filter: blur(24px);
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+    th {
+      background: rgba(2, 6, 23, 0.5); padding: 16px 20px; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+    td { padding: 18px 20px; font-size: 0.9rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
 
-      if (response.ok) {
-        setSubmitted(true)
-        setFormData({ clientname: '', email: '', serviceType: 'Static Website', estimatedBudget: 12000, projectOverview: '' })
-        setTimeout(() => setSubmitted(false), 5000)
-      } else {
-        alert('Server rejection status: ' + response.status)
+    .empty-state { text-align: center; padding: 40px; color: var(--text-muted); font-style: italic; }
+
+    @media(max-width: 768px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-header">
+    <h1>Lead Management <span>Dashboard</span></h1>
+    <a href="index.html" class="back-btn">&larr; Return to Site</a>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <h3>Total Leads Received</h3>
+      <div class="value" id="totalleads">0</div>
+    </div>
+    <div class="metric-card">
+      <h3>Total Pipeline Value</h3>
+      <div class="value" id="totalvalue">₹0</div>
+    </div>
+    <div class="metric-card">
+      <h3>Average Budget</h3>
+      <div class="value" id="avgBudget">₹0</div>
+    </div>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="controls-bar">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search leads by name, email, or service..." onkeyup="filterLeads()" />
+  </div>
+
+  <!-- Lead Data Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client Name</th>
+          <th>Email</th>
+          <th>Service Requested</th>
+          <th>Project Overview</th>
+          <th>Estimated Budget</th>
+          <th>Date Received</th>
+        </tr>
+      </thead>
+      <tbody id="leadTableBody">
+        <tr><td colspan="7" class="empty-state">Connecting to backend database...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    let allLeads = [];
+
+    async function fetchLeads() {
+      const tbody = document.getElementById('leadTableBody');
+      try {
+        const response = await fetch('https://agency-backend-t8oq.onrender.com/api/leads', {
+          headers: { 'Accept': 'application/json' }
+        });
+        
+        if (response.ok) {
+          allLeads = await response.json();
+          renderTable(allLeads);
+          updateMetrics(allLeads);
+        } else {
+          tbody.innerHTML = `<tr><td colspan="7" class="empty-state" style="color: #ef4444;">Failed to load leads from database (Status: ${response.status})</td></tr>`;
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        tbody.innerHTML = `<tr><td colspan="7" class="empty-state" style="color: #ef4444;">Unable to reach backend server. Check network connection or Render instance status.</td></tr>`;
       }
-    } catch (err) {
-      console.error('Network Error:', err)
-      alert('Could not reach backend database server. Please check your network connection.')
-    } finally {
-      setSubmitting(false)
     }
-  }
 
-  return (
-    <main className="min-h-screen bg-black text-white tracking-[-0.02em] font-sans selection:bg-purple-500 selection:text-white">
-      {/* Navigation bar - Admin link kept hidden for privacy */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 py-4 sm:px-10 bg-black/50 backdrop-blur-xl border-b border-white/10">
-        <a href="#home" className="flex items-center gap-2 text-decoration-none">
-          <span className="text-white text-xl font-bold tracking-tight">yezhuththu<span className="text-purple-400">.site</span></span>
-        </a>
+    function renderTable(leads) {
+      const tbody = document.getElementById('leadTableBody');
+      tbody.innerHTML = '';
 
-        <div className="hidden md:flex items-center gap-6 bg-white/[0.03] border border-white/10 rounded-full px-6 py-2 backdrop-blur-md">
-          <a href="#home" className="text-xs font-medium text-white hover:text-purple-300 transition-colors">Home</a>
-          <a href="#services" className="text-xs font-medium text-white/70 hover:text-white transition-colors">Services</a>
-          <a href="#contact" className="text-xs font-medium text-white/70 hover:text-white transition-colors">Contact</a>
-        </div>
+      if (!leads || leads.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="empty-state">No lead inquiries found in the database.</td></tr>`;
+        return;
+      }
 
-        <a href="#contact" className="hidden md:inline-flex items-center gap-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-xs font-semibold px-5 py-2.5 rounded-full hover:opacity-90 transition-all shadow-lg shadow-purple-500/20">
-          Get a Quote <ArrowRight size={14} />
-        </a>
-        <button className="md:hidden p-2 text-white" aria-label="Open menu">
-          <Menu size={22} strokeWidth={1.75} />
-        </button>
-      </nav>
+      leads.forEach(lead => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>#${lead.id || 'N/A'}</td>
+          <td style="font-weight: 600;">${lead.clientname || 'Unnamed'}</td>
+          <td><a href="mailto:${lead.email}" style="color: var(--accent-glow); text-decoration: none;">${lead.email || 'No email'}</a></td>
+          <td><span style="background: rgba(99, 102, 241, 0.15); padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; color: var(--accent-glow);">${lead.serviceType || ''}</span></td>
+          <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${lead.projectOverview || ''}">
+            ${lead.projectOverview || '<span style="color: var(--text-muted); font-style: italic;">No overview provided</span>'}
+          </td>
+          <td style="font-weight: 700;">₹${lead.estimatedBudget ? lead.estimatedBudget.toLocaleString() : '0'}</td>
+          <td style="color: var(--text-muted); font-size: 0.85rem;">${lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : 'Recent'}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
-      {/* Page 1: Pristine Spotlight Hero (Untouched) */}
-      <section id="home" className="relative w-full h-screen bg-black flex items-center justify-center" style={{ height: '100dvh' }}>
-        <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat opacity-90" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
-        <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
+    function updateMetrics(leads) {
+      const totalLeads = leads.length;
+      const totalValue = leads.reduce((sum, l) => sum + (Number(l.estimatedBudget) || 0), 0);
+      const avgBudget = totalLeads > 0 ? Math.round(totalValue / totalLeads) : 0;
 
-        <div className="absolute top-[22%] left-0 right-0 z-50 flex flex-col items-center text-center px-4 md:px-8 pointer-events-none">
-          <div className="text-xs uppercase tracking-[0.25em] text-indigo-300 font-semibold mb-4 flex items-center gap-2">
-            <Sparkles size={14} /> Websites • Marketing • SEO
-          </div>
-          <h1 className="text-white leading-[0.92] max-w-6xl">
-            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1">
-              Every business
-            </span>
-            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1">
-              starts with the
-            </span>
-            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1 italic font-serif text-indigo-300">
-              right words,
-            </span>
-            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1">
-              then a website that
-            </span>
-            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight">
-              carries them.
-            </span>
-          </h1>
-        </div>
-      </section>
+      document.getElementById('totalleads').innerText = totalLeads;
+      document.getElementById('totalvalue').innerText = '₹' + totalValue.toLocaleString();
+      document.getElementById('avgBudget').innerText = '₹' + avgBudget.toLocaleString();
+    }
 
-      {/* Page 2: Ultimate Motion Graphics & Rotating Parallax Orbs */}
-      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/10">
-        {/* Rotating & Floating Background Motion Orbs */}
-        <div 
-          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-indigo-600/25 via-purple-600/20 to-pink-500/15 rounded-full blur-[140px] pointer-events-none transition-transform duration-500 ease-out animate-pulse"
-          style={{ transform: `translate(${parallaxOffset.x * 2}px, ${parallaxOffset.y * 2}px) scale(1.1)` }}
-        />
-        <div 
-          className="absolute bottom-1/4 right-1/4 w-[550px] h-[550px] bg-gradient-to-tr from-pink-600/20 via-indigo-600/25 to-purple-800/20 rounded-full blur-[150px] pointer-events-none transition-transform duration-500 ease-out"
-          style={{ transform: `translate(${-parallaxOffset.x * 1.8}px, ${-parallaxOffset.y * 1.8}px) scale(1.05)` }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,rgba(99,102,241,0.08)_0%,transparent_100%)] pointer-events-none" />
+    function filterLeads() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = allLeads.filter(l => 
+        (l.clientname && l.clientname.toLowerCase().includes(query)) ||
+        (l.email && l.email.toLowerCase().includes(query)) ||
+        (l.serviceType && l.serviceType.toLowerCase().includes(query)) ||
+        (l.projectOverview && l.projectOverview.toLowerCase().includes(query))
+      );
+      renderTable(filtered);
+    }
 
-        <div className="relative z-10 max-w-6xl w-full text-center">
-          <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-3 block">What We Offer</span>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">Engineered for growth.</h2>
-          <p className="text-white/60 max-w-lg mx-auto mb-16 text-sm sm:text-base">Comprehensive digital solutions built with enterprise grade precision.</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-purple-500/60 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2 hover:scale-[1.02]">
-              <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
-                <Globe size={22} />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-2">01. Website Building</h3>
-              <p className="text-white/60 text-sm leading-relaxed mb-6">Custom-designed web apps and immersive landing pages optimized for high conversion rates.</p>
-              <div className="flex items-center gap-2 text-xs font-semibold text-purple-400">
-                <CheckCircle2 size={14} /> Custom Architecture
-              </div>
-            </div>
-
-            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-indigo-500/60 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2 hover:scale-[1.02]">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
-                <Megaphone size={22} />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-2">02. Digital Marketing</h3>
-              <p className="text-white/60 text-sm leading-relaxed mb-6">Targeted multichannel campaigns designed around your exact value proposition.</p>
-              <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
-                <CheckCircle2 size={14} /> Conversion Focused
-              </div>
-            </div>
-
-            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-pink-500/60 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2 hover:scale-[1.02]">
-              <div className="w-12 h-12 rounded-2xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-110 transition-transform">
-                <Search size={22} />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-2">03. SEO & Technical</h3>
-              <p className="text-white/60 text-sm leading-relaxed mb-6">Structural optimization, lightning-fast speed audits, and organic traffic expansion.</p>
-              <div className="flex items-center gap-2 text-xs font-semibold text-pink-400">
-                <CheckCircle2 size={14} /> Organic Authority
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Page 3: Immersive Stacking Contact Section connected to Java Backend */}
-      <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-28 bg-black overflow-hidden border-t border-white/10">
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-purple-900/30 via-indigo-900/20 to-pink-900/25 rounded-full blur-[160px] pointer-events-none transition-transform duration-500 ease-out"
-          style={{ transform: `translate(calc(-50% + ${parallaxOffset.x * 1.5}px), calc(-50% + ${parallaxOffset.y * 1.5}px))` }}
-        />
-
-        <div className="relative z-10 w-full max-w-xl bg-white/[0.03] border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-3xl shadow-2xl hover:border-purple-500/40 transition-all duration-500">
-          <div className="text-center mb-8">
-            <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-2 block">Get in Touch</span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Start Your Project</h2>
-            <p className="text-white/60 text-xs sm:text-sm">Submit your project specs to securely save to the backend database.</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Your Name</label>
-              <input 
-                type="text" 
-                required
-                value={formData.clientname}
-                onChange={e => setFormData({...formData, clientname: e.target.value})}
-                placeholder="John Doe"
-                className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Email Address</label>
-              <input 
-                type="email" 
-                required
-                value={formData.email}
-                onChange={e => setFormData({...formData, email: e.target.value})}
-                placeholder="john@example.com"
-                className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
-              />
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-1.5 text-left">
-                <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Service Required</label>
-                <select 
-                  value={formData.serviceType}
-                  onChange={e => setFormData({...formData, serviceType: e.target.value})}
-                  className="bg-zinc-900 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors cursor-pointer"
-                >
-                  <option value="Static Website">Static Website</option>
-                  <option value="Dynamic Website">Dynamic Website</option>
-                  <option value="Studio Complete">Studio Complete</option>
-                  <option value="E-Commerce Solution">E-Commerce Solution</option>
-                </select>
-              </div>
-              <div className="flex flex-col gap-1.5 text-left">
-                <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Estimated Budget (₹)</label>
-                <input 
-                  type="number"
-                  required
-                  value={formData.estimatedBudget}
-                  onChange={e => setFormData({...formData, estimatedBudget: Number(e.target.value)})}
-                  placeholder="12000"
-                  className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Project Overview</label>
-              <textarea 
-                rows={4}
-                value={formData.projectOverview}
-                onChange={e => setFormData({...formData, projectOverview: e.target.value})}
-                placeholder="Tell us about your project goals..."
-                className="bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors resize-none"
-              />
-            </div>
-            <button 
-              type="submit" 
-              disabled={submitting}
-              className="mt-2 w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold py-3.5 rounded-xl hover:opacity-95 transition-all shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {submitting ? 'Transmitting...' : 'Submit Request'} <ArrowRight size={16} />
-            </button>
-            {submitted && (
-              <p className="text-emerald-400 text-xs text-center font-medium mt-2 animate-fade-in">✓ Success! Inquiry securely saved to your backend database.</p>
-            )}
-          </form>
-        </div>
-      </section>
-    </main>
-  )
-}
+    // Load leads on startup
+    fetchLeads();
+  </script>
+</body>
+</html>
