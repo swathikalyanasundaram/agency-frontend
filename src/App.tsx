@@ -89,7 +89,7 @@ export default function App() {
   return (
     <main className="min-h-screen bg-black text-white tracking-[-0.02em]" style={{ fontFamily: "'Inter', sans-serif" }}>
       {/* Navigation bar */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5 bg-black/40 backdrop-blur-xl border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-6 bg-black/40 backdrop-blur-xl border-b border-white/10">
         <a href="#top" aria-label="Yezhuththu home" className="flex items-center gap-2.5 text-decoration-none">
           <span className="text-white text-2xl font-bold tracking-tight">yezhuththu<span className="text-orange-500">.site</span></span>
         </a>
@@ -108,33 +108,45 @@ export default function App() {
         </button>
       </nav>
 
-      {/* Cinematic Motion-Graphic Spotlight Hero Section */}
+      {/* Cinematic Motion-Graphic Spotlight Hero Section with Exact Brand Copy */}
       <section id="top" className="relative w-full overflow-hidden h-screen bg-black flex items-center justify-center" style={{ height: '100dvh' }}>
         <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat opacity-90" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
         <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
 
-        <div className="absolute top-[18%] left-0 right-0 z-50 flex flex-col items-center text-center px-5 pointer-events-none">
-          <h1 className="text-white leading-[0.95] max-w-5xl">
-            <span className="block font-normal text-4xl sm:text-6xl md:text-7xl tracking-tight mb-2">
-              Digital Systems
+        <div className="absolute top-[14%] left-0 right-0 z-50 flex flex-col items-center text-center px-4 md:px-8 pointer-events-none">
+          <div className="text-xs uppercase tracking-[0.25em] text-indigo-300 font-semibold mb-4">
+            Websites • Marketing • SEO
+          </div>
+          <h1 className="text-white leading-[0.92] max-w-6xl">
+            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1">
+              Every business
             </span>
-            <span className="block font-bold text-5xl sm:text-7xl md:text-8xl tracking-tighter bg-gradient-to-r from-orange-400 via-pink-500 to-indigo-500 bg-clip-text text-transparent">
-              Engineered to Scale
+            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1">
+              starts with the
+            </span>
+            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1 italic font-serif text-indigo-300">
+              right words,
+            </span>
+            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight mb-1">
+              then a website that
+            </span>
+            <span className="block font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight">
+              carries them.
             </span>
           </h1>
         </div>
 
-        <div className="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[280px] z-50">
-          <p className="text-sm text-white/80 leading-relaxed font-light">
-            We architect elite web engineering solutions, high-performance frontends, and robust backend infrastructures designed for modern growth.
+        <div className="hidden sm:block absolute bottom-10 left-10 md:left-14 max-w-[280px] z-50">
+          <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-light">
+            Yezhuththu means "script" — the letters that carry a message. We build the sites, campaigns, and search visibility that carry yours.
           </p>
         </div>
 
-        <div className="absolute bottom-10 sm:bottom-20 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[280px] z-50 flex flex-col items-start gap-4">
-          <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
+        <div className="absolute bottom-8 sm:bottom-14 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[280px] z-50 flex flex-col items-start gap-3">
+          <p className="text-xs text-white/70 leading-relaxed font-light">
             Discover our custom packages, dynamic backends, and cloud DevOps setups to elevate your brand presence.
           </p>
-          <a href="#contact" className="bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95 shadow-lg shadow-[#e8702a]/30">
+          <a href="#contact" className="bg-[#e8702a] hover:bg-[#d2611f] text-white text-xs sm:text-sm font-medium px-6 py-2.5 rounded-full transition-all hover:scale-[1.03] active:scale-95 shadow-lg shadow-[#e8702a]/30">
             Start Project
           </a>
         </div>
