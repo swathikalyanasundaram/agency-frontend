@@ -64,7 +64,7 @@ export default function App() {
   const smooth = useRef<Point>({ x: -999, y: -999 })
   const rafRef = useRef<number | null>(null)
   const [cursorPos, setCursorPos] = useState<Point>({ x: -999, y: -999 })
-  const [parallaxOffset, setParallaxOffset] = useState({ x: 0, y: 0 })
+  const [activeSection, setActiveSection] = useState<'home' | 'services' | 'contact'>('home')
 
   const [formData, setFormData] = useState({
     clientname: '',
@@ -79,9 +79,6 @@ export default function App() {
   useEffect(() => {
     const onMove = (event: MouseEvent) => {
       mouse.current = { x: event.clientX, y: event.clientY }
-      const px = (event.clientX / window.innerWidth - 0.5) * 35
-      const py = (event.clientY / window.innerHeight - 0.5) * 35
-      setParallaxOffset({ x: px, y: py })
     }
 
     const animate = () => {
@@ -91,11 +88,28 @@ export default function App() {
       rafRef.current = requestAnimationFrame(animate)
     }
 
+    // Track active section for background brightness transition
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + window.innerHeight / 3
+      const servicesEl = document.getElementById('services')
+      const contactEl = document.getElementById('contact')
+
+      if (contactEl && scrollPos >= contactEl.offsetTop) {
+        setActiveSection('contact')
+      } else if (servicesEl && scrollPos >= servicesEl.offsetTop) {
+        setActiveSection('services')
+      } else {
+        setActiveSection('home')
+      }
+    }
+
     window.addEventListener('mousemove', onMove)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     rafRef.current = requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('scroll', handleScroll)
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
     }
   }, [])
@@ -139,8 +153,21 @@ export default function App() {
     }
   }
 
+  // Determine background brightness & opacity based on active section
+  const bgOpacity = activeSection === 'home' ? 'opacity-90 brightness-100' : activeSection === 'services' ? 'opacity-50 brightness-75' : 'opacity-40 brightness-50'
+
   return (
-    <main className="min-h-screen bg-black text-white tracking-[-0.02em] font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden">
+    <main className="min-h-screen text-white tracking-[-0.02em] font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden bg-black relative">
+      
+      {/* FIXED GLOBAL BACKGROUND (Stays locked while page moves over it) */}
+      <div className="fixed inset-0 z-0 pointer-events-none transition-all duration-700">
+        <div className={`absolute inset-0 bg-center bg-cover bg-no-repeat transition-opacity duration-700 ${bgOpacity}`} style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
+        <div className={`absolute inset-0 transition-opacity duration-700 ${activeSection === 'home' ? 'opacity-100' : 'opacity-60'}`}>
+          <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
+        </div>
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+      </div>
+
       {/* Navigation bar */}
       <nav className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 py-4 sm:px-10 bg-black/40 backdrop-blur-xl border-b border-white/[0.06]">
         <a href="#home" className="flex items-center gap-2 text-decoration-none">
@@ -161,11 +188,8 @@ export default function App() {
         </button>
       </nav>
 
-      {/* Page 1: Pristine Spotlight Hero */}
-      <section id="home" className="relative w-full h-screen bg-black flex items-center justify-center" style={{ height: '100dvh' }}>
-        <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat opacity-90" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
-        <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
-
+      {/* Page 1: Hero */}
+      <section id="home" className="relative w-full h-screen flex items-center justify-center z-10" style={{ height: '100dvh' }}>
         <div className="absolute top-[22%] left-0 right-0 z-50 flex flex-col items-center text-center px-4 md:px-8 pointer-events-none">
           <div className="text-xs uppercase tracking-[0.25em] text-indigo-300 font-semibold mb-4 flex items-center gap-2">
             <Sparkles size={14} /> Websites • Marketing • SEO
@@ -190,13 +214,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 2: Services with Integrated Spotlight & Background Textures */}
-      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 bg-black overflow-hidden">
-        {/* Same underlying imagery layout as Page 1 */}
-        <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat opacity-60" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
-        <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
-
-        <div className="relative z-40 max-w-6xl w-full text-center">
+      {/* Page 2: Services */}
+      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 z-10">
+        <div className="max-w-6xl w-full text-center">
           <span className="text-xs uppercase tracking-[0.25em] text-purple-300 font-semibold mb-3 block">What We Offer</span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 text-white">Engineered for growth.</h2>
           <p className="text-white/70 max-w-lg mx-auto mb-16 text-sm sm:text-base font-light">Comprehensive digital solutions built with enterprise grade precision.</p>
@@ -238,13 +258,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 3: Contact with Integrated Spotlight & Background Textures */}
-      <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 bg-black overflow-hidden">
-        {/* Same underlying imagery layout as Page 1 */}
-        <div className="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat opacity-60" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
-        <RevealLayer image={BG_IMAGE_2} cursorX={cursorPos.x} cursorY={cursorPos.y} />
-
-        <div className="relative z-40 w-full max-w-xl bg-black/70 border border-white/20 p-8 sm:p-12 rounded-3xl backdrop-blur-3xl shadow-2xl">
+      {/* Page 3: Contact */}
+      <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 z-10">
+        <div className="w-full max-w-xl bg-black/70 border border-white/20 p-8 sm:p-12 rounded-3xl backdrop-blur-3xl shadow-2xl">
           <div className="text-center mb-8">
             <span className="text-xs uppercase tracking-[0.25em] text-purple-300 font-semibold mb-2 block">Get in Touch</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 text-white">Start Your Project</h2>
