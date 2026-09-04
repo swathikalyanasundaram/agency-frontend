@@ -79,8 +79,8 @@ export default function App() {
   useEffect(() => {
     const onMove = (event: MouseEvent) => {
       mouse.current = { x: event.clientX, y: event.clientY }
-      const px = (event.clientX / window.innerWidth - 0.5) * 40
-      const py = (event.clientY / window.innerHeight - 0.5) * 40
+      const px = (event.clientX / window.innerWidth - 0.5) * 35
+      const py = (event.clientY / window.innerHeight - 0.5) * 35
       setParallaxOffset({ x: px, y: py })
     }
 
@@ -190,52 +190,56 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 2: Matching Seamless Theme - Services */}
+      {/* Page 2: Services with Immersive Theme Background & Parallax Orbs */}
       <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 bg-black overflow-hidden">
-        {/* Subtle ambient lighting nodes keeping consistency with page 1 */}
+        {/* Soft textured background layer blending with site aesthetic */}
+        <div className="absolute inset-0 bg-center bg-cover bg-no-repeat opacity-20 pointer-events-none" style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black pointer-events-none" />
+
+        {/* Dynamic Glowing Parallax Orbs */}
         <div 
-          className="absolute top-1/3 left-1/4 w-[450px] h-[450px] bg-gradient-to-tr from-indigo-900/15 via-purple-900/10 to-transparent rounded-full blur-[130px] pointer-events-none transition-transform duration-700 ease-out"
-          style={{ transform: `translate(${parallaxOffset.x * 1.5}px, ${parallaxOffset.y * 1.5}px)` }}
+          className="absolute top-1/4 left-1/4 w-[480px] h-[480px] bg-gradient-to-tr from-indigo-600/20 via-purple-600/15 to-transparent rounded-full blur-[140px] pointer-events-none transition-transform duration-700 ease-out"
+          style={{ transform: `translate(${parallaxOffset.x * 2}px, ${parallaxOffset.y * 2}px)` }}
         />
         <div 
-          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-pink-900/10 via-indigo-900/15 to-transparent rounded-full blur-[140px] pointer-events-none transition-transform duration-700 ease-out"
-          style={{ transform: `translate(${-parallaxOffset.x * 1.5}px, ${-parallaxOffset.y * 1.5}px)` }}
+          className="absolute bottom-1/4 right-1/4 w-[480px] h-[480px] bg-gradient-to-tr from-pink-600/15 via-indigo-600/20 to-transparent rounded-full blur-[140px] pointer-events-none transition-transform duration-700 ease-out"
+          style={{ transform: `translate(${-parallaxOffset.x * 2}px, ${-parallaxOffset.y * 2}px)` }}
         />
 
         <div className="relative z-10 max-w-6xl w-full text-center">
           <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-3 block">What We Offer</span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">Engineered for growth.</h2>
-          <p className="text-white/50 max-w-lg mx-auto mb-16 text-sm sm:text-base font-light">Comprehensive digital solutions built with enterprise grade precision.</p>
+          <p className="text-white/60 max-w-lg mx-auto mb-16 text-sm sm:text-base font-light">Comprehensive digital solutions built with enterprise grade precision.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-purple-500/40 p-8 rounded-3xl transition-all duration-500 backdrop-blur-xl shadow-2xl hover:-translate-y-1.5">
-              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-105 transition-transform">
+            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-purple-500/50 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
                 <Globe size={22} />
               </div>
               <h3 className="text-white font-semibold text-lg mb-2">01. Website Building</h3>
-              <p className="text-white/50 text-sm leading-relaxed font-light mb-6">Custom-designed web apps and immersive landing pages optimized for high conversion rates.</p>
+              <p className="text-white/60 text-sm leading-relaxed font-light mb-6">Custom-designed web apps and immersive landing pages optimized for high conversion rates.</p>
               <div className="flex items-center gap-2 text-xs font-semibold text-purple-400">
                 <CheckCircle2 size={14} /> Custom Architecture
               </div>
             </div>
 
-            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-indigo-500/40 p-8 rounded-3xl transition-all duration-500 backdrop-blur-xl shadow-2xl hover:-translate-y-1.5">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-105 transition-transform">
+            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-indigo-500/50 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                 <Megaphone size={22} />
               </div>
               <h3 className="text-white font-semibold text-lg mb-2">02. Digital Marketing</h3>
-              <p className="text-white/50 text-sm leading-relaxed font-light mb-6">Targeted multichannel campaigns designed around your exact value proposition.</p>
+              <p className="text-white/60 text-sm leading-relaxed font-light mb-6">Targeted multichannel campaigns designed around your exact value proposition.</p>
               <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400">
                 <CheckCircle2 size={14} /> Conversion Focused
               </div>
             </div>
 
-            <div className="group bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.06] hover:border-pink-500/40 p-8 rounded-3xl transition-all duration-500 backdrop-blur-xl shadow-2xl hover:-translate-y-1.5">
-              <div className="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-105 transition-transform">
+            <div className="group bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-pink-500/50 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2">
+              <div className="w-12 h-12 rounded-2xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400 mb-6 group-hover:scale-110 transition-transform">
                 <Search size={22} />
               </div>
               <h3 className="text-white font-semibold text-lg mb-2">03. SEO & Technical</h3>
-              <p className="text-white/50 text-sm leading-relaxed font-light mb-6">Structural optimization, lightning-fast speed audits, and organic traffic expansion.</p>
+              <p className="text-white/60 text-sm leading-relaxed font-light mb-6">Structural optimization, lightning-fast speed audits, and organic traffic expansion.</p>
               <div className="flex items-center gap-2 text-xs font-semibold text-pink-400">
                 <CheckCircle2 size={14} /> Organic Authority
               </div>
@@ -244,50 +248,54 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 3: Matching Seamless Theme - Contact */}
+      {/* Page 3: Contact with Immersive Theme Background & Form Container */}
       <section id="contact" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 bg-black overflow-hidden">
+        {/* Soft textured background layer blending with site aesthetic */}
+        <div className="absolute inset-0 bg-center bg-cover bg-no-repeat opacity-20 pointer-events-none" style={{ backgroundImage: `url(${BG_IMAGE_2})` }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black pointer-events-none" />
+
         <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-purple-900/20 via-indigo-900/10 to-transparent rounded-full blur-[150px] pointer-events-none transition-transform duration-700 ease-out"
-          style={{ transform: `translate(calc(-50% + ${parallaxOffset.x}px), calc(-50% + ${parallaxOffset.y}px))` }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-purple-600/20 via-indigo-600/15 to-transparent rounded-full blur-[150px] pointer-events-none transition-transform duration-700 ease-out"
+          style={{ transform: `translate(calc(-50% + ${parallaxOffset.x * 1.5}px), calc(-50% + ${parallaxOffset.y * 1.5}px))` }}
         />
 
-        <div className="relative z-10 w-full max-w-xl bg-white/[0.02] border border-white/[0.06] p-8 sm:p-12 rounded-3xl backdrop-blur-2xl shadow-2xl">
+        <div className="relative z-10 w-full max-w-xl bg-white/[0.03] border border-white/[0.08] p-8 sm:p-12 rounded-3xl backdrop-blur-3xl shadow-2xl">
           <div className="text-center mb-8">
             <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-semibold mb-2 block">Get in Touch</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Start Your Project</h2>
-            <p className="text-white/50 text-xs sm:text-sm font-light">Submit your project specs to securely save to the backend database.</p>
+            <p className="text-white/60 text-xs sm:text-sm font-light">Submit your project specs to securely save to the backend database.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/50 font-medium">Your Name</label>
+              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Your Name</label>
               <input 
                 type="text" 
                 required
                 value={formData.clientname}
                 onChange={e => setFormData({...formData, clientname: e.target.value})}
                 placeholder="John Doe"
-                className="bg-black/50 border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
+                className="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/50 font-medium">Email Address</label>
+              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Email Address</label>
               <input 
                 type="email" 
                 required
                 value={formData.email}
                 onChange={e => setFormData({...formData, email: e.target.value})}
                 placeholder="john@example.com"
-                className="bg-black/50 border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
+                className="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5 text-left">
-                <label className="text-xs uppercase tracking-wider text-white/50 font-medium">Service Required</label>
+                <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Service Required</label>
                 <select 
                   value={formData.serviceType}
                   onChange={e => setFormData({...formData, serviceType: e.target.value})}
-                  className="bg-zinc-950 border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors cursor-pointer"
+                  className="bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors cursor-pointer"
                 >
                   <option value="Static Website">Static Website</option>
                   <option value="Dynamic Website">Dynamic Website</option>
@@ -296,25 +304,25 @@ export default function App() {
                 </select>
               </div>
               <div className="flex flex-col gap-1.5 text-left">
-                <label className="text-xs uppercase tracking-wider text-white/50 font-medium">Estimated Budget (₹)</label>
+                <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Estimated Budget (₹)</label>
                 <input 
                   type="number"
                   required
                   value={formData.estimatedBudget}
                   onChange={e => setFormData({...formData, estimatedBudget: Number(e.target.value)})}
                   placeholder="12000"
-                  className="bg-black/50 border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
+                  className="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors"
                 />
               </div>
             </div>
             <div className="flex flex-col gap-1.5 text-left">
-              <label className="text-xs uppercase tracking-wider text-white/50 font-medium">Project Overview</label>
+              <label className="text-xs uppercase tracking-wider text-white/60 font-medium">Project Overview</label>
               <textarea 
                 rows={4}
                 value={formData.projectOverview}
                 onChange={e => setFormData({...formData, projectOverview: e.target.value})}
                 placeholder="Tell us about your project goals..."
-                className="bg-black/50 border border-white/[0.08] rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors resize-none"
+                className="bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-purple-500 transition-colors resize-none"
               />
             </div>
             <button 
