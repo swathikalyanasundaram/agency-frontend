@@ -1,4 +1,4 @@
-import { Menu, ArrowRight, CheckCircle2, Sparkles, Globe, Megaphone, Search } from 'lucide-react'
+import { Menu, ArrowRight, CheckCircle2, Sparkles, Globe, Megaphone, Search, ShoppingBag } from 'lucide-react'
 import { CSSProperties, useEffect, useRef, useState } from 'react'
 
 const BG_IMAGE_1 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85'
@@ -6,6 +6,41 @@ const BG_IMAGE_2 = 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%
 const SPOTLIGHT_R = 260
 
 type Point = { x: number; y: number }
+
+const SERVICES_DATA = [
+  {
+    num: '01',
+    title: 'Website Building',
+    desc: 'Custom-designed web apps and immersive landing pages optimized for high conversion rates.',
+    tag: 'Custom Architecture',
+    Icon: Globe,
+    color: 'purple'
+  },
+  {
+    num: '02',
+    title: 'Digital Marketing',
+    desc: 'Targeted multichannel campaigns designed around your exact value proposition.',
+    tag: 'Conversion Focused',
+    Icon: Megaphone,
+    color: 'indigo'
+  },
+  {
+    num: '03',
+    title: 'SEO & Technical',
+    desc: 'Structural optimization, lightning-fast speed audits, and organic traffic expansion.',
+    tag: 'Organic Authority',
+    Icon: Search,
+    color: 'pink'
+  },
+  {
+    num: '04',
+    title: 'E-Commerce Solutions',
+    desc: 'Scalable storefronts with instant payment gateways and real-time inventory management.',
+    tag: 'High Performance',
+    Icon: ShoppingBag,
+    color: 'emerald'
+  }
+]
 
 function RevealLayer({ image, cursorX, cursorY }: { image: string; cursorX: number; cursorY: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -88,7 +123,6 @@ export default function App() {
       rafRef.current = requestAnimationFrame(animate)
     }
 
-    // Track active section for background brightness transition
     const handleScroll = () => {
       const scrollPos = window.scrollY + window.innerHeight / 3
       const servicesEl = document.getElementById('services')
@@ -153,13 +187,33 @@ export default function App() {
     }
   }
 
-  // Determine background brightness & opacity based on active section
-  const bgOpacity = activeSection === 'home' ? 'opacity-90 brightness-100' : activeSection === 'services' ? 'opacity-50 brightness-75' : 'opacity-40 brightness-50'
+  const bgOpacity = activeSection === 'home' 
+    ? 'opacity-90 brightness-100' 
+    : activeSection === 'services' 
+    ? 'opacity-50 brightness-75' 
+    : 'opacity-40 brightness-50'
+
+  // Double array to construct seamless marquee loop
+  const marqueeItems = [...SERVICES_DATA, ...SERVICES_DATA]
 
   return (
     <main className="min-h-screen text-white tracking-[-0.02em] font-sans selection:bg-purple-500 selection:text-white overflow-x-hidden bg-black relative">
-      
-      {/* FIXED GLOBAL BACKGROUND (Stays locked while page moves over it) */}
+      <style>{`
+        @keyframes marqueeSlow {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-slow {
+          display: flex;
+          width: max-content;
+          animation: marqueeSlow 40s linear infinite;
+        }
+        .animate-marquee-slow:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      {/* FIXED GLOBAL BACKGROUND */}
       <div className="fixed inset-0 z-0 pointer-events-none transition-all duration-700">
         <div className={`absolute inset-0 bg-center bg-cover bg-no-repeat transition-opacity duration-700 ${bgOpacity}`} style={{ backgroundImage: `url(${BG_IMAGE_1})` }} />
         <div className={`absolute inset-0 transition-opacity duration-700 ${activeSection === 'home' ? 'opacity-100' : 'opacity-60'}`}>
@@ -214,46 +268,42 @@ export default function App() {
         </div>
       </section>
 
-      {/* Page 2: Services */}
-      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center px-6 py-32 z-10">
-        <div className="max-w-6xl w-full text-center">
+      {/* Page 2: Services with Slow Infinite Loop Animation */}
+      <section id="services" className="relative min-h-screen flex flex-col justify-center items-center py-32 z-10 overflow-hidden">
+        <div className="max-w-6xl w-full text-center px-6 mb-12">
           <span className="text-xs uppercase tracking-[0.25em] text-purple-300 font-semibold mb-3 block">What We Offer</span>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 text-white">Engineered for growth.</h2>
-          <p className="text-white/70 max-w-lg mx-auto mb-16 text-sm sm:text-base font-light">Comprehensive digital solutions built with enterprise grade precision.</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="group bg-black/60 hover:bg-black/40 border border-white/20 hover:border-purple-400 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2">
-              <div className="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-300 mb-6 group-hover:scale-110 transition-transform">
-                <Globe size={22} />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-2">01. Website Building</h3>
-              <p className="text-white/70 text-sm leading-relaxed font-light mb-6">Custom-designed web apps and immersive landing pages optimized for high conversion rates.</p>
-              <div className="flex items-center gap-2 text-xs font-semibold text-purple-300">
-                <CheckCircle2 size={14} /> Custom Architecture
-              </div>
-            </div>
+          <p className="text-white/70 max-w-lg mx-auto text-sm sm:text-base font-light">Comprehensive digital solutions running in continuous alignment with your brand.</p>
+        </div>
 
-            <div className="group bg-black/60 hover:bg-black/40 border border-white/20 hover:border-indigo-400 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 mb-6 group-hover:scale-110 transition-transform">
-                <Megaphone size={22} />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-2">02. Digital Marketing</h3>
-              <p className="text-white/70 text-sm leading-relaxed font-light mb-6">Targeted multichannel campaigns designed around your exact value proposition.</p>
-              <div className="flex items-center gap-2 text-xs font-semibold text-indigo-300">
-                <CheckCircle2 size={14} /> Conversion Focused
-              </div>
-            </div>
+        {/* Infinite Loop Track Container with Masked Fade Edges */}
+        <div className="w-full relative py-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="animate-marquee-slow flex gap-6 px-4">
+            {marqueeItems.map((item, idx) => {
+              const IconComp = item.Icon
+              return (
+                <div 
+                  key={idx}
+                  className="w-[320px] sm:w-[380px] shrink-0 bg-black/60 hover:bg-black/80 border border-white/15 hover:border-purple-400/80 p-8 rounded-3xl transition-all duration-300 backdrop-blur-2xl shadow-2xl flex flex-col justify-between group cursor-pointer"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-300 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                        <IconComp size={22} />
+                      </div>
+                      <span className="text-xs font-mono text-white/40 group-hover:text-purple-300 transition-colors">{item.num}</span>
+                    </div>
 
-            <div className="group bg-black/60 hover:bg-black/40 border border-white/20 hover:border-pink-400 p-8 rounded-3xl transition-all duration-500 backdrop-blur-2xl shadow-2xl hover:-translate-y-2">
-              <div className="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 flex items-center justify-center text-pink-300 mb-6 group-hover:scale-110 transition-transform">
-                <Search size={22} />
-              </div>
-              <h3 className="text-white font-semibold text-lg mb-2">03. SEO & Technical</h3>
-              <p className="text-white/70 text-sm leading-relaxed font-light mb-6">Structural optimization, lightning-fast speed audits, and organic traffic expansion.</p>
-              <div className="flex items-center gap-2 text-xs font-semibold text-pink-300">
-                <CheckCircle2 size={14} /> Organic Authority
-              </div>
-            </div>
+                    <h3 className="text-white font-semibold text-xl mb-3">{item.title}</h3>
+                    <p className="text-white/60 text-sm leading-relaxed font-light mb-8">{item.desc}</p>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs font-semibold text-purple-300 pt-4 border-t border-white/10">
+                    <CheckCircle2 size={14} /> {item.tag}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
