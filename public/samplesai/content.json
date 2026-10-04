@@ -1,69 +1,41 @@
 {
   "brand": "AURELIA VOSS",
-  "seoTitle": "Aurelia Voss Photography | Portrait, Wedding & Editorial",
+  "seoTitle": "Aurelia Voss | Fine-Art Photography",
   "hero": {
-    "frameCount": 0,
-    "frameFolder": "frames/",
-    "images": [
-      "https://picsum.photos/seed/av1/2000/1200",
-      "https://picsum.photos/seed/av2/2000/1200",
-      "https://picsum.photos/seed/av3/2000/1200",
-      "https://picsum.photos/seed/av4/2000/1200"
-    ],
-    "location": "TUSCANY, ITALY · 35MM · F/1.4",
-    "stages": [
-      { "eyebrow": "FINE-ART PHOTOGRAPHY", "title": "Light, Remembered", "desc": "Portraits, weddings and editorial stories made with patience, honesty and natural light.", "b1": "View Portfolio", "b2": "Book a Session" },
-      { "eyebrow": "UNHURRIED MOMENTS", "title": "Honest Frames", "desc": "I spend time with people before the camera comes up, so every image feels like you.", "b1": "Featured Series", "b2": "Services" },
-      { "eyebrow": "BOOKING 2026–27", "title": "Your Story", "desc": "A limited number of dates each season. Tell me about yours and I will reply within 24 hours.", "b1": "Start Inquiry", "b2": "Pricing" }
-    ]
+    "video": "https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/portfolio_hero_bg_zuhahj.webm",
+    "poster": "https://picsum.photos/id/1015/2000/1200",
+    "eyebrow": "Fine-art photography",
+    "title": "Light, remembered.",
+    "sub": "Portrait, wedding and editorial work, made slowly.",
+    "location": "Based in Chennai · Working worldwide"
   },
-  "about": {
-    "title": "Honest light. Unhurried moments.",
-    "text": "For over a decade I have photographed people in the quiet second before the picture. My work is unposed and edited by hand, delivered within three weeks.",
-    "image": "https://picsum.photos/seed/avabout/900/1125",
-    "stats": [ { "n": 12, "suffix": "+", "l": "Years behind the lens" }, { "n": 400, "suffix": "+", "l": "Weddings & sessions" }, { "n": 38, "suffix": "", "l": "Countries" }, { "n": 14, "suffix": "", "l": "Publications" } ]
-  },
+  "intro": "I do not chase moments. I wait for the quiet second just before them, when people forget the camera and the light settles on who they really are.",
   "gallery": [
-    { "src": "https://picsum.photos/seed/gl1/900/1200", "title": "Window light", "location": "Chennai", "year": "2025", "cat": "Portrait", "exif": "Canon R5 · 85mm · f/1.4" },
-    { "src": "https://picsum.photos/seed/gl2/1200/800", "title": "The first look", "location": "Pondicherry", "year": "2025", "cat": "Wedding", "exif": "Sony A7IV · 35mm · f/1.8" },
-    { "src": "https://picsum.photos/seed/gl3/1200/800", "title": "Blue hour", "location": "Munnar", "year": "2024", "cat": "Landscape", "exif": "Nikon Z7 · 24mm · f/8" },
-    { "src": "https://picsum.photos/seed/gl4/900/1200", "title": "Silk and shade", "location": "Studio", "year": "2025", "cat": "Editorial", "exif": "Canon R5 · 50mm · f/2" },
-    { "src": "https://picsum.photos/seed/gl5/900/1100", "title": "Vows", "location": "Kochi", "year": "2024", "cat": "Wedding", "exif": "Sony A7IV · 85mm · f/1.8" },
-    { "src": "https://picsum.photos/seed/gl6/1200/900", "title": "Salt flats", "location": "Rann of Kutch", "year": "2023", "cat": "Landscape", "exif": "Nikon Z7 · 35mm · f/11" },
-    { "src": "https://picsum.photos/seed/gl7/900/1200", "title": "Studio study", "location": "Studio", "year": "2025", "cat": "Portrait", "exif": "Canon R5 · 85mm · f/2" },
-    { "src": "https://picsum.photos/seed/gl8/1200/800", "title": "Cover story", "location": "Mumbai", "year": "2024", "cat": "Editorial", "exif": "Sony A7IV · 50mm · f/2.8" }
+    { "src": "https://picsum.photos/id/1015/1400/1800", "title": "First light", "place": "Munnar", "year": "2025" },
+    { "src": "https://picsum.photos/id/1018/1800/1200", "title": "Still water", "place": "Kodaikanal", "year": "2025" },
+    { "src": "https://picsum.photos/id/1039/1400/1800", "title": "The long way down", "place": "Athirappilly", "year": "2024" },
+    { "src": "https://picsum.photos/id/1043/1800/1200", "title": "Slow tide", "place": "Pondicherry", "year": "2024" },
+    { "src": "https://picsum.photos/id/1016/1400/1800", "title": "Quiet geometry", "place": "Rajasthan", "year": "2023" },
+    { "src": "https://picsum.photos/id/1011/1800/1200", "title": "Morning crossing", "place": "Alleppey", "year": "2023" },
+    { "src": "https://picsum.photos/id/1035/1400/1800", "title": "After rain", "place": "Coorg", "year": "2022" },
+    { "src": "https://picsum.photos/id/1036/1800/1200", "title": "Winter hush", "place": "Ladakh", "year": "2022" }
   ],
   "series": [
-    { "src": "https://picsum.photos/seed/sr1/1400/1000", "title": "Monsoon Weddings", "year": "2025", "text": "Three weddings, one season of rain. A series about joy that refuses to wait for good weather." },
-    { "src": "https://picsum.photos/seed/sr2/1400/1000", "title": "Quiet Portraits", "year": "2024", "text": "Window light, no direction, no poses. Ten people photographed in the rooms where they feel most themselves." },
-    { "src": "https://picsum.photos/seed/sr3/1400/1000", "title": "Coastline", "year": "2023", "text": "Eight months along the east coast at first and last light, chasing the hour when everything goes quiet." }
+    { "src": "https://picsum.photos/id/1018/2200/1400", "title": "Monsoon", "year": "2025", "text": "A season of rain, photographed from the first cloud to the last." },
+    { "src": "https://picsum.photos/id/1016/2200/1400", "title": "Quiet Portraits", "year": "2024", "text": "Ten people, in the rooms where they feel most themselves." },
+    { "src": "https://picsum.photos/id/1043/2200/1400", "title": "Coastline", "year": "2023", "text": "Eight months along the east coast, at first and last light." }
   ],
-  "services": [
-    { "title": "Portrait sessions", "text": "60–90 minutes, one location, 25 hand-edited images.", "price": "From ₹15,000" },
-    { "title": "Weddings & events", "text": "Full-day coverage, second shooter, online gallery and album.", "price": "From ₹1,20,000" },
-    { "title": "Editorial & commercial", "text": "Concept, shoot and licensed delivery for brands and magazines.", "price": "Quote on request" }
-  ],
-  "process": {
-    "image": "https://picsum.photos/seed/avproc/1000/1200",
-    "title": "How we work together",
-    "steps": [
-      { "title": "Consult", "text": "A call about your story, people and the feeling you want." },
-      { "title": "Plan", "text": "Locations, timing and light mapped before the day." },
-      { "title": "Shoot", "text": "Unhurried, unposed, and entirely focused on you." },
-      { "title": "Deliver", "text": "A hand-edited gallery within three weeks." }
-    ]
+  "about": {
+    "image": "https://picsum.photos/id/1035/1200/1500",
+    "title": "Twelve years of waiting for the right light.",
+    "text": "My work is unposed and edited by hand. I spend time with people before the camera comes up, so what you receive feels like you. Published in Vogue Italia, Kinfolk and Harper's Bazaar.",
+    "stats": [ { "n": 12, "l": "Years" }, { "n": 400, "l": "Commissions" }, { "n": 38, "l": "Countries" } ]
   },
-  "prints": [
-    { "src": "https://picsum.photos/seed/pr1/900/1200", "title": "Blue Hour, Munnar", "edition": "Edition of 25", "paper": "Hahnemühle Photo Rag" },
-    { "src": "https://picsum.photos/seed/pr2/900/1200", "title": "Salt Flats", "edition": "Edition of 15", "paper": "Baryta Fibre" },
-    { "src": "https://picsum.photos/seed/pr3/900/1200", "title": "Window Light No. 4", "edition": "Edition of 30", "paper": "Hahnemühle Photo Rag" },
-    { "src": "https://picsum.photos/seed/pr4/900/1200", "title": "Coastline II", "edition": "Edition of 20", "paper": "Baryta Fibre" }
+  "services": [
+    { "title": "Portraits", "text": "Sixty to ninety minutes, one location, twenty-five hand-edited images.", "price": "From ₹15,000" },
+    { "title": "Weddings", "text": "Full-day coverage with a second photographer, gallery and heirloom album.", "price": "From ₹1,20,000" },
+    { "title": "Editorial", "text": "Concept, direction and licensed delivery for brands and magazines.", "price": "On request" }
   ],
-  "cta": { "image": "https://picsum.photos/seed/avcta/2000/900", "title": "Your Story Deserves to Be Seen." },
-  "testimonials": [
-    { "quote": "She disappeared into the day and somehow caught every moment that mattered.", "name": "Ananya & Rohan", "role": "Wedding, Pondicherry", "avatar": "https://picsum.photos/seed/t1/200/200" },
-    { "quote": "The most natural portraits I have ever had taken.", "name": "Meera S.", "role": "Portrait session", "avatar": "https://picsum.photos/seed/t2/200/200" }
-  ],
-  "press": [ "VOGUE ITALIA", "HARPER'S BAZAAR", "WEDDINGS", "KINFOLK", "NAT GEO TRAVEL" ],
-  "contact": { "email": "hello@yezhuththu.site", "phone": "+91 00000 00000", "city": "Chennai, India", "instagram": "https://instagram.com/", "formEndpoint": "" }
+  "quote": { "text": "She disappeared into the day and somehow caught every moment that mattered.", "name": "Ananya & Rohan", "role": "Wedding, Pondicherry" },
+  "contact": { "email": "hello@yezhuththu.site", "phone": "+91 00000 00000", "city": "Chennai, India", "instagram": "https://instagram.com/" }
 }
