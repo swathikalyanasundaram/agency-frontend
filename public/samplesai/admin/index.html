@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030305;--p:#101015;--b:rgba(255,255,255,.1);--a:#F2A65A}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font:15px Inter,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:1rem 2rem;border-bottom:1px solid var(--b);position:sticky;top:0;background:var(--bg);z-index:5}
+h1{font:700 1.2rem Outfit}h2{font:500 1.1rem Outfit;margin:2rem 0 .8rem;color:var(--a);text-transform:capitalize}main{max-width:900px;margin:auto;padding:1rem 2rem 6rem}
+.box{background:var(--p);border:1px solid var(--b);border-radius:12px;padding:1rem;margin:.6rem 0}
+label{display:block;font-size:.75rem;color:#aaa;margin:.7rem 0 .2rem;text-transform:capitalize}
+input,textarea{width:100%;padding:.6rem .8rem;background:#000;border:1px solid var(--b);border-radius:8px;color:#fff;font:inherit}
+button{cursor:pointer;border:1px solid var(--b);background:none;color:#fff;padding:.5rem 1rem;border-radius:8px;font:inherit}
+button.pri{background:var(--a);color:#1A1008;border:0;font-weight:600}button.del{color:#ff7a7a}
+.row{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}.row>input{flex:1;min-width:140px}
+img.th{height:46px;border-radius:4px}#msg{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:#222;padding:.7rem 1.2rem;border-radius:8px;display:none;z-index:9}
+.hide{display:none}
+</style></head><body>
+<header><h1>Site admin</h1><div class="row"><button id="cfgBtn">GitHub settings</button><a href="../" style="color:#aaa">View site</a><button class="pri" id="save">Save &amp; publish</button></div></header>
+<main>
+<div class="box hide" id="cfg">
+  <p style="color:#aaa;margin:0 0 .5rem">Saves go straight to your GitHub repo as commits, and Vercel redeploys automatically. The token stays in this browser only.</p>
+  <label>Repo owner</label><input id="owner" value="swathikalyanasundaram">
+  <label>Repo name (the repo that serves yezhuththu.site)</label><input id="repo" value="agency-frontend">
+  <label>Branch</label><input id="branch" value="main">
+  <label>Folder of the site inside repo</label><input id="dir" value="public/samplesai">
+  <label>GitHub token (fine-grained, Contents: read &amp; write, this repo only)</label><input id="token" type="password" placeholder="github_pat_...">
+  <p><button class="pri" id="cfgSave">Save settings &amp; load content</button></p>
+</div>
+<div id="editor"></div>
+</main><div id="msg" role="status"></div>
+<script>
+const $=id=>document.getElementById(id),F=['owner','repo','branch','dir'];let data=null,sha=null;
+const msg=t=>{const m=$('msg');m.textContent=t;m.style.display='block';clearTimeout(msg.t);msg.t=setTimeout(()=>m.style.display='none',4000)};
+F.forEach(k=>{const v=localStorage.getItem('adm_'+k);if(v)$(k).value=v});$('token').value=sessionStorage.getItem('adm_token')||'';
+const cfg=()=>({o:$('owner').value.trim(),r:$('repo').value.trim(),b:$('branch').value.trim(),d:$('dir').value.trim().replace(/^\/|\/$/g,'')});
+const api=(p,opt={})=>fetch('https://api.github.com/repos/'+cfg().o+'/'+cfg().r+'/contents/'+p,{...opt,headers:{Authorization:'Bearer '+$('token').value.trim(),Accept:'application/vnd.github+json','Content-Type':'application/json'}});
+const b64=s=>btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+const unb64=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')),c=>c.charCodeAt(0)));
+async function load(){
+  if(!$('token').value){$('cfg').classList.remove('hide');return msg('Add your GitHub token first')}
+  const r=await api(cfg().d+'/content.json?ref='+cfg().b);if(!r.ok)return msg('Load failed ('+r.status+'). Check repo, folder and token.');
+  const j=await r.json();sha=j.sha;data=JSON.parse(unb64(j.content));render();msg('Content loaded');
+}
+$('cfgBtn').onclick=()=>$('cfg').classList.toggle('hide');
+$('cfgSave').onclick=()=>{F.forEach(k=>localStorage.setItem('adm_'+k,$(k).value));sessionStorage.setItem('adm_token',$('token').value);$('cfg').classList.add('hide');load()};
+$('save').onclick=async()=>{
+  if(!data)return msg('Nothing loaded yet');
+  const r=await api(cfg().d+'/content.json',{method:'PUT',body:JSON.stringify({message:'Update site content via admin',branch:cfg().b,sha,content:b64(JSON.stringify(data,null,2))})});
+  if(!r.ok)return msg('Save failed ('+r.status+')');sha=(await r.json()).content.sha;msg('Saved. Site updates in about a minute.');
+};
+async function upload(file,cb){
+  const name=Date.now()+'-'+file.name.replace(/[^\w.-]/g,'_'),buf=new Uint8Array(await file.arrayBuffer());let s='';buf.forEach(b=>s+=String.fromCharCode(b));
+  msg('Uploading...');const r=await api(cfg().d+'/uploads/'+name,{method:'PUT',body:JSON.stringify({message:'Upload '+name,branch:cfg().b,content:btoa(s)})});
+  if(!r.ok)return msg('Upload failed ('+r.status+')');cb('uploads/'+name);msg('Uploaded. Press Save & publish to keep it.');
+}
+function render(){const e=$('editor');e.innerHTML='';e.append(node(data,null,null,[]))}
+function node(v,parent,key,path){
+  const w=document.createElement('div');
+  if(Array.isArray(v)){
+    if(v.every(x=>typeof x==='string')){const t=document.createElement('textarea');t.rows=Math.max(2,v.length);t.value=v.join('\n');t.oninput=()=>parent[key]=t.value.split('\n').filter(Boolean);w.append(t);return w}
+    v.forEach((it,i)=>{const b=document.createElement('div');b.className='box';b.append(node(it,v,i,path));
+      const bar=document.createElement('div');bar.className='row';
+      [['Up',()=>i&&([v[i-1],v[i]]=[v[i],v[i-1]],render())],['Down',()=>i<v.length-1&&([v[i+1],v[i]]=[v[i],v[i+1]],render())],['Delete',()=>(v.splice(i,1),render()),'del']].forEach(([n,f,c])=>{const x=document.createElement('button');x.textContent=n;x.className=c||'';x.onclick=f;bar.append(x)});
+      b.append(bar);w.append(b)});
+    const add=document.createElement('button');add.textContent='+ Add item';add.onclick=()=>{const t=JSON.parse(JSON.stringify(v[0]||{}));(function z(o){for(const k in o)typeof o[k]==='object'?z(o[k]):o[k]=''})(t);v.push(t);render()};w.append(add);return w}
+  if(v&&typeof v==='object'){for(const k in v){const c=v[k];
+    if(typeof c==='object'){const h=document.createElement('h2');h.textContent=k;w.append(h)}else{const l=document.createElement('label');l.textContent=k;w.append(l)}
+    const n=node(c,v,k,[...path,k]);w.append(n)}return w}
+  const isImg=/^(src|image)$/.test(key),long=String(v).length>70||/text|description|quote/i.test(key);
+  const i=document.createElement(long?'textarea':'input');i.value=v;if(long)i.rows=3;i.oninput=()=>parent[key]=i.value;
+  if(isImg||/images|video/i.test(key)){const r=document.createElement('div');r.className='row';r.append(i);
+    if(isImg){const th=new Image();th.className='th';th.src=v;th.alt='';i.addEventListener('input',()=>th.src=i.value);r.prepend(th)}
+    const f=document.createElement('input');f.type='file';f.accept='image/*,video/*';f.style.display='none';f.onchange=()=>f.files[0]&&upload(f.files[0],u=>{i.value=u;parent[key]=u;if(r.firstChild.tagName==='IMG')r.firstChild.src='../'+u});
+    const b=document.createElement('button');b.textContent='Upload';b.onclick=()=>f.click();r.append(b,f);return r}
+  return i;
+}
+if($('token').value)load();else $('cfg').classList.remove('hide');
+</script></body></html>

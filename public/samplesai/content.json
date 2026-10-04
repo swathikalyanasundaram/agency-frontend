@@ -1,0 +1,44 @@
+{
+  "brand": "AURELIA VOSS",
+  "seoTitle": "Aurelia Voss Photography | Portrait, Wedding & Editorial",
+  "hero": {
+    "greeting": "PORTRAIT · WEDDING · EDITORIAL PHOTOGRAPHER",
+    "title": "Honest Light,\nUnhurried Moments.",
+    "subtitle": "I photograph the in-between moments",
+    "description": "Based in Chennai, travelling worldwide. Available for weddings, editorial commissions and portrait sessions.",
+    "video": "",
+    "images": [
+      "https://picsum.photos/seed/aurelia1/1920/1080",
+      "https://picsum.photos/seed/aurelia2/1920/1080",
+      "https://picsum.photos/seed/aurelia3/1920/1080"
+    ],
+    "exif": "TUSCANY, ITALY · 35MM · F/1.4 · 1/250s"
+  },
+  "availability": { "status": "NOW BOOKING 2026–27", "line": "Spring & Autumn dates open", "note": "Reply within 24 hours" },
+  "stats": [ { "n": "12+", "l": "Years" }, { "n": "400+", "l": "Shoots" }, { "n": "38", "l": "Countries" } ],
+  "about": {
+    "title": "I look for the quiet second before the picture.",
+    "text": "My work is unposed and unhurried. I spend time with people before I lift the camera, so what you receive feels like you, not like a pose. Every gallery is edited by hand and delivered within three weeks.",
+    "image": "https://picsum.photos/seed/aboutme/800/1000"
+  },
+  "gallery": [
+    { "src": "https://picsum.photos/seed/g1/900/1200", "title": "Window light", "location": "Chennai", "cat": "Portrait" },
+    { "src": "https://picsum.photos/seed/g2/1200/800", "title": "The first look", "location": "Pondicherry", "cat": "Wedding" },
+    { "src": "https://picsum.photos/seed/g3/1200/800", "title": "Blue hour", "location": "Munnar", "cat": "Landscape" },
+    { "src": "https://picsum.photos/seed/g4/900/1200", "title": "Silk and shade", "location": "Studio", "cat": "Editorial" },
+    { "src": "https://picsum.photos/seed/g5/900/1100", "title": "Vows", "location": "Kochi", "cat": "Wedding" },
+    { "src": "https://picsum.photos/seed/g6/1200/900", "title": "Salt flats", "location": "Rann of Kutch", "cat": "Landscape" },
+    { "src": "https://picsum.photos/seed/g7/900/1200", "title": "Studio study", "location": "Studio", "cat": "Portrait" },
+    { "src": "https://picsum.photos/seed/g8/1200/800", "title": "Cover story", "location": "Mumbai", "cat": "Editorial" }
+  ],
+  "services": [
+    { "title": "Portrait sessions", "text": "60–90 minutes, one location, 25 edited images.", "price": "From ₹15,000" },
+    { "title": "Weddings & events", "text": "Full-day coverage, second shooter, online gallery and album.", "price": "From ₹1,20,000" },
+    { "title": "Editorial & commercial", "text": "Concept, shoot and licensed delivery for brands and magazines.", "price": "Quote on request" }
+  ],
+  "testimonials": [
+    { "quote": "She disappeared into the day and somehow caught every moment that mattered.", "name": "Ananya & Rohan", "role": "Wedding, Pondicherry" },
+    { "quote": "The most natural portraits I have ever had taken.", "name": "Meera S.", "role": "Portrait session" }
+  ],
+  "contact": { "email": "hello@yezhuththu.site", "phone": "+91 00000 00000", "city": "Chennai, India", "instagram": "https://instagram.com/", "formEndpoint": "" }
+}
