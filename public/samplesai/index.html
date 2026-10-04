@@ -1,55 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<base href="/samplesai/">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Photography Portfolio</title>
-<meta name="description" content="Portrait, wedding and editorial photography portfolio.">
+<html lang="en"><head>
+<meta charset="UTF-8"><base href="/samplesai/"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Photography Portfolio</title><meta name="description" content="Fine-art portrait, wedding and editorial photography.">
+<link rel="canonical" href="https://yezhuththu.site/samplesai/">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header class="hero-section" id="top">
-  <div class="video-container"><video id="heroVideo" muted playsinline aria-label="Showreel"></video><div id="slides"></div><div class="overlay"></div><div class="flash" id="flash"></div></div>
-  <div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-  <nav class="navbar">
-    <a class="logo" href="#top"><i class="ph ph-aperture"></i><span id="brand"></span></a>
-    <div class="nav-links"><a href="#work">Work</a><a href="#about">About</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
-    <div class="nav-actions"><a class="btn outline" href="#contact">Book a session</a></div>
-    <button class="mobile-menu-toggle" id="menuBtn" aria-label="Open menu"><i class="ph ph-list"></i></button>
-  </nav>
-  <div class="hero-content"><div class="wrap">
-    <p class="greeting animate-fade-up" id="greeting" style="animation-delay:.1s"></p>
-    <h1 class="main-title animate-fade-up" id="title" style="animation-delay:.2s"></h1>
-    <h2 class="sub-title accent-text-gradient animate-fade-up" id="subtitle" style="animation-delay:.3s"></h2>
-    <p class="desc animate-fade-up" id="desc" style="animation-delay:.4s"></p>
-    <div class="cta-group animate-fade-up" style="animation-delay:.5s"><a class="btn primary" href="#work">View portfolio</a><a class="btn outline" href="#contact">Book a session</a></div>
-  </div></div>
-  <div class="hero-footer">
-    <div class="footer-left"><div class="socials" id="socials"></div><div class="stats-group" id="stats"></div></div>
-    <div class="glass card"><div class="row"><span class="pulse-dot"></span><b id="avStatus"></b></div><p class="av-line" id="avLine"></p><p class="muted small" id="avNote"></p><a href="#contact" class="small link">Check availability</a></div>
-  </div>
-  <div class="exif" id="exif"></div>
-  <div class="scroll-indicator"><div class="mouse"><div class="wheel"></div></div><span>Scroll to explore</span></div>
-</header>
-<div class="drawer" id="drawer"><button id="closeBtn" aria-label="Close menu"><i class="ph ph-x"></i></button><a href="#work">Work</a><a href="#about">About</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
+</head><body>
+<div id="cursor-dot"></div><div id="cursor-ring"><span>View</span></div>
+<header id="main-header"><a class="brand" href="#top" id="brand"></a>
+  <nav id="nav"><a href="#work">Work</a><a href="#series">Series</a><a href="#about">About</a><a href="#services">Services</a><a href="#contact">Contact</a></nav>
+  <button class="pill" data-book>Book a Session</button><button id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i></button></header>
 
-<section id="work" class="sec"><h2 class="h2">Selected work</h2><div class="filters" id="filters"></div><div class="masonry" id="gallery"></div></section>
-<section id="about" class="sec about"><img id="aboutImg" alt="Portrait of the photographer" loading="lazy"><div><h2 class="h2" id="aboutTitle"></h2><p class="lead" id="aboutText"></p></div></section>
-<section id="services" class="sec"><h2 class="h2">Services</h2><div class="cards" id="services"></div></section>
-<section class="sec quotes"><div class="cards" id="quotes"></div></section>
-<section id="contact" class="sec contact">
-  <div><h2 class="h2">Tell me about your day</h2><p class="lead">Dates, place, and the mood you want. I reply within 24 hours.</p><p class="muted" id="contactInfo"></p></div>
-  <form id="form"><input name="name" placeholder="Your name" required><input name="email" type="email" placeholder="Email" required>
-    <select name="type"><option>Portrait session</option><option>Wedding / event</option><option>Editorial / commercial</option></select>
-    <input name="date" placeholder="Preferred date / location"><textarea name="message" rows="4" placeholder="Message" required></textarea>
-    <input name="website" class="hp" tabindex="-1" autocomplete="off"><button class="btn primary" type="submit">Send inquiry</button><p id="formMsg" class="small" role="status"></p></form>
-</section>
-<footer><span id="foot"></span><a href="admin/">Admin</a></footer>
-<div class="lightbox" id="lb" role="dialog" aria-modal="true" hidden><button id="lbClose" aria-label="Close">&times;</button><button id="lbPrev" aria-label="Previous">&#8249;</button><figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure><button id="lbNext" aria-label="Next">&#8250;</button></div>
+<main id="top">
+<div id="hero-runway"><div class="hero-sticky-frame">
+  <canvas id="hero-canvas" aria-label="Scroll-driven photography showreel" role="img"></canvas>
+  <div class="hero-stage" id="stages"></div>
+  <div class="hero-loc" id="loc"></div>
+  <div class="hero-hud"><span data-n="0" class="on">01</span><span data-n="1">02</span><span data-n="2">03</span><div class="bar"><i id="bar"></i></div></div>
+</div></div>
+
+<section id="about" class="sec paper"><div class="container about-grid">
+  <div class="reveal about-img"><img id="aboutImg" alt="Portrait of the photographer on location" loading="lazy"></div>
+  <div data-aos="fade-up"><p class="eyebrow">About</p><h2 id="aboutTitle"></h2><p class="lead" id="aboutText"></p>
+  <div class="stats" id="stats"></div></div></div></section>
+
+<section id="work" class="sec ink"><div class="container"><div data-aos="fade-up"><p class="eyebrow">Selected work</p><h2>Photographs, not decoration</h2></div>
+  <div class="filters" id="filters" role="tablist"></div><div class="masonry" id="gallery"></div></div></section>
+
+<section id="series" class="sec paper"><div class="container" id="seriesList"></div></section>
+
+<section id="services" class="sec paper-deep"><div class="container"><div data-aos="fade-up"><p class="eyebrow">Services &amp; investment</p><h2>Ways we can work together</h2></div><div class="cards" id="servicesList"></div></div></section>
+
+<section class="split"><div class="split-img"><img id="procImg" alt="Behind the scenes on a shoot" loading="lazy"></div>
+  <div class="split-txt paper"><div data-aos="fade-up"><p class="eyebrow">Process</p><h2 id="procTitle"></h2><ol class="steps" id="steps"></ol></div></div></section>
+
+<section class="sec ink prints"><div class="container"><div class="head-row"><div data-aos="fade-up"><p class="eyebrow">Limited editions</p><h2>Prints for your walls</h2></div>
+  <div class="nav-btns"><button class="pr-prev" aria-label="Previous print">&#8592;</button><button class="pr-next" aria-label="Next print">&#8594;</button></div></div>
+  <div class="prints-slider-wrapper"><div class="swiper" id="prints-slider"><div class="swiper-wrapper" id="printsList"></div></div></div></div></section>
+
+<section class="cta" id="cta"><div class="cta-bg"></div><div class="container"><h2 id="ctaTitle"></h2><button class="pill" data-book>Start an Inquiry</button></div></section>
+
+<section class="sec white quotes"><div class="container"><div class="qmark">“</div><div class="swiper" id="quotes-slider"><div class="swiper-wrapper" id="quotesList"></div><div class="swiper-pagination"></div></div></div></section>
+
+<section class="press"><div class="container" id="pressList"></div></section>
+<section id="contact" class="sec ink"><div class="container contact"><div data-aos="fade-up"><p class="eyebrow">Contact</p><h2>Tell me about your day</h2><p class="lead dim" id="contactInfo"></p><button class="pill" data-book>Book a Session</button></div></div></section>
+</main>
+<footer class="ink"><div class="container foot"><span id="foot"></span><span><a href="admin/">Admin</a></span></div></footer>
+
+<div class="modal" id="booking" role="dialog" aria-modal="true" aria-label="Book a session" hidden><div class="modal-box">
+  <button class="x" data-close aria-label="Close">&times;</button><h3>Book a session</h3>
+  <form id="form"><select name="type"><option>Portrait session</option><option>Wedding / event</option><option>Editorial / commercial</option></select>
+  <input name="name" placeholder="Your name" required><input name="email" type="email" placeholder="Email" required>
+  <input name="date" placeholder="Preferred dates"><input name="location" placeholder="Location"><input name="budget" placeholder="Budget range">
+  <textarea name="message" rows="3" placeholder="Tell me about it" required></textarea><input class="hp" name="website" tabindex="-1" autocomplete="off">
+  <button class="pill" type="submit">Send inquiry</button><p id="formMsg" role="status"></p></form></div></div>
+<div class="modal lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden><button class="x" data-close aria-label="Close">&times;</button><button class="lb-nav l" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure><button class="lb-nav r" id="lbNext" aria-label="Next">&#8250;</button></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script src="app.js"></script>
-</body>
-</html>
+</body></html>
